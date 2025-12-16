@@ -1,3 +1,15 @@
+![Status](https://img.shields.io/badge/status-active--development-orange)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Python](https://img.shields.io/badge/python-3.10%2B-blue)
+
+![Model](https://img.shields.io/badge/model-SBE%20%2B%20UPPE-purple)
+![Physics](https://img.shields.io/badge/physics-ultrafast--optics-red)
+![Scale](https://img.shields.io/badge/scale-multiscale-brightgreen)
+
+![DFT](https://img.shields.io/badge/DFT-GPAW-lightgrey)
+![FDTD](https://img.shields.io/badge/FDTD-MEEP-lightgrey)
+
+
 # SBUP³-Ultrafast
 
 **SBUP³** — *Semiconductor Bloch–Unidirectional Pulse Propagation Platform*
