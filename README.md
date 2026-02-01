@@ -8,29 +8,26 @@
 ![FDTD](https://img.shields.io/badge/FDTD-MEEP-lightgrey)
 
 
-# SBUP³-Ultrafast
+## SBUP³-Ultrafast
 
 **SBUP³** — *Semiconductor Bloch–Unidirectional Pulse Propagation Platform*
 
 A coupled Semiconductor Bloch–UPPE platform for multiscale ultrafast laser–matter simulations.
 
----
-
 SBUP³ is a modular computational framework for modeling femtosecond laser excitation
 in semiconductors by self-consistently coupling:
 
-1. **Electronic structure inputs** (band energies and transition dipole moments),
-2. **Semiconductor Bloch Equations (SBE)** for nonequilibrium carrier and polarization dynamics,
-3. **Unidirectional Pulse Propagation Equation (UPPE)** for ultrafast electromagnetic pulse evolution.
+1. Electronic structure inputs (band energies and transition dipole moments),
+2. Semiconductor Bloch Equations (SBE) for nonequilibrium carrier and polarization dynamics,
+3. Unidirectional Pulse Propagation Equation (UPPE) for ultrafast electromagnetic pulse evolution.
 
 The framework bridges microscopic carrier dynamics and macroscopic pulse propagation,
 enabling physically interpretable simulations beyond phenomenological nonlinear optics models.
 
----
 
 ### Scientific Scope
 
-SBUP³ is designed as a **methods and modeling platform**, not a discovery engine.
+SBUP³ is designed as a methods and modeling platform, not a discovery engine.
 Its primary goal is to teach, validate, and reuse a multiscale workflow for
 ultrafast laser–matter interaction.
 
@@ -45,8 +42,6 @@ Planned extensions:
 - Coupling to FDTD (e.g. MEEP)
 - Quantum photonic materials
 
----
-
 ### Repository Structure
 
 - `sbup3/dft/` — electronic structure parametrizations
@@ -55,8 +50,6 @@ Planned extensions:
 - `sbup3/coupling/` — self-consistent SBUP³ coupling loop
 - `sbup3/analysis/` — energy deposition and diagnostics
 - `notebooks/` — reproducible Jupyter demonstrations
-
----
 
 ### Installation
 
