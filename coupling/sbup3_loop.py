@@ -31,10 +31,13 @@ from pathlib import Path
 # -----------------------------
 # Config
 # -----------------------------
-N_ITERS = 5
+N_ITERS = 10
 RTOL = 1e-3               # convergence tolerance (relative L2 change)
 USE_ABS_TOL = 1e-12       # prevents division by tiny norms
 VERBOSE = True
+FEEDBACK_BETA = 0.2       # under-relaxation for feedback (0 < beta ≤ 1)
+FEEDBACK_NORM = "rms"     # "rms", "peak", or "none"
+FEEDBACK_NORM_EPS = 1e-30
 
 
 # -----------------------------
@@ -75,6 +78,31 @@ def _relative_l2(a: np.ndarray, b: np.ndarray) -> float:
     num = np.linalg.norm(a - b)
     den = max(np.linalg.norm(a), USE_ABS_TOL)
     return float(num / den)
+
+
+def _normalize_feedback(E_fb: np.ndarray, E_drive: np.ndarray) -> tuple[np.ndarray, float]:
+    """
+    Scale feedback to match the drive amplitude. Returns (scaled, scale_factor).
+    """
+    mode = FEEDBACK_NORM.lower()
+    if mode == "none":
+        return E_fb, 1.0
+
+    if mode == "rms":
+        rms_fb = float(np.sqrt(np.mean(E_fb**2)))
+        rms_drive = float(np.sqrt(np.mean(E_drive**2)))
+        if rms_fb < FEEDBACK_NORM_EPS:
+            return E_fb, 1.0
+        return E_fb * (rms_drive / rms_fb), (rms_drive / rms_fb)
+
+    if mode == "peak":
+        peak_fb = float(np.max(np.abs(E_fb)))
+        peak_drive = float(np.max(np.abs(E_drive)))
+        if peak_fb < FEEDBACK_NORM_EPS:
+            return E_fb, 1.0
+        return E_fb * (peak_drive / peak_fb), (peak_drive / peak_fb)
+
+    raise ValueError(f"Unknown FEEDBACK_NORM: {FEEDBACK_NORM}")
 
 
 def _extract_on_axis_field() -> tuple[np.ndarray, np.ndarray]:
@@ -124,8 +152,29 @@ def main() -> None:
         # 3) Extract feedback field from UPPE output
         time_uppe, E_onaxis = _extract_on_axis_field()
 
+        # 3b) Align and stabilize feedback
+        E_drive = np.load(SBE_E_T)
+        n = min(len(E_onaxis), len(E_drive))
+        if len(E_onaxis) != len(E_drive) and VERBOSE:
+            print(f"[WARN] Length mismatch: UPPE={len(E_onaxis)} vs SBE={len(E_drive)}; truncating to {n}")
+
+        E_onaxis = E_onaxis[:n]
+        E_drive = E_drive[:n]
+
+        if prev_E_drive is not None:
+            n = min(n, len(prev_E_drive))
+            E_onaxis = E_onaxis[:n]
+            E_drive = E_drive[:n]
+            E_fb = (1.0 - FEEDBACK_BETA) * prev_E_drive[:n] + FEEDBACK_BETA * E_onaxis[:n]
+        else:
+            E_fb = E_onaxis.copy()
+
+        E_fb, scale = _normalize_feedback(E_fb, E_drive)
+        if VERBOSE and FEEDBACK_NORM.lower() != "none":
+            print(f"[NORM] Feedback scaled by {scale:.3e} using {FEEDBACK_NORM}")
+
         # 4) Save feedback for next SBE pass
-        np.save(SBE_E_FEEDBACK, E_onaxis)
+        np.save(SBE_E_FEEDBACK, E_fb)
         if VERBOSE:
             print(f"[SAVE] Feedback field -> {SBE_E_FEEDBACK}")
 
@@ -133,15 +182,15 @@ def main() -> None:
         # We compare the *feedback* drive each iteration (on-axis propagated field).
         if prev_E_drive is not None:
             # Make sure shapes match; if not, truncate to min length
-            n = min(len(prev_E_drive), len(E_onaxis))
-            rel = _relative_l2(prev_E_drive[:n], E_onaxis[:n])
+            n = min(len(prev_E_drive), len(E_fb))
+            rel = _relative_l2(prev_E_drive[:n], E_fb[:n])
             print(f"[CHK ] Relative L2 change = {rel:.3e}")
 
             if rel < RTOL:
                 print(f"[DONE] Converged (rel < {RTOL}). Stopping.")
                 break
 
-        prev_E_drive = E_onaxis.copy()
+        prev_E_drive = E_fb.copy()
 
     print("\nSBUP³ coupling loop complete.")
     print("Key files:")

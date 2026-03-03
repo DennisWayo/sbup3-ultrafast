@@ -2,6 +2,8 @@
 .idea/
 .vscode/
 .DS_Store
+.mplconfig/
+.cache/
 
 # Python
 __pycache__/
@@ -18,3 +20,4 @@ notebooks/
 *.txt
 *.gpw
 uppe/outputs/
+analysis/figures/

@@ -82,7 +82,7 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parents[1]
 E_FEEDBACK = BASE / "sbe" / "E_t_feedback.npy"
 
-MIXING = 0.3  # 0 < MIXING ≤ 1
+MIXING = 0.05  # 0 < MIXING ≤ 1 (smaller improves coupling stability)
 
 if E_FEEDBACK.exists():
     E_fb = np.load(E_FEEDBACK)

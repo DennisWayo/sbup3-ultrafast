@@ -48,7 +48,7 @@ Planned extensions:
 - `sbe/` — Semiconductor Bloch Equation solver (RK4)
 - `uppe/` — 2D UPPE propagation model
 - `coupling/` — self-consistent SBUP³ coupling loop
-- `notebooks/` — Jupyter demonstrations
+- `analysis/` — visualization scripts and figures
 
 ### Installation
 
@@ -84,7 +84,13 @@ If `sbe/E_t_feedback.npy` exists, `sbe/sbe_rk4.py` mixes it with the internal Ga
 ### Visualization
 
 ```bash
-jupyter lab notebooks/visualize_sbup3.ipynb
+python analysis/visualize_sbup3.py
+```
+
+To view plots interactively:
+
+```bash
+python analysis/visualize_sbup3.py --show
 ```
 
 ### Optional DFT
