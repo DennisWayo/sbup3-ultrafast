@@ -1,0 +1,20 @@
+# Editor / IDE
+.idea/
+.vscode/
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Jupyter
+notebooks/
+.ipynb_checkpoints/
+
+# Generated data / outputs
+*.npy
+*.npz
+*.log
+*.txt
+*.gpw
+uppe/outputs/

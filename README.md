@@ -27,8 +27,8 @@ enabling physically interpretable simulations beyond phenomenological nonlinear 
 
 ### Scientific Scope
 
-SBUP³ is designed as a methods and modeling platform, not a discovery engine.
-Its primary goal is to teach, validate, and reuse a multiscale workflow for
+SBUP³ is a methods and modeling platform rather than a discovery engine.
+Its primary goal is to develop, validate, and reuse a multiscale workflow for
 ultrafast laser–matter interaction.
 
 Current focus:
@@ -44,15 +44,50 @@ Planned extensions:
 
 ### Repository Structure
 
-- `sbup3/dft/` — electronic structure parametrizations
-- `sbup3/sbe/` — Semiconductor Bloch Equation solvers (RK4)
-- `sbup3/uppe/` — 1D UPPE propagation models
-- `sbup3/coupling/` — self-consistent SBUP³ coupling loop
-- `sbup3/analysis/` — energy deposition and diagnostics
-- `notebooks/` — reproducible Jupyter demonstrations
+- `dft/` — electronic structure parametrizations
+- `sbe/` — Semiconductor Bloch Equation solver (RK4)
+- `uppe/` — 2D UPPE propagation model
+- `coupling/` — self-consistent SBUP³ coupling loop
+- `notebooks/` — Jupyter demonstrations
 
 ### Installation
+
+Conda (recommended):
 
 ```bash
 conda env create -f environment.yml
 conda activate sbup3
+```
+
+### Quickstart
+
+From the repo root:
+
+```bash
+# 1) SBE (writes outputs into sbe/)
+cd sbe
+python sbe_rk4.py
+cd ..
+
+# 2) UPPE (reads sbe outputs, writes uppe/outputs/)
+python -m uppe.uppe_2d
+
+# 3) Coupled loop (experimental)
+python -m coupling.sbup3_loop
+```
+
+### Feedback Field
+
+If `sbe/E_t_feedback.npy` exists, `sbe/sbe_rk4.py` mixes it with the internal Gaussian pulse
+(see `MIXING` in `sbe/sbe_rk4.py`). Delete or rename the file to force the internal drive.
+
+### Visualization
+
+```bash
+jupyter lab notebooks/visualize_sbup3.ipynb
+```
+
+### Optional DFT
+
+DFT inputs are precomputed in `dft/*.npy`. Regenerating them requires GPAW and its dependencies;
+see `dft/gaas_bulk_gpaw.py` and `dft/gaas_lrtddft.py`.

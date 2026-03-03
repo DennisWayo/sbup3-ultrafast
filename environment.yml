@@ -1,0 +1,8 @@
+name: sbup3
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - numpy>=1.22
+  - matplotlib>=3.7
+  - jupyterlab>=4.0
