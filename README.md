@@ -10,7 +10,7 @@
 
 ## SBUP³-Ultrafast
 
-**SBUP³** — *Semiconductor Bloch–Unidirectional Pulse Propagation Platform*
+**SBUP³** — Semiconductor Bloch–Unidirectional Pulse Propagation Platform
 
 A coupled Semiconductor Bloch–UPPE platform for multiscale ultrafast laser–matter simulations.
 
