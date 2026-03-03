@@ -76,6 +76,26 @@ python -m uppe.uppe_2d
 python -m coupling.sbup3_loop
 ```
 
+### Pipeline
+
+```bash
+# Coupling run + figures + validation report
+python analysis/run_pipeline.py --mode coupling --plots --validate
+
+# Sequential run (SBE -> UPPE) without coupling
+python analysis/run_pipeline.py --mode sequential
+```
+
+### Validation
+
+```bash
+# Metrics from current outputs
+python analysis/validate_sbup3.py
+
+# Simple convergence sweeps
+python analysis/validate_sbup3.py --sweep-dt-as 5,2.5 --sweep-dz 1e-6,5e-7
+```
+
 ### Feedback Field
 
 If `sbe/E_t_feedback.npy` exists, `sbe/sbe_rk4.py` mixes it with the internal Gaussian pulse
@@ -97,3 +117,9 @@ python analysis/visualize_sbup3.py --show
 
 DFT inputs are precomputed in `dft/*.npy`. Regenerating them requires GPAW and its dependencies;
 see `dft/gaas_bulk_gpaw.py` and `dft/gaas_lrtddft.py`.
+
+To run the DFT stage through the pipeline:
+
+```bash
+python analysis/run_pipeline.py --run-dft --dft-env <gpaw-env> --mode sequential
+```

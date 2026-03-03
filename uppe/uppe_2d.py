@@ -1,8 +1,21 @@
+import os
 import numpy as np
 from numpy.fft import fft2, ifft2, fftfreq
 from pathlib import Path
 
 from uppe.dispersion import refractive_index_gaas
+
+# =================================================
+# Environment overrides (optional)
+# =================================================
+def _env_float(name: str, default: float) -> float:
+    v = os.getenv(name)
+    return default if v is None else float(v)
+
+
+def _env_int(name: str, default: int) -> int:
+    v = os.getenv(name)
+    return default if v is None else int(v)
 
 # =================================================
 # Constants
@@ -89,8 +102,10 @@ if __name__ == "__main__":
     P_t    = np.load(BASE / "sbe" / "polarization.npy")
 
     # --- Transverse grid ---
-    x_m = np.linspace(-5e-6, 5e-6, 256)  # 10 µm window
-    w0 = 2e-6                            # beam waist (m)
+    nx = _env_int("SBUP3_UPPE_NX", 256)
+    x_window = _env_float("SBUP3_UPPE_X_WINDOW", 10e-6)  # full window (m)
+    w0 = _env_float("SBUP3_UPPE_W0", 2e-6)               # beam waist (m)
+    x_m = np.linspace(-0.5 * x_window, 0.5 * x_window, nx)
 
     # --- Lift to 2D ---
     envelope = np.exp(-(x_m[:, None]**2) / w0**2)
@@ -98,13 +113,16 @@ if __name__ == "__main__":
     P_xt  = envelope * P_t[None, :]
 
     # --- Propagation ---
+    dz = _env_float("SBUP3_UPPE_DZ", 1e-6)
+    z_steps = _env_int("SBUP3_UPPE_Z_STEPS", 100)
+
     E_xt_out = propagate_uppe_2d(
         x_m=x_m,
         time_s=time_s,
         E_xt0=E_xt0,
         P_xt=P_xt,
-        dz=1e-6,
-        z_steps=100,
+        dz=dz,
+        z_steps=z_steps,
     )
 
     # --- Save ---

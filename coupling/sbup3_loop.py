@@ -27,17 +27,34 @@ import subprocess
 import numpy as np
 from pathlib import Path
 
+# -----------------------------
+# Environment overrides (optional)
+# -----------------------------
+def _env_float(name: str, default: float) -> float:
+    v = os.getenv(name)
+    return default if v is None else float(v)
+
+
+def _env_int(name: str, default: int) -> int:
+    v = os.getenv(name)
+    return default if v is None else int(v)
+
+
+def _env_str(name: str, default: str) -> str:
+    v = os.getenv(name)
+    return default if v is None else str(v)
+
 
 # -----------------------------
 # Config
 # -----------------------------
-N_ITERS = 10
-RTOL = 1e-3               # convergence tolerance (relative L2 change)
-USE_ABS_TOL = 1e-12       # prevents division by tiny norms
-VERBOSE = True
-FEEDBACK_BETA = 0.2       # under-relaxation for feedback (0 < beta ≤ 1)
-FEEDBACK_NORM = "rms"     # "rms", "peak", or "none"
-FEEDBACK_NORM_EPS = 1e-30
+N_ITERS = _env_int("SBUP3_COUPLING_ITERS", 10)
+RTOL = _env_float("SBUP3_COUPLING_RTOL", 1e-3)     # convergence tolerance (relative L2 change)
+USE_ABS_TOL = _env_float("SBUP3_COUPLING_ABS_TOL", 1e-12)
+VERBOSE = _env_str("SBUP3_COUPLING_VERBOSE", "true").lower() not in {"0", "false", "no", "off"}
+FEEDBACK_BETA = _env_float("SBUP3_FEEDBACK_BETA", 0.2)       # under-relaxation (0 < beta ≤ 1)
+FEEDBACK_NORM = _env_str("SBUP3_FEEDBACK_NORM", "rms")       # "rms", "peak", or "none"
+FEEDBACK_NORM_EPS = _env_float("SBUP3_FEEDBACK_NORM_EPS", 1e-30)
 
 
 # -----------------------------

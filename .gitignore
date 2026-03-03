@@ -21,3 +21,4 @@ notebooks/
 *.gpw
 uppe/outputs/
 analysis/figures/
+analysis/reports/

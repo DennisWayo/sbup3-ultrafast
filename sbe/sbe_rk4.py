@@ -26,6 +26,20 @@ import numpy as np
 import os
 
 # ============================================================
+# Environment overrides (optional)
+# ============================================================
+def _env_float(name: str, default: float) -> float:
+    v = os.getenv(name)
+    return default if v is None else float(v)
+
+
+def _env_bool(name: str, default: bool = False) -> bool:
+    v = os.getenv(name)
+    if v is None:
+        return default
+    return v.strip().lower() in {"1", "true", "yes", "on"}
+
+# ============================================================
 # Constants
 # ============================================================
 HBAR = 1.054571817e-34     # J·s
@@ -46,12 +60,12 @@ f0     = np.load(os.path.join(DFT, "f0.npy")).item()
 # ============================================================
 # Simulation parameters
 # ============================================================
-T_FS   = 50.0       # total time [fs]
-DT_AS  = 5.0        # timestep [as]
-GAMMA  = 5.0e13     # dephasing rate [1/s]
+T_FS   = _env_float("SBUP3_T_FS", 50.0)      # total time [fs]
+DT_AS  = _env_float("SBUP3_DT_AS", 5.0)       # timestep [as]
+GAMMA  = _env_float("SBUP3_GAMMA", 5.0e13)    # dephasing rate [1/s]
 
-E_FIELD_AMPL = 1.0e7   # V/m  (linear regime)
-OMEGA_L      = omega0 # resonant drive
+E_FIELD_AMPL = _env_float("SBUP3_E_FIELD_AMPL", 1.0e7)  # V/m (linear regime)
+OMEGA_L      = _env_float("SBUP3_OMEGA_L", omega0)      # resonant drive
 
 
 # ============================================================
@@ -82,9 +96,10 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parents[1]
 E_FEEDBACK = BASE / "sbe" / "E_t_feedback.npy"
 
-MIXING = 0.05  # 0 < MIXING ≤ 1 (smaller improves coupling stability)
+MIXING = _env_float("SBUP3_MIXING", 0.05)  # 0 < MIXING ≤ 1
+IGNORE_FEEDBACK = _env_bool("SBUP3_IGNORE_FEEDBACK", False)
 
-if E_FEEDBACK.exists():
+if E_FEEDBACK.exists() and not IGNORE_FEEDBACK:
     E_fb = np.load(E_FEEDBACK)
 
     if len(E_fb) != len(time_s):
@@ -96,6 +111,10 @@ if E_FEEDBACK.exists():
     E_t = (1 - MIXING) * E_t_internal + MIXING * E_fb
     print(f"[LOAD] Using mixed UPPE feedback (α = {MIXING}) → {E_FEEDBACK}")
 
+elif E_FEEDBACK.exists() and IGNORE_FEEDBACK:
+    E_t = E_t_internal
+    print("[INFO] Feedback field found but ignored by SBUP3_IGNORE_FEEDBACK.")
+
 else:
     E_t = E_t_internal
     print("[INFO] No feedback field found; using internal Gaussian pulse.")
@@ -103,7 +122,7 @@ else:
 # ------------------------------------------------------------
 # Field stabilization (important for SBE ↔ UPPE coupling)
 # ------------------------------------------------------------
-E_MAX = 5.0e7  # V/m, safe nonlinear GaAs regime
+E_MAX = _env_float("SBUP3_E_MAX", 5.0e7)  # V/m, safe nonlinear GaAs regime
 E_t = np.clip(E_t, -E_MAX, E_MAX)
 
 # ============================================================
