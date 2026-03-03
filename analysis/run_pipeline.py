@@ -180,6 +180,8 @@ def main() -> None:
     parser.add_argument("--mixing", type=float)
     parser.add_argument("--ignore-feedback", action="store_true")
     parser.add_argument("--e-max", type=float)
+    parser.add_argument("--density-m3", type=float)
+    parser.add_argument("--polarization-scale", type=float)
 
     # UPPE overrides
     parser.add_argument("--x-window", type=float)
@@ -194,6 +196,11 @@ def main() -> None:
     parser.add_argument("--feedback-beta", type=float)
     parser.add_argument("--feedback-norm", choices=["rms", "peak", "none"])
     parser.add_argument("--feedback-norm-eps", type=float)
+
+    # Validation extras
+    parser.add_argument("--ref-csv", default=None, help="Reference CSV for baseline comparison")
+    parser.add_argument("--linear-check", action="store_true", help="Run linear-regime check in validation")
+    parser.add_argument("--osc-broadening", type=float, default=None, help="Sigma [eV] for oscillator spectrum")
 
     args = parser.parse_args()
 
@@ -220,6 +227,10 @@ def main() -> None:
         _set_env(env, "SBUP3_IGNORE_FEEDBACK", 1)
     if args.e_max is not None:
         _set_env(env, "SBUP3_E_MAX", args.e_max)
+    if args.density_m3 is not None:
+        _set_env(env, "SBUP3_DENSITY_M3", args.density_m3)
+    if args.polarization_scale is not None:
+        _set_env(env, "SBUP3_POLARIZATION_SCALE", args.polarization_scale)
 
     if args.x_window is not None:
         _set_env(env, "SBUP3_UPPE_X_WINDOW", args.x_window)
@@ -251,7 +262,18 @@ def main() -> None:
             dft_python = [conda_exe, "run", "-n", args.dft_env, "python"]
 
         _run(dft_python + [str(dft_dir / "gaas_bulk_gpaw.py")], cwd=dft_dir, env=env)
-        _run(dft_python + [str(dft_dir / "gaas_lrtddft.py")], cwd=dft_dir, env=env)
+        export_csv = base / "analysis" / "data" / "gaas_tddft_reference.csv"
+        export_csv.parent.mkdir(parents=True, exist_ok=True)
+        _run(
+            dft_python
+            + [
+                str(dft_dir / "gaas_lrtddft.py"),
+                "--export-csv",
+                str(export_csv),
+            ],
+            cwd=dft_dir,
+            env=env,
+        )
 
     # Main pipeline
     if args.mode in {"sequential", "full"}:
@@ -268,7 +290,14 @@ def main() -> None:
     # Optional validation
     validation_report = None
     if args.validate:
-        _run([sys.executable, str(base / "analysis" / "validate_sbup3.py")], cwd=base, env=env)
+        vcmd = [sys.executable, str(base / "analysis" / "validate_sbup3.py")]
+        if args.ref_csv:
+            vcmd += ["--ref-csv", args.ref_csv]
+        if args.linear_check:
+            vcmd += ["--linear-check"]
+        if args.osc_broadening is not None:
+            vcmd += ["--osc-broadening", str(args.osc_broadening)]
+        _run(vcmd, cwd=base, env=env)
         latest = sorted((base / "analysis" / "reports").glob("validation_*.json"))
         if latest:
             validation_report = str(latest[-1])
@@ -311,6 +340,8 @@ def main() -> None:
                 "mixing": args.mixing,
                 "ignore_feedback": args.ignore_feedback,
                 "e_max": args.e_max,
+                "density_m3": args.density_m3,
+                "polarization_scale": args.polarization_scale,
             },
             "uppe": {
                 "x_window": args.x_window,

@@ -11,7 +11,7 @@ Inputs (from sbup3/dft/):
 Outputs:
   - time_s.npy
   - E_t.npy
-  - polarization.npy
+  - polarization.npy (macroscopic; scaled by SBUP3_DENSITY_M3 and SBUP3_POLARIZATION_SCALE)
   - population.npy
   - omega_rad_s.npy
   - chi_eff_complex.npy
@@ -66,6 +66,8 @@ GAMMA  = _env_float("SBUP3_GAMMA", 5.0e13)    # dephasing rate [1/s]
 
 E_FIELD_AMPL = _env_float("SBUP3_E_FIELD_AMPL", 1.0e7)  # V/m (linear regime)
 OMEGA_L      = _env_float("SBUP3_OMEGA_L", omega0)      # resonant drive
+N_DENSITY    = _env_float("SBUP3_DENSITY_M3", 1.0)      # m^-3 (macroscopic scaling)
+P_SCALE      = _env_float("SBUP3_POLARIZATION_SCALE", 1.0)
 
 
 # ============================================================
@@ -153,7 +155,7 @@ for i, t in enumerate(time_s):
     p += (dt / 6.0) * (k1p + 2*k2p + 2*k3p + k4p)
     n += (dt / 6.0) * (k1n + 2*k2n + 2*k3n + k4n)
 
-    polarization[i] = d_eff * p
+    polarization[i] = P_SCALE * N_DENSITY * d_eff * p
     population[i]   = n
 
 # ============================================================
@@ -213,6 +215,7 @@ print("-------------------------------------------")
 print(f"ω0  = {omega0:.3e} rad/s")
 print(f"E0  = {E0_eV:.3f} eV")
 print(f"|d| = {abs(d_eff):.3e} C·m ({abs(d_eff)/3.33564e-30:.2f} D)")
+print(f"N   = {N_DENSITY:.3e} 1/m^3 (P scale = {P_SCALE:.3e})")
 print(f"f0  = {f0:.3e}")
 
 print("\nSBE propagation complete.")

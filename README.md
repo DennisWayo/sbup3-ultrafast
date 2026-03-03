@@ -96,6 +96,22 @@ python analysis/validate_sbup3.py
 python analysis/validate_sbup3.py --sweep-dt-as 5,2.5 --sweep-dz 1e-6,5e-7
 ```
 
+Baseline comparison (optional):
+
+```bash
+# CSV with energy_eV and one or more columns: chi_real, chi_imag, alpha, n, osc
+python analysis/validate_sbup3.py --ref-csv analysis/data/gaas_tddft_reference.csv
+```
+
+If no CSV is provided, validation falls back to parsing `dft/lrtddft.log`
+or `dft/gaas_lrtddft.log` and uses |me| as an oscillator proxy.
+
+Linear‑regime check:
+
+```bash
+python analysis/validate_sbup3.py --linear-check
+```
+
 ### Feedback Field
 
 If `sbe/E_t_feedback.npy` exists, `sbe/sbe_rk4.py` mixes it with the internal Gaussian pulse
@@ -123,3 +139,14 @@ To run the DFT stage through the pipeline:
 ```bash
 python analysis/run_pipeline.py --run-dft --dft-env <gpaw-env> --mode sequential
 ```
+
+### Physical Scaling
+
+By default, SBE polarization uses unit density. For absolute scaling, set:
+
+```bash
+export SBUP3_DENSITY_M3=<carrier_density>
+export SBUP3_POLARIZATION_SCALE=<scale_factor>
+```
+
+These affect the macroscopic polarization that feeds UPPE and should be recorded for publication.

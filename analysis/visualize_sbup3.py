@@ -2,7 +2,6 @@
 """
 SBUP3 visualization script.
 
-Generates publication-ready figures from SBE and UPPE outputs.
 Run from the repo root:
   python analysis/visualize_sbup3.py
 """

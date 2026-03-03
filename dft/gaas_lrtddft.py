@@ -14,6 +14,8 @@ Author: Dennis Wayo
 
 from __future__ import annotations
 import os
+import argparse
+import csv
 import numpy as np
 
 from gpaw import GPAW
@@ -78,14 +80,36 @@ def extract_lowest_bright_excitation(gpw):
     omega0 = (E0_eV * e0) / hbar
     d_eff = dipole_from_f(omega0, f0)
 
-    return omega0, d_eff, E0_eV, f0
+    return omega0, d_eff, E0_eV, f0, lr
+
+
+def export_excitation_csv(lr: LrTDDFT, path: str, osc_min: float) -> None:
+    rows = []
+    for exc in lr:
+        E_eV = exc.get_energy() * 27.2114
+        fvec = np.array(exc.get_oscillator_strength())
+        fmag = np.linalg.norm(fvec)
+        if fmag >= osc_min:
+            rows.append((E_eV, fmag))
+
+    rows.sort(key=lambda x: x[0])
+
+    with open(path, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["energy_eV", "osc"])
+        writer.writerows(rows)
 
 
 def main():
+    parser = argparse.ArgumentParser(description="SBUP3 LR-TDDFT extraction: GaAs")
+    parser.add_argument("--export-csv", default=None, help="Export excitations to CSV")
+    parser.add_argument("--osc-min", type=float, default=OSC_MIN, help="Oscillator strength cutoff")
+    args = parser.parse_args()
+
     print("SBUP³ LR-TDDFT extraction: GaAs")
     print("--------------------------------")
 
-    omega0, d_eff, E0_eV, f0 = extract_lowest_bright_excitation(GPW_FD)
+    omega0, d_eff, E0_eV, f0, lr = extract_lowest_bright_excitation(GPW_FD)
 
     np.save(OUT_OMEGA0, omega0)
     np.save(OUT_E0EV, E0_eV)
@@ -98,6 +122,10 @@ def main():
     print("  f0        :", f0)
     print("  |d| (C·m) :", d_eff)
     print("  |d| (Debye):", d_eff / 3.33564e-30)
+
+    if args.export_csv:
+        export_excitation_csv(lr, args.export_csv, args.osc_min)
+        print(f"  export CSV: {args.export_csv}")
 
 
 if __name__ == "__main__":
