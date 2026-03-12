@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 from pathlib import Path
 
 import numpy as np
@@ -32,9 +33,63 @@ def hann(n: int) -> np.ndarray:
     return 0.5 - 0.5 * np.cos(2 * np.pi * np.arange(n) / (n - 1))
 
 
+def _load_tddft_log(path: Path) -> tuple[np.ndarray, np.ndarray] | None:
+    if not path.exists():
+        return None
+    pattern_om = re.compile(r"om=([0-9.+-Ee]+)\[eV\]\s+\|me\|=([0-9.+-Ee]+)")
+    pattern_kss = re.compile(r"eji=([0-9.+-Ee]+)\[eV\]\s+\(([^)]+)\)")
+
+    energies: list[float] = []
+    osc: list[float] = []
+    for line in path.read_text(errors="ignore").splitlines():
+        match = pattern_om.search(line)
+        if match:
+            energies.append(float(match.group(1)))
+            osc.append(float(match.group(2)))
+            continue
+        match_kss = pattern_kss.search(line)
+        if match_kss:
+            try:
+                energy = float(match_kss.group(1))
+                vec = [float(v.strip()) for v in match_kss.group(2).split(",")]
+                if len(vec) == 3:
+                    energies.append(energy)
+                    osc.append(float(np.linalg.norm(vec)))
+            except Exception:
+                continue
+
+    if not energies:
+        return None
+    e = np.asarray(energies, dtype=float)
+    f = np.asarray(osc, dtype=float)
+    idx = np.argsort(e)
+    return e[idx], f[idx]
+
+
+def _oscillator_spectrum(energy_grid: np.ndarray, e0: np.ndarray, osc: np.ndarray, sigma: float) -> np.ndarray:
+    if sigma <= 0:
+        sigma = 0.1
+    spec = np.zeros_like(energy_grid, dtype=float)
+    for e, f in zip(e0, osc):
+        spec += f * np.exp(-0.5 * ((energy_grid - e) / sigma) ** 2)
+    return spec
+
+
 def load_outputs(base: Path) -> dict:
     sbe = base / "sbe"
     uppe = base / "uppe" / "outputs"
+
+    alpha_path = sbe / "alpha_m_inv.npy"
+    if not alpha_path.exists():
+        alpha_path = sbe / "alpha_rel.npy"
+
+    n_path = sbe / "n_real.npy"
+    n_is_absolute = True
+    if not n_path.exists():
+        n_path = sbe / "n_rel.npy"
+        n_is_absolute = False
+
+    support_path = sbe / "chi_support_mask.npy"
 
     required = [
         sbe / "time_s.npy",
@@ -45,8 +100,8 @@ def load_outputs(base: Path) -> dict:
         sbe / "chi_eff_complex.npy",
         sbe / "chi_eff_real.npy",
         sbe / "chi_eff_imag.npy",
-        sbe / "alpha_rel.npy",
-        sbe / "n_rel.npy",
+        alpha_path,
+        n_path,
         uppe / "E_xt_out.npy",
         uppe / "x_m.npy",
         uppe / "time_s.npy",
@@ -73,8 +128,10 @@ def load_outputs(base: Path) -> dict:
         "chi": np.load(sbe / "chi_eff_complex.npy"),
         "chi_r": np.load(sbe / "chi_eff_real.npy"),
         "chi_i": np.load(sbe / "chi_eff_imag.npy"),
-        "alpha": np.load(sbe / "alpha_rel.npy"),
-        "n_rel": np.load(sbe / "n_rel.npy"),
+        "alpha": np.load(alpha_path),
+        "n_rel": np.load(n_path),
+        "n_is_absolute": n_is_absolute,
+        "chi_support_mask": np.load(support_path).astype(bool) if support_path.exists() else None,
         "E_xt": np.load(uppe / "E_xt_out.npy"),
         "x_m": np.load(uppe / "x_m.npy"),
         "time_s_uppe": np.load(uppe / "time_s.npy"),
@@ -98,6 +155,45 @@ def main() -> None:
         help="Output directory for figures (relative to repo root)",
     )
     parser.add_argument("--show", action="store_true", help="Show figures interactively")
+    parser.add_argument(
+        "--baseline-log",
+        default=None,
+        help="Path to TDDFT log for overlay (defaults to dft/gaas_lrtddft.log)",
+    )
+    parser.add_argument(
+        "--osc-broadening",
+        type=float,
+        default=0.1,
+        help="Gaussian sigma [eV] for TDDFT oscillator spectrum",
+    )
+    parser.add_argument(
+        "--overlay-scale",
+        choices=["fit", "peak", "none"],
+        default="fit",
+        help="Scale SBE alpha to TDDFT for overlay (fit, peak) or use raw amplitude (none)",
+    )
+    parser.add_argument(
+        "--overlay-abs",
+        action="store_true",
+        help="Use |alpha| for the SBE overlay (useful when sign conventions differ)",
+    )
+    parser.add_argument(
+        "--overlay-e-min",
+        type=float,
+        default=0.0,
+        help="Energy window min [eV] for overlay scaling/plot",
+    )
+    parser.add_argument(
+        "--overlay-e-max",
+        type=float,
+        default=3.0,
+        help="Energy window max [eV] for overlay scaling/plot",
+    )
+    parser.add_argument(
+        "--overlay-window",
+        default=None,
+        help="Convenience window in eV as min,max (overrides overlay-e-min/max)",
+    )
     args = parser.parse_args()
 
     base = Path(__file__).resolve().parents[1]
@@ -127,12 +223,39 @@ def main() -> None:
     chi_i = data["chi_i"]
     alpha = data["alpha"]
     n_rel = data["n_rel"]
+    n_is_absolute = data["n_is_absolute"]
+    chi_support_mask = data["chi_support_mask"]
     E_xt = data["E_xt"]
     x_m = data["x_m"]
     time_s_uppe = data["time_s_uppe"]
 
     time_fs = time_s * 1e15
     omega_eV = HBAR * omega / E0
+    valid = np.isfinite(chi_r) & np.isfinite(chi_i) & np.isfinite(alpha) & np.isfinite(n_rel)
+    if chi_support_mask is not None and len(chi_support_mask) == len(valid):
+        valid &= chi_support_mask
+
+    # TDDFT reference (optional overlay)
+    ref_energy = None
+    ref_osc = None
+    ref_label = None
+    if args.baseline_log:
+        ref_path = Path(args.baseline_log)
+        ref = _load_tddft_log(ref_path)
+        if ref:
+            ref_energy, ref_osc = ref
+            ref_label = str(ref_path)
+    else:
+        default_paths = [
+            base / "dft" / "gaas_lrtddft.log",
+            base / "dft" / "lrtddft.log",
+        ]
+        for path in default_paths:
+            ref = _load_tddft_log(path)
+            if ref:
+                ref_energy, ref_osc = ref
+                ref_label = str(path)
+                break
 
     # Time-domain SBE dynamics
     fig = plt.figure()
@@ -150,8 +273,8 @@ def main() -> None:
 
     # Susceptibility
     fig = plt.figure()
-    plt.plot(omega_eV, chi_r, label="Re chi(omega)")
-    plt.plot(omega_eV, chi_i, label="Im chi(omega)")
+    plt.plot(omega_eV[valid], chi_r[valid], label="Re chi(omega)")
+    plt.plot(omega_eV[valid], chi_i[valid], label="Im chi(omega)")
     plt.xlim(0, 3)
     plt.xlabel("Photon energy (eV)")
     plt.ylabel("Susceptibility")
@@ -161,21 +284,117 @@ def main() -> None:
 
     # Refractive index modification
     fig = plt.figure()
-    plt.plot(omega_eV, n_rel)
+    plt.plot(omega_eV[valid], n_rel[valid])
     plt.xlim(0, 3)
     plt.xlabel("Photon energy (eV)")
-    plt.ylabel("Delta n (relative)")
-    plt.title("Refractive Index Modification")
+    if n_is_absolute:
+        plt.ylabel("n(omega)")
+        plt.title("Refractive Index")
+    else:
+        plt.ylabel("Delta n (relative)")
+        plt.title("Refractive Index Modification")
     savefig(fig, outdir, "sbe_n_rel.png", args.show)
 
-    # Absorption coefficient proxy
+    # Absorption coefficient (SBE only)
     fig = plt.figure()
-    plt.plot(omega_eV, alpha)
+    alpha_mask = (omega_eV >= 0) & (omega_eV <= 3) & valid
+    plt.plot(omega_eV[alpha_mask], alpha[alpha_mask])
     plt.xlim(0, 3)
     plt.xlabel("Photon energy (eV)")
-    plt.ylabel("Alpha (arb. units)")
-    plt.title("Absorption Coefficient")
+    plt.ylabel("Alpha (1/m)")
     savefig(fig, outdir, "sbe_alpha.png", args.show)
+
+    # TDDFT overlay (separate file)
+    if args.overlay_window:
+        try:
+            wmin, wmax = [float(v.strip()) for v in args.overlay_window.split(",")]
+            args.overlay_e_min = wmin
+            args.overlay_e_max = wmax
+        except Exception:
+            pass
+
+    if ref_energy is not None and ref_osc is not None:
+        ref_alpha = _oscillator_spectrum(omega_eV, ref_energy, ref_osc, args.osc_broadening)
+        sim_alpha = np.abs(alpha) if args.overlay_abs else alpha
+        finite_mask = np.isfinite(sim_alpha) & np.isfinite(ref_alpha)
+        mask = (omega_eV >= args.overlay_e_min) & (omega_eV <= args.overlay_e_max) & valid & finite_mask
+        if not np.any(mask):
+            mask = finite_mask
+        scale = 1.0
+        if args.overlay_scale == "fit":
+            denom = float(np.dot(sim_alpha[mask], sim_alpha[mask])) or 1.0
+            scale = float(np.dot(ref_alpha[mask], sim_alpha[mask]) / denom)
+        elif args.overlay_scale == "peak":
+            sim_peak = float(np.max(np.abs(sim_alpha[mask]))) if hasattr(mask, "__len__") else float(np.max(np.abs(sim_alpha)))
+            ref_peak = float(np.max(np.abs(ref_alpha[mask]))) if hasattr(mask, "__len__") else float(np.max(np.abs(ref_alpha)))
+            if sim_peak > 0:
+                scale = ref_peak / sim_peak
+        fig, ax = plt.subplots()
+        apply_scale = args.overlay_scale in {"fit", "peak"}
+        if args.overlay_abs:
+            label = "SBE |alpha| (scaled)" if apply_scale else "SBE |alpha|"
+        else:
+            label = "SBE alpha (scaled)" if apply_scale else "SBE alpha"
+        sim_plot = sim_alpha * scale if apply_scale else sim_alpha
+        ref_plot = ref_alpha
+        ax.plot(omega_eV, sim_plot, label=label)
+        ax.plot(omega_eV, ref_plot, label="TDDFT osc", linestyle="--")
+        ax.set_xlim(args.overlay_e_min, args.overlay_e_max)
+        # Auto-scale y limits to the visible window for clarity
+        if hasattr(mask, "__len__"):
+            visible = np.concatenate([sim_plot[mask], ref_plot[mask]])
+        else:
+            visible = np.concatenate([sim_plot, ref_plot])
+        vmin = float(np.min(visible))
+        vmax = float(np.max(visible))
+        if np.isfinite(vmin) and np.isfinite(vmax) and vmax > vmin:
+            pad = 0.05 * (vmax - vmin)
+            ax.set_ylim(vmin - pad, vmax + pad)
+
+        # Region bands (IR / Visible / UV)
+        regions = [
+            ("IR", 0.0, 1.65, "#e8f2ff"),
+            ("Visible", 1.65, 3.1, "#fff3d9"),
+            ("UV", 3.1, 100.0, "#f7e9ff"),
+        ]
+        xmin, xmax = args.overlay_e_min, args.overlay_e_max
+        for name, a, b, color in regions:
+            left = max(xmin, a)
+            right = min(xmax, b)
+            if right > left:
+                ax.axvspan(left, right, color=color, alpha=0.18, zorder=0)
+                mid = 0.5 * (left + right)
+                ax.text(
+                    mid,
+                    0.95,
+                    name,
+                    transform=ax.get_xaxis_transform(),
+                    ha="center",
+                    va="top",
+                    fontsize=9,
+                    color="0.35",
+                )
+
+        # Top axis with wavelength (um) using explicit tick mapping
+        ev_min = float(args.overlay_e_min)
+        ev_max = float(args.overlay_e_max)
+        tick_start = max(ev_min, 0.2)
+        tick_end = ev_max
+        if tick_end - tick_start >= 0.1:
+            step = 0.2 if (tick_end - tick_start) >= 0.6 else 0.1
+            ticks = np.arange(tick_start, tick_end + 1e-9, step)
+            labels = [f"{(1.23984193 / t):.2f}" for t in ticks]
+            ax_top = ax.twiny()
+            ax_top.set_xlim(ax.get_xlim())
+            ax_top.set_xticks(ticks)
+            ax_top.set_xticklabels(labels)
+            ax_top.set_xlabel("Wavelength (um)")
+
+        ax.set_xlabel("Photon energy (eV)")
+        ax.set_ylabel("Alpha (arb. units)")
+        ax.set_title("Absorption Overlay (TDDFT)")
+        ax.legend()
+        savefig(fig, outdir, "sbe_alpha_tddft_overlay.png", args.show)
 
     # UPPE spatiotemporal field
     x_um = x_m * 1e6

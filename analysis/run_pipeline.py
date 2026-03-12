@@ -182,6 +182,9 @@ def main() -> None:
     parser.add_argument("--e-max", type=float)
     parser.add_argument("--density-m3", type=float)
     parser.add_argument("--polarization-scale", type=float)
+    parser.add_argument("--chi-eps", type=float)
+    parser.add_argument("--response-power-cutoff", type=float)
+    parser.add_argument("--chi-max-ev", type=float)
 
     # UPPE overrides
     parser.add_argument("--x-window", type=float)
@@ -197,10 +200,19 @@ def main() -> None:
     parser.add_argument("--feedback-norm", choices=["rms", "peak", "none"])
     parser.add_argument("--feedback-norm-eps", type=float)
 
-    # Validation extras
+    # Validation + plotting extras
     parser.add_argument("--ref-csv", default=None, help="Reference CSV for baseline comparison")
     parser.add_argument("--linear-check", action="store_true", help="Run linear-regime check in validation")
     parser.add_argument("--osc-broadening", type=float, default=None, help="Sigma [eV] for oscillator spectrum")
+    parser.add_argument("--overlay-e-min", type=float, default=None, help="Overlay min energy [eV] for plots")
+    parser.add_argument("--overlay-e-max", type=float, default=None, help="Overlay max energy [eV] for plots")
+    parser.add_argument(
+        "--overlay-window",
+        default=None,
+        help="Overlay window as min,max eV (passed to visualize script)",
+    )
+    parser.add_argument("--overlay-scale", choices=["fit", "peak", "none"], default=None, help="Overlay scaling mode for plots")
+    parser.add_argument("--overlay-abs", action="store_true", help="Use absolute alpha in overlay")
 
     args = parser.parse_args()
 
@@ -231,6 +243,12 @@ def main() -> None:
         _set_env(env, "SBUP3_DENSITY_M3", args.density_m3)
     if args.polarization_scale is not None:
         _set_env(env, "SBUP3_POLARIZATION_SCALE", args.polarization_scale)
+    if args.chi_eps is not None:
+        _set_env(env, "SBUP3_CHI_EPS", args.chi_eps)
+    if args.response_power_cutoff is not None:
+        _set_env(env, "SBUP3_RESPONSE_POWER_CUTOFF", args.response_power_cutoff)
+    if args.chi_max_ev is not None:
+        _set_env(env, "SBUP3_CHI_MAX_EV", args.chi_max_ev)
 
     if args.x_window is not None:
         _set_env(env, "SBUP3_UPPE_X_WINDOW", args.x_window)
@@ -285,7 +303,20 @@ def main() -> None:
 
     # Optional plots
     if args.plots:
-        _run([sys.executable, str(base / "analysis" / "visualize_sbup3.py")], cwd=base, env=env)
+        plot_cmd = [sys.executable, str(base / "analysis" / "visualize_sbup3.py")]
+        if args.overlay_e_min is not None:
+            plot_cmd += ["--overlay-e-min", str(args.overlay_e_min)]
+        if args.overlay_e_max is not None:
+            plot_cmd += ["--overlay-e-max", str(args.overlay_e_max)]
+        if args.overlay_window is not None:
+            plot_cmd += ["--overlay-window", str(args.overlay_window)]
+        if args.overlay_scale is not None:
+            plot_cmd += ["--overlay-scale", str(args.overlay_scale)]
+        if args.overlay_abs:
+            plot_cmd += ["--overlay-abs"]
+        if args.osc_broadening is not None:
+            plot_cmd += ["--osc-broadening", str(args.osc_broadening)]
+        _run(plot_cmd, cwd=base, env=env)
 
     # Optional validation
     validation_report = None

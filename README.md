@@ -103,14 +103,41 @@ Baseline comparison (optional):
 python analysis/validate_sbup3.py --ref-csv analysis/data/gaas_tddft_reference.csv
 ```
 
-If no CSV is provided, validation falls back to parsing `dft/lrtddft.log`
-or `dft/gaas_lrtddft.log` and uses |me| as an oscillator proxy.
+If no CSV is provided, validation falls back to parsing `dft/gaas_lrtddft.log`
+(or `dft/lrtddft.log`) and uses |me| as an oscillator proxy.
+
+To export a CSV from the TDDFT log:
+
+```bash
+python analysis/export_tddft_csv.py --log dft/gaas_lrtddft.log --out analysis/data/gaas_tddft_reference.csv
+```
 
 Linear‑regime check:
 
 ```bash
 python analysis/validate_sbup3.py --linear-check
 ```
+
+Response-support extraction controls (to avoid divide-by-small-field artifacts):
+
+```bash
+python analysis/run_pipeline.py --mode sequential --chi-eps 1e-3 --response-power-cutoff 0.999 --chi-max-ev 3.0
+```
+
+Tuned analysis profile (current best tradeoff for TDDFT overlay support):
+
+```bash
+export SBUP3_POLARIZATION_SCALE=7.375504e8
+export SBUP3_IGNORE_FEEDBACK=1
+python analysis/run_pipeline.py --mode sequential --plots --validate \
+  --ref-csv analysis/data/gaas_tddft_reference.csv \
+  --t-fs 50 --dt-as 2.5 \
+  --chi-eps 1e-5 --response-power-cutoff 1.0 --chi-max-ev 3.0 \
+  --overlay-window 0,1.2 --overlay-scale fit --overlay-abs
+```
+
+This setting expanded the validated overlap from 10 to 16 support points (0.91 eV -> 1.24 eV)
+while reducing shape error in the TDDFT oscillator overlay.
 
 ### Feedback Field
 
@@ -133,6 +160,7 @@ python analysis/visualize_sbup3.py --show
 
 DFT inputs are precomputed in `dft/*.npy`. Regenerating them requires GPAW and its dependencies;
 see `dft/gaas_bulk_gpaw.py` and `dft/gaas_lrtddft.py`.
+Ground‑state provenance is recorded in `dft/gaas_fd.txt`.
 
 To run the DFT stage through the pipeline:
 
@@ -150,3 +178,15 @@ export SBUP3_POLARIZATION_SCALE=<scale_factor>
 ```
 
 These affect the macroscopic polarization that feeds UPPE and should be recorded for publication.
+
+SBE now writes physically interpretable optics outputs:
+- `sbe/alpha_m_inv.npy` : absorption coefficient $\alpha(\omega)$ in 1/m
+- `sbe/n_real.npy` : refractive index $n(\omega)$
+- `sbe/kappa.npy` : extinction coefficient $\kappa(\omega)$
+- `sbe/chi_support_mask.npy` : frequencies where $\chi(\omega)$ extraction is trusted
+
+Based on the current TDDFT log baseline, a provisional polarization scale is:
+
+```bash
+export SBUP3_POLARIZATION_SCALE=7.375504e8
+```

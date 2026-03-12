@@ -63,6 +63,15 @@ def _run(cmd: list[str], cwd: Path, env: dict[str, str]) -> None:
 def _load_outputs(base: Path) -> dict[str, Any]:
     sbe = base / "sbe"
     uppe = base / "uppe" / "outputs"
+    alpha_path = sbe / "alpha_m_inv.npy"
+    if not alpha_path.exists():
+        alpha_path = sbe / "alpha_rel.npy"
+
+    n_path = sbe / "n_real.npy"
+    if not n_path.exists():
+        n_path = sbe / "n_rel.npy"
+
+    support_path = sbe / "chi_support_mask.npy"
     data = {
         "time_s": np.load(sbe / "time_s.npy"),
         "E_t": np.load(sbe / "E_t.npy"),
@@ -71,8 +80,9 @@ def _load_outputs(base: Path) -> dict[str, Any]:
         "omega": np.load(sbe / "omega_rad_s.npy"),
         "chi_r": np.load(sbe / "chi_eff_real.npy"),
         "chi_i": np.load(sbe / "chi_eff_imag.npy"),
-        "alpha": np.load(sbe / "alpha_rel.npy"),
-        "n_rel": np.load(sbe / "n_rel.npy"),
+        "alpha": np.load(alpha_path),
+        "n_rel": np.load(n_path),
+        "chi_support_mask": np.load(support_path).astype(bool) if support_path.exists() else None,
         "E_xt": np.load(uppe / "E_xt_out.npy"),
         "x_m": np.load(uppe / "x_m.npy"),
         "time_s_uppe": np.load(uppe / "time_s.npy"),
@@ -146,10 +156,11 @@ def _load_reference_csv(path: Path) -> dict[str, np.ndarray]:
 
 def _load_reference_log(base: Path) -> tuple[dict[str, np.ndarray], str] | None:
     log_paths = [
-        base / "dft" / "lrtddft.log",
         base / "dft" / "gaas_lrtddft.log",
+        base / "dft" / "lrtddft.log",
     ]
     pattern = re.compile(r"om=([0-9.+-Ee]+)\[eV\]\s+\|me\|=([0-9.+-Ee]+)")
+    pattern_kss = re.compile(r"eji=([0-9.+-Ee]+)\[eV\]\s+\(([^)]+)\)")
 
     for path in log_paths:
         if not path.exists():
@@ -161,6 +172,17 @@ def _load_reference_log(base: Path) -> tuple[dict[str, np.ndarray], str] | None:
             if match:
                 energies.append(float(match.group(1)))
                 osc.append(float(match.group(2)))
+                continue
+            match_kss = pattern_kss.search(line)
+            if match_kss:
+                try:
+                    energy = float(match_kss.group(1))
+                    vec = [float(v.strip()) for v in match_kss.group(2).split(",")]
+                    if len(vec) == 3:
+                        energies.append(energy)
+                        osc.append(float(np.linalg.norm(vec)))
+                except Exception:
+                    continue
         if energies:
             ref = {
                 "energy_eV": np.asarray(energies, dtype=float),
@@ -186,6 +208,13 @@ def _compare_series(
     ref_energy: np.ndarray,
     ref_values: np.ndarray,
 ) -> dict[str, float] | None:
+    finite_sim = np.isfinite(sim_energy) & np.isfinite(sim_values)
+    finite_ref = np.isfinite(ref_energy) & np.isfinite(ref_values)
+    sim_energy = sim_energy[finite_sim]
+    sim_values = sim_values[finite_sim]
+    ref_energy = ref_energy[finite_ref]
+    ref_values = ref_values[finite_ref]
+
     if len(sim_energy) < 2 or len(ref_energy) < 2:
         return None
 
@@ -232,6 +261,7 @@ def compute_metrics(base: Path) -> dict[str, Any]:
     P_t = data["P_t"]
     n_t = data["n_t"]
     omega = data["omega"]
+    support = data["chi_support_mask"]
     E_xt = data["E_xt"]
     x_m = data["x_m"]
     time_s_uppe = data["time_s_uppe"]
@@ -257,6 +287,13 @@ def compute_metrics(base: Path) -> dict[str, Any]:
 
     mu_in, sig_in = _spectral_moments(freq_in_eV, Ew_in)
     mu_out, sig_out = _spectral_moments(freq_out_eV, Ew_out)
+
+    support_coverage = None
+    support_max_eV = None
+    if support is not None and len(support) == len(omega):
+        support_coverage = float(np.mean(support))
+        if np.any(support):
+            support_max_eV = float((HBAR * omega[support] / E0).max())
 
     # Energy proxy
     energy_xt = np.trapezoid(np.abs(E_xt) ** 2, x_m, axis=0)
@@ -306,6 +343,13 @@ def compute_metrics(base: Path) -> dict[str, Any]:
             "P_t": _finite_stats(P_t),
             "n_t": _finite_stats(n_t),
             "E_xt": _finite_stats(E_xt),
+            "chi_r": _finite_stats(data["chi_r"]),
+            "chi_i": _finite_stats(data["chi_i"]),
+            "alpha": _finite_stats(data["alpha"]),
+        },
+        "response_support": {
+            "coverage_fraction": support_coverage,
+            "max_energy_eV": support_max_eV,
         },
         "dephasing": {
             "tail_max_over_peak": tail_ratio,
@@ -352,7 +396,7 @@ def _baseline_from_ref(
 
     baseline: dict[str, Any] = {"path": label, "metrics": {}}
     if label.endswith(".log"):
-        baseline["notes"] = "Reference built from LR-TDDFT log (|me| used as oscillator proxy)."
+        baseline["notes"] = "Reference built from LR-TDDFT log (transition vectors or |me| used as oscillator proxy)."
 
     if "chi_real" in ref:
         baseline["metrics"]["chi_real"] = _compare_series(
@@ -366,10 +410,16 @@ def _baseline_from_ref(
         baseline["metrics"]["alpha"] = _compare_series(
             omega_eV, data["alpha"], ref["energy_eV"], ref["alpha"]
         )
+        baseline["metrics"]["alpha_abs"] = _compare_series(
+            omega_eV, np.abs(data["alpha"]), ref["energy_eV"], ref["alpha"]
+        )
     elif "osc" in ref:
         ref_alpha = _oscillator_spectrum(omega_eV, ref["energy_eV"], ref["osc"], osc_sigma)
         baseline["metrics"]["alpha_from_osc"] = _compare_series(
             omega_eV, data["alpha"], omega_eV, ref_alpha
+        )
+        baseline["metrics"]["alpha_from_osc_abs"] = _compare_series(
+            omega_eV, np.abs(data["alpha"]), omega_eV, ref_alpha
         )
     if "n" in ref:
         baseline["metrics"]["n"] = _compare_series(
@@ -377,7 +427,15 @@ def _baseline_from_ref(
         )
 
     # Recommend polarization scaling from alpha (preferred) or chi_imag
-    if baseline["metrics"].get("alpha") and baseline["metrics"]["alpha"] is not None:
+    if baseline["metrics"].get("alpha_abs") and baseline["metrics"]["alpha_abs"] is not None:
+        scale = baseline["metrics"]["alpha_abs"]["scale"]
+        baseline["recommended_polarization_scale"] = scale
+        baseline["recommended_source"] = "alpha_abs"
+    elif baseline["metrics"].get("alpha_from_osc_abs") and baseline["metrics"]["alpha_from_osc_abs"] is not None:
+        scale = baseline["metrics"]["alpha_from_osc_abs"]["scale"]
+        baseline["recommended_polarization_scale"] = scale
+        baseline["recommended_source"] = "alpha_from_osc_abs"
+    elif baseline["metrics"].get("alpha") and baseline["metrics"]["alpha"] is not None:
         scale = baseline["metrics"]["alpha"]["scale"]
         baseline["recommended_polarization_scale"] = scale
         baseline["recommended_source"] = "alpha"
@@ -476,14 +534,19 @@ def main() -> None:
 
     if not do_sweep:
         report["metrics"] = compute_metrics(base)
-        ref_path = Path(args.ref_csv) if args.ref_csv else (base / "analysis" / "data" / "gaas_tddft_reference.csv")
-        if ref_path.exists():
-            report["baseline"] = compute_baseline(base, ref_path, args.osc_broadening)
+        if args.ref_csv:
+            ref_path = Path(args.ref_csv)
+            if ref_path.exists():
+                report["baseline"] = compute_baseline(base, ref_path, args.osc_broadening)
         else:
             fallback = _load_reference_log(base)
             if fallback:
                 ref, label = fallback
                 report["baseline"] = _baseline_from_ref(_load_outputs(base), ref, label, args.osc_broadening)
+            else:
+                ref_path = base / "analysis" / "data" / "gaas_tddft_reference.csv"
+                if ref_path.exists():
+                    report["baseline"] = compute_baseline(base, ref_path, args.osc_broadening)
         if args.linear_check:
             base_amp = args.linear_amp
             if base_amp is None:

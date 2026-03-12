@@ -22,4 +22,10 @@ Units should be consistent across the file. For baseline comparisons, the script
 fits a scale factor to best match the simulation in the overlapping energy range.
 
 If no CSV is available, `analysis/validate_sbup3.py` will fall back to parsing
-`dft/lrtddft.log` or `dft/gaas_lrtddft.log` and interpret `|me|` as an oscillator proxy.
+`dft/gaas_lrtddft.log` (or `dft/lrtddft.log`) and interpret `|me|` as an oscillator proxy.
+
+You can generate a CSV directly from the TDDFT log:
+
+```
+python analysis/export_tddft_csv.py --log dft/gaas_lrtddft.log --out analysis/data/gaas_tddft_reference.csv
+```

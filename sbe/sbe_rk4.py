@@ -45,6 +45,7 @@ def _env_bool(name: str, default: bool = False) -> bool:
 HBAR = 1.054571817e-34     # J·s
 E0   = 1.602176634e-19    # C
 EPS0 = 8.8541878128e-12   # F/m
+C0   = 299792458.0        # m/s
 
 # ============================================================
 # Paths
@@ -105,13 +106,15 @@ if E_FEEDBACK.exists() and not IGNORE_FEEDBACK:
     E_fb = np.load(E_FEEDBACK)
 
     if len(E_fb) != len(time_s):
-        raise ValueError(
-            f"Feedback field length mismatch: "
-            f"{len(E_fb)} vs time grid {len(time_s)}"
+        E_t = E_t_internal
+        print(
+            "[WARN] Feedback field length mismatch: "
+            f"{len(E_fb)} vs time grid {len(time_s)}. "
+            "Ignoring stale feedback and using internal Gaussian pulse."
         )
-
-    E_t = (1 - MIXING) * E_t_internal + MIXING * E_fb
-    print(f"[LOAD] Using mixed UPPE feedback (α = {MIXING}) → {E_FEEDBACK}")
+    else:
+        E_t = (1 - MIXING) * E_t_internal + MIXING * E_fb
+        print(f"[LOAD] Using mixed UPPE feedback (α = {MIXING}) → {E_FEEDBACK}")
 
 elif E_FEEDBACK.exists() and IGNORE_FEEDBACK:
     E_t = E_t_internal
@@ -182,30 +185,60 @@ E_w = np.fft.rfft(E)
 freq = np.fft.rfftfreq(nt, dt)
 omega = 2*np.pi*freq
 
-chi = np.zeros_like(P_w, dtype=complex)
-mask = np.abs(E_w) > 1e-30
-chi[mask] = P_w[mask] / (EPS0 * E_w[mask])
+chi = np.full_like(P_w, np.nan + 1j * np.nan, dtype=complex)
+E_w_abs = np.abs(E_w)
+E_w_max = float(E_w_abs.max()) if E_w_abs.size else 0.0
+CHI_EPS = _env_float("SBUP3_CHI_EPS", 1e-3)
+RESPONSE_POWER_CUTOFF = _env_float("SBUP3_RESPONSE_POWER_CUTOFF", 0.999)
+CHI_MAX_EV = _env_float("SBUP3_CHI_MAX_EV", 3.0)
+
+support_mask = E_w_abs > max(1e-30, CHI_EPS * E_w_max)
+
+# Restrict inversion to the spectral support of the driving field.
+drive_power = E_w_abs**2
+power_sum = float(np.sum(drive_power))
+if power_sum > 0:
+    cum = np.cumsum(drive_power) / power_sum
+    cutoff = min(max(RESPONSE_POWER_CUTOFF, 0.0), 1.0)
+    idx_cut = int(np.searchsorted(cum, cutoff))
+    support_mask &= (np.arange(len(omega)) <= idx_cut)
+
+if CHI_MAX_EV > 0:
+    omega_max = CHI_MAX_EV * E0 / HBAR
+    support_mask &= (omega <= omega_max)
+
+chi[support_mask] = P_w[support_mask] / (EPS0 * E_w[support_mask])
 
 np.save("omega_rad_s.npy", omega)
 np.save("chi_eff_complex.npy", chi)
 np.save("chi_eff_real.npy", np.real(chi))
 np.save("chi_eff_imag.npy", np.imag(chi))
+np.save("chi_support_mask.npy", support_mask)
 
 
 # ------------------------------------------------------------
-# Optics-ready derived quantities (relative, for comparison)
+# Optics-ready derived quantities (physical + legacy aliases)
 # ------------------------------------------------------------
 chi_real = np.real(chi)
 chi_imag = np.imag(chi)
 
-# Relative absorption proxy ~ ω * Im[χ(ω)]
-alpha_rel = omega * chi_imag
+# Complex refractive index n~ = n + i*kappa from epsilon_r = 1 + chi
+n_tilde = np.sqrt(1.0 + chi)
+n_real = np.real(n_tilde)
+kappa = np.imag(n_tilde)
 
-# Relative dispersion proxy ~ Re[χ(ω)]
-n_rel = chi_real
+# Physical absorption coefficient alpha [1/m]
+alpha_m_inv = 2.0 * omega * kappa / C0
+
+# Legacy aliases to keep downstream scripts compatible
+alpha_rel = alpha_m_inv
+n_rel = n_real - 1.0
 
 np.save("alpha_rel.npy", alpha_rel)
 np.save("n_rel.npy", n_rel)
+np.save("alpha_m_inv.npy", alpha_m_inv)
+np.save("kappa.npy", kappa)
+np.save("n_real.npy", n_real)
 
 # ============================================================
 # Summary
@@ -228,5 +261,9 @@ print("  omega_rad_s.npy")
 print("  chi_eff_complex.npy")
 print("  chi_eff_real.npy")
 print("  chi_eff_imag.npy")
+print("  chi_support_mask.npy")
 print("  alpha_rel.npy")
 print("  n_rel.npy")
+print("  alpha_m_inv.npy")
+print("  kappa.npy")
+print("  n_real.npy")

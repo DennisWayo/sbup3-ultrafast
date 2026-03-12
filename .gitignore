@@ -19,6 +19,8 @@ notebooks/
 *.log
 *.txt
 *.gpw
+*.tex
+*.bib
 uppe/outputs/
 analysis/figures/
 analysis/reports/
