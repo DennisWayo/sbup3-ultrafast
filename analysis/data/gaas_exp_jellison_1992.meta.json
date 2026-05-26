@@ -1,0 +1,11 @@
+{
+  "input_yaml": "/Users/denniswayo/sbup3-ultrafast/analysis/data/sources/gaas/Jellison_1992.yml",
+  "output_csv": "/Users/denniswayo/sbup3-ultrafast/analysis/data/gaas_exp_jellison_1992.csv",
+  "source_label": "Jellison1992_GaAs",
+  "source_url": "https://refractiveindex.info/?shelf=main&book=GaAs&page=Jellison",
+  "references": "G.E. Jellison Jr. Optical functions of GaAs, GaP, and Ge determined by two-channel polarization modulation ellipsometry. <a href=\"https://doi.org/10.1016/0925-3467(92)90022-F\"><i>Opt. Mat.</i> <b>1</b>, 151-160 (1992)</a>",
+  "comments": "Crysal orientation: <100>; Room temperature",
+  "n_rows": 187,
+  "energy_min_eV": 1.4760023623000031,
+  "energy_max_eV": 5.298470018512831
+}

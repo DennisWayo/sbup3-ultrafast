@@ -1,55 +1,97 @@
 """
-SBUP³ — TDDFT-based parameter extraction for Semiconductor Bloch Equations (GaAs)
-=================================================================================
+SBUP3 ground-state DFT preparation for bulk GaAs.
 
-Method:
-  1) LCAO ground-state DFT (Γ-only)
-  2) Finite-difference (FD) restart for accurate band energies
-  3) Linear-response TDDFT (Casida / delta-kick, Γ-only)
-  4) Extract effective interband dipole from oscillator strength
-
-Notes:
-  • Linear-response TDDFT in GPAW is restricted to Γ-only calculations.
-  • The extracted dipole is an effective, k-averaged quantity suitable
-    for two-band Semiconductor Bloch Equations (SBE).
-  • k-resolved dipoles are NOT computed in this workflow.
-
-Outputs:
-  - omega0.npy : fundamental transition frequency ω₀ [rad/s]
-  - d_eff.npy  : effective interband dipole |d| [C·m]
-
-Author: Dennis Wayo
+This stage prepares periodic-wavefunction files for optical-response
+calculations with converged k-point sampling.
 """
 
 from __future__ import annotations
 
-import os
-import numpy as np
+import argparse
+import json
+from pathlib import Path
+
 from ase.build import bulk
-from gpaw import GPAW, FermiDirac
+from gpaw import GPAW, FermiDirac, PW
 
 # -------------------------------------------------
 # Paths
 # -------------------------------------------------
-HERE = os.path.dirname(os.path.abspath(__file__))
+HERE = Path(__file__).resolve().parent
 
-LCAO_GPW = os.path.join(HERE, "gaas_lcao_gamma.gpw")
-FD_GPW   = os.path.join(HERE, "gaas_fd_gamma.gpw")
+LCAO_GPW = HERE / "gaas_lcao.gpw"
+FD_GPW = HERE / "gaas_fd.gpw"
+PW_GPW = HERE / "gaas_pw.gpw"
+META_JSON = HERE / "gaas_ground_state_meta.json"
 
-# -------------------------------------------------
-# Physical constants
-# -------------------------------------------------
-hbar = 1.054571817e-34  # J·s
-e0   = 1.602176634e-19  # C
-me   = 9.10938356e-31   # kg
+# Defaults for publication-grade periodic calculations.
+DEFAULT_XC = "PBE"
+DEFAULT_KPTS = (8, 8, 8)
+DEFAULT_NBANDS = 32
+DEFAULT_SMEARING = 0.01
+DEFAULT_H = 0.25
+DEFAULT_GS_MODE = "pw"
+DEFAULT_PW_ECUT_EV = 200.0
 
-# -------------------------------------------------
-# User parameters (Γ-only is REQUIRED)
-# -------------------------------------------------
-XC = "PBE"
-KPTS = (1, 1, 1)        # 🔴 REQUIRED for LR-TDDFT
-NBANDS = 16
-SMEARING = 0.01         # eV
+
+def _validate_existing_artifacts(
+    *,
+    gs_mode: str,
+    xc: str,
+    kpts: tuple[int, int, int],
+    nbands: int,
+    smearing_ev: float,
+    h: float,
+    pw_ecut_ev: float,
+    a_ang: float,
+) -> None:
+    artifacts = [PW_GPW] if gs_mode == "pw" else [LCAO_GPW, FD_GPW]
+    existing = [p for p in artifacts if p.exists()]
+    if not existing:
+        return
+    if not META_JSON.exists():
+        raise RuntimeError(
+            "Found existing DFT artifacts without provenance metadata "
+            f"({META_JSON}). Refusing reuse; rerun with --force."
+        )
+
+    try:
+        meta = json.loads(META_JSON.read_text())
+    except Exception as exc:
+        raise RuntimeError(
+            f"Could not parse provenance metadata {META_JSON}; rerun with --force."
+        ) from exc
+
+    expected = {
+        "gs_mode": str(gs_mode),
+        "xc": str(xc),
+        "kpts": [int(kpts[0]), int(kpts[1]), int(kpts[2])],
+        "nbands": int(nbands),
+        "smearing_ev": float(smearing_ev),
+        "h_ang": float(h) if gs_mode == "fd" else None,
+        "pw_ecut_ev": float(pw_ecut_ev) if gs_mode == "pw" else None,
+        "lattice_a_ang": float(a_ang),
+    }
+
+    mismatches: list[str] = []
+    for key, exp in expected.items():
+        got = meta.get(key)
+        if isinstance(exp, float):
+            try:
+                if abs(float(got) - exp) > 1e-12:
+                    mismatches.append(f"{key}: existing={got} requested={exp}")
+            except Exception:
+                mismatches.append(f"{key}: existing={got} requested={exp}")
+        else:
+            if got != exp:
+                mismatches.append(f"{key}: existing={got} requested={exp}")
+
+    if mismatches:
+        raise RuntimeError(
+            "Existing DFT artifacts do not match requested settings. "
+            "Refusing mixed provenance; rerun with --force.\n"
+            + "\n".join(mismatches)
+        )
 
 # -------------------------------------------------
 # Build bulk GaAs
@@ -59,62 +101,197 @@ def build_gaas(a: float = 5.653):
     atoms.pbc = True
     return atoms
 
-# -------------------------------------------------
-# LCAO ground state (Γ-only)
-# -------------------------------------------------
-def run_lcao(atoms):
-    if os.path.exists(LCAO_GPW):
-        print(f"[SKIP] LCAO → {LCAO_GPW}")
-        return GPAW(LCAO_GPW)
+def _parse_kpts(raw: str) -> tuple[int, int, int]:
+    parts = [p.strip() for p in raw.split(",") if p.strip()]
+    if len(parts) != 3:
+        raise ValueError(f"Expected k-points as 'kx,ky,kz', got: {raw}")
+    return (int(parts[0]), int(parts[1]), int(parts[2]))
 
-    print("[RUN ] LCAO ground state (Γ-only)")
+
+def _is_gamma_only(kpts: tuple[int, int, int]) -> bool:
+    return kpts == (1, 1, 1)
+
+
+def run_lcao(
+    atoms,
+    *,
+    xc: str,
+    kpts: tuple[int, int, int],
+    nbands: int,
+    smearing_ev: float,
+    force: bool,
+):
+    if LCAO_GPW.exists() and not force:
+        print(f"[SKIP] LCAO -> {LCAO_GPW}")
+        return GPAW(str(LCAO_GPW))
+
+    print("[RUN ] LCAO ground state")
     calc = GPAW(
         mode="lcao",
         basis="dzp",
-        xc=XC,
-        kpts=KPTS,
-        nbands=NBANDS,
-        occupations=FermiDirac(SMEARING),
+        xc=xc,
+        kpts=kpts,
+        nbands=nbands,
+        occupations=FermiDirac(smearing_ev),
         symmetry="off",
-        txt=os.path.join(HERE, "gaas_lcao.txt"),
+        txt=str(HERE / "gaas_lcao.txt"),
     )
     atoms.calc = calc
     atoms.get_potential_energy()
-    calc.write(LCAO_GPW, mode="all")
+    calc.write(str(LCAO_GPW), mode="all")
     return calc
 
-# -------------------------------------------------
-# FD restart (Γ-only)
-# -------------------------------------------------
-def run_fd():
-    if os.path.exists(FD_GPW):
-        print(f"[SKIP] FD → {FD_GPW}")
-        return GPAW(FD_GPW)
 
-    print("[RUN ] FD restart (Γ-only)")
+def run_fd(
+    *,
+    h: float,
+    smearing_ev: float,
+    force: bool,
+):
+    if FD_GPW.exists() and not force:
+        print(f"[SKIP] FD -> {FD_GPW}")
+        return GPAW(str(FD_GPW))
+
+    print("[RUN ] FD restart")
     calc = GPAW(
-        LCAO_GPW,
+        str(LCAO_GPW),
         mode="fd",
-        h=0.25,
-        occupations=FermiDirac(SMEARING),
-        txt=os.path.join(HERE, "gaas_fd.txt"),
+        h=h,
+        occupations=FermiDirac(smearing_ev),
+        txt=str(HERE / "gaas_fd.txt"),
     )
     calc.get_potential_energy()
-    calc.write(FD_GPW, mode="all")
+    calc.write(str(FD_GPW), mode="all")
     return calc
 
-# -------------------------------------------------
-# Main
-# -------------------------------------------------
+
+def run_pw(
+    atoms,
+    *,
+    xc: str,
+    kpts: tuple[int, int, int],
+    nbands: int,
+    smearing_ev: float,
+    pw_ecut_ev: float,
+    force: bool,
+):
+    if PW_GPW.exists() and not force:
+        print(f"[SKIP] PW -> {PW_GPW}")
+        return GPAW(str(PW_GPW))
+
+    print("[RUN ] PW ground state")
+    calc = GPAW(
+        mode=PW(float(pw_ecut_ev)),
+        xc=xc,
+        kpts={"size": kpts, "gamma": True},
+        nbands=nbands,
+        occupations=FermiDirac(smearing_ev),
+        symmetry="off",
+        txt=str(HERE / "gaas_pw.txt"),
+    )
+    atoms.calc = calc
+    atoms.get_potential_energy()
+    calc.write(str(PW_GPW), mode="all")
+    return calc
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Prepare GaAs ground-state wavefunctions")
+    parser.add_argument("--a-ang", type=float, default=5.6533, help="Lattice constant [Angstrom]")
+    parser.add_argument("--xc", default=DEFAULT_XC, help="XC functional")
+    parser.add_argument("--kpts", default="8,8,8", help="Monkhorst-Pack k-points as kx,ky,kz")
+    parser.add_argument(
+        "--gs-mode",
+        choices=["pw", "fd"],
+        default=DEFAULT_GS_MODE,
+        help="Ground-state mode. Use 'pw' for dielectric response workflows.",
+    )
+    parser.add_argument("--nbands", type=int, default=DEFAULT_NBANDS, help="Number of bands for GS step")
+    parser.add_argument("--smearing-ev", type=float, default=DEFAULT_SMEARING, help="Fermi smearing [eV]")
+    parser.add_argument("--h", type=float, default=DEFAULT_H, help="FD grid spacing [Angstrom]")
+    parser.add_argument(
+        "--pw-ecut-ev",
+        type=float,
+        default=DEFAULT_PW_ECUT_EV,
+        help="PW cutoff [eV] for PW ground-state mode.",
+    )
+    parser.add_argument(
+        "--allow-gamma-only",
+        action="store_true",
+        help="Allow kpts=1,1,1 (debug only; not publication-grade).",
+    )
+    parser.add_argument("--force", action="store_true", help="Recompute even if .gpw files exist")
+    args = parser.parse_args()
+
+    kpts = _parse_kpts(args.kpts)
+    if _is_gamma_only(kpts) and not args.allow_gamma_only:
+        raise RuntimeError(
+            "Refusing to run with kpts=(1,1,1). "
+            "Use a converged periodic grid (for example 6,6,6 or 8,8,8)."
+        )
+    if not args.force:
+        _validate_existing_artifacts(
+            gs_mode=args.gs_mode,
+            xc=args.xc,
+            kpts=kpts,
+            nbands=args.nbands,
+            smearing_ev=args.smearing_ev,
+            h=args.h,
+            pw_ecut_ev=args.pw_ecut_ev,
+            a_ang=args.a_ang,
+        )
+
+    print("SBUP3 DFT ground-state setup: GaAs")
+    print("----------------------------------")
+    print(
+        f"mode={args.gs_mode}, XC={args.xc}, kpts={kpts}, nbands={args.nbands}, "
+        f"h={args.h}, ecut={args.pw_ecut_ev}, smearing={args.smearing_ev} eV"
+    )
+
+    atoms = build_gaas(a=args.a_ang)
+    if args.gs_mode == "pw":
+        run_pw(
+            atoms,
+            xc=args.xc,
+            kpts=kpts,
+            nbands=args.nbands,
+            smearing_ev=args.smearing_ev,
+            pw_ecut_ev=args.pw_ecut_ev,
+            force=args.force,
+        )
+    else:
+        run_lcao(
+            atoms,
+            xc=args.xc,
+            kpts=kpts,
+            nbands=args.nbands,
+            smearing_ev=args.smearing_ev,
+            force=args.force,
+        )
+        run_fd(
+            h=args.h,
+            smearing_ev=args.smearing_ev,
+            force=args.force,
+        )
+
+    meta = {
+        "gs_mode": args.gs_mode,
+        "xc": args.xc,
+        "kpts": list(kpts),
+        "nbands": int(args.nbands),
+        "smearing_ev": float(args.smearing_ev),
+        "h_ang": float(args.h) if args.gs_mode == "fd" else None,
+        "pw_ecut_ev": float(args.pw_ecut_ev) if args.gs_mode == "pw" else None,
+        "lattice_a_ang": float(args.a_ang),
+        "lcao_gpw": str(LCAO_GPW) if args.gs_mode == "fd" else None,
+        "fd_gpw": str(FD_GPW) if args.gs_mode == "fd" else None,
+        "pw_gpw": str(PW_GPW) if args.gs_mode == "pw" else None,
+        "publication_grade_kmesh": not _is_gamma_only(kpts),
+    }
+    META_JSON.write_text(json.dumps(meta, indent=2))
+    print(f"[OK] Wrote metadata: {META_JSON}")
+    print("[OK] Ground-state preparation complete.")
+
+
 if __name__ == "__main__":
-
-    print("SBUP³ TDDFT-based DFT extraction: GaAs")
-    print("--------------------------------------")
-
-    atoms = build_gaas()
-
-    run_lcao(atoms)
-    run_fd()
-
-    print("Ground-state preparation complete.")
-    print("Proceed with LR-TDDFT (Casida) for dipole extraction.")
+    main()

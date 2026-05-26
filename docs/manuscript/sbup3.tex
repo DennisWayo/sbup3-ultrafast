@@ -1,0 +1,1352 @@
+\documentclass[aps,pra,twocolumn,reprint,superscriptaddress,nofootinbib]{revtex4-2}
+
+  \usepackage[svgnames,table,xcdraw]{xcolor}
+  \usepackage{amsmath}
+  \usepackage{microtype}
+  \usepackage{amssymb}
+  \usepackage{braket}
+  \usepackage{graphicx}
+  \usepackage{booktabs}
+%\usepackage{tabu}
+  \usepackage{bm}
+  \usepackage{dsfont}
+  \usepackage{hyperref}
+  \usepackage[caption=false]{subfig}
+  \usepackage{amsthm}
+  \newtheorem*{claim}{Claim}
+  \usepackage{xfrac}
+  \usepackage{enumitem}
+  \usepackage{orcidlink}
+  \usepackage{appendix}
+  \usepackage[ruled,vlined]{algorithm2e}
+
+%\usepackage{array}
+%\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% \usepackage[
+%     backend=biber,
+%     style=numeric-comp,
+%     maxbibnames=2,
+%     sorting=none,
+%     url=false
+% ]{biblatex}
+% \addbibresource{refs.bib}
+% \ExecuteBibliographyOptions{doi=false}
+% \newbibmacro{string+doi}[1]{%
+%   \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
+% \DeclareFieldFormat{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
+% \DeclareFieldFormat[article]{title}{\usebibmacro{string+doi}{\mkbibquote{#1}}}
+
+
+  \hypersetup{colorlinks,linkcolor={DarkBlue},citecolor={DarkBlue},urlcolor={DarkBlue}}
+
+  \let\originalleft\left
+                     \let\originalright\right
+  \renewcommand{\left}{\mathopen{}\mathclose\bgroup\originalleft}
+  \renewcommand{\right}{\aftergroup\egroup\originalright}
+
+  \usepackage{mathtools}
+  \DeclarePairedDelimiter{\paren}{(}{)}
+
+  \newcommand{\id}{\mathds{1}}
+  \DontPrintSemicolon
+  \SetKwInput{KwInput}{Input}
+  \SetKwInput{KwOutput}{Output}
+  \SetKwFor{ForEach}{foreach}{do}{}
+  \SetKwFor{ForLoop}{for}{do}{}
+
+  \input{preamble.tex}
+
+  \begin{document}
+
+    \title{%
+      \texorpdfstring
+      {SBUP$^3$: A Physics-Calibrated Time-Dependent Density Functional Theory--Semiconductor Bloch Equation Framework for Ultrafast \\Laser--Matter Dynamics in Gallium Arsenide (GaAs)}
+      {SBUP3: A Physics-Calibrated Time-Dependent Density Functional Theory-Semiconductor Bloch Equation Framework for Ultrafast Laser-Matter Dynamics in Gallium Arsenide (GaAs)}
+    }
+    \def \affGatech {College of Computing, Georgia Institute of Technology, Atlanta, GA 30332 USA}
+    \def \fora {Department of Computer Science, Federal University of Juiz de Fora, Juiz de Fora MG 36036-900, Brazil}
+    \def\ganj{Department of BioNano Technology, Gachon University, 1342 Seongnamdae-ro, Sujeong-gu, Seongnam, Gyeonggi, 13120, Republic of Korea}
+
+
+    \author{Dennis Delali Kwesi Wayo \orcidlink{0000-0001-9980-6247}}
+    \affiliation{\affGatech}
+    \email{dwayo3@gatech.edu}
+
+    \author{Priscilla Goliat Capriles}
+    \affiliation{\fora}
+
+    \author{Masoud Darvish Ganji}
+    \affiliation{\ganj}
+
+
+    \date{\today}
+\begin{abstract}
+We present SBUP$^3$, a reproducible multiscale workflow that links periodic DFT
+dielectric response, reduced multi-transition semiconductor Bloch equations
+(SBE), and 2D unidirectional pulse propagation (UPPE) for ultrafast GaAs
+simulation. Calibration to the primary Jellison reference selects
+$N=1.7585\times10^{28}~\mathrm{m^{-3}}$ and oscillator normalization 0.9593,
+with finite 68\% and 95\% uncertainty regions. Post-calibration validation gives
+shape RMSE values of 0.3602 for $|\alpha|$ and 0.2872 for $n$ on the primary set
+(84 points), and 0.4171 and 0.2944 on an independent secondary Aspnes set
+(14 points). Stability checks across $(\Delta t,\Delta z)$ sweep points show
+nearly unchanged shape error, and an independent linearity test gives
+$\mathrm{ratio}_{P_{\max}}=1.999999430$. UPPE diagnostics show an output spectral
+centroid increase (+0.01975 eV) and broadening (+0.00905 eV). These results
+establish SBUP$^3$ as a reproducible baseline with explicit provenance, bounded
+calibration uncertainty, and stable numerical behavior in the tested regime.
+Remaining error is dominated by model-form optical-shape mismatch rather than
+solver instability, providing a clear baseline for targeted physics extensions.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+Ultrafast laser-matter interaction in semiconductors has entered a regime where
+sub-cycle field control, coherent interband dynamics, and nonperturbative carrier motion can all be measured directly. Over the last decade, strong-field experiments in solids have demonstrated high-harmonic emission, attosecond-scale band-structure response, and coherent waveform-dependent transport signatures that were previously discussed mainly in atomic and molecular contexts \cite{ghimire2011hhg,schubert2014subcycle,schiffrin2013opticalfield,schultze2013controlling,schultze2014attosecond,luu2015extreme,vampa2015linking,hohenleutner2015realtime,garg2016multipetahertz,ndabashimiye2016carrier,you2017anisotropic,yoshikawa2017graphene,sivis2017tailored,higuchi2017lightfield,langer2018lightwave}. These developments have elevated semiconductors from passive optical media to active ultrafast platforms, with implications for petahertz electronics, compact frequency conversion, and coherent lightwave control
+\cite{kruchinin2018strong,ghimire2019highharmonicsolids,goulielmakis2022extreme,heide2024ultrafast}.
+
+This experimental progress has exposed a central modeling challenge: physically
+relevant observables are generated across multiple coupled scales. Electronic
+coherences and populations evolve at the microscopic level, while measurable
+pulse reshaping, spectral transfer, and spatial transport emerge at mesoscopic
+or device-relevant scales. If one solves only the microscopic problem, one
+obtains detailed polarization physics without realistic propagation context. If
+one solves only the propagation problem, one obtains numerically stable field
+evolution but often with phenomenological constitutive laws that hide the
+underlying electron dynamics. The result is a persistent scale gap in which
+parameters are transferred between models in an ad hoc way, usually without
+clear uncertainty accounting or reproducible calibration.
+
+Several mature theoretical lines address parts of this problem. Many-body
+semiconductor theory and the semiconductor Bloch equations (SBE) provide a
+rigorous route from microscopic Hamiltonians to coherent polarization and
+population dynamics under ultrafast excitation
+\cite{rossi2002ultrafast,axt2004femtosecond}. In the strong-field limit, SBE
+and related band-structure formalisms have been used to interpret solid-state
+harmonic generation and interband-intraband interference mechanisms
+\cite{golde2008hhg,vampa2014theoretical,vampa2015semiclassical,tancogne2017ellipticity}. In parallel,
+real-time time-dependent density functional theory (TDDFT) has enabled
+first-principles simulation of electron dynamics in crystalline solids under
+intense fields, including direct access to transition energies, oscillator
+strength trends, and nonlinear response channels
+\cite{hohenberg1964inhomogeneous,kohn1965selfconsistent,runge1984densityfunctional,yabana2012tddft,floss2018abinitio}. These approaches are powerful, but
+they are not automatically interchangeable: each has distinct numerical
+assumptions, response windows, and scaling conventions.
+
+Electromagnetic propagation theory has evolved similarly. Envelope and
+unidirectional formulations, including variants of the unidirectional pulse
+propagation equation (UPPE), have become standard tools for broadband
+ultrashort-pulse transport in dispersive and nonlinear media
+\cite{brabec1997nonlinear,kolesik2002nonlinear,kolesik2004unidirectional}.
+These methods are computationally efficient and physically transparent at the
+field level, but their predictive quality depends critically on how material
+polarization is supplied. In semiconductor applications, this coupling step is
+often the weak link: microscopic models may output polarization in one set of
+units and conventions, while propagation solvers require a macroscopic source
+term with consistent scaling, bandwidth support, and numerical regularity.
+
+The literature therefore motivates an integrative viewpoint. Experiments now
+probe regimes where microscopic quantum response and propagation dynamics cannot
+be decoupled cleanly. At the same time, computational workflows remain fragmented:
+first-principles calculations, reduced quantum kinetics, and propagation solvers
+are frequently run as separate stages without closed-loop correction. Even when
+all three are present, data exchange rules are rarely documented in a way that
+supports independent reproduction and calibration. This limits comparability
+across studies and slows transition from qualitative interpretation to
+quantitative prediction.
+
+%\paragraph{Problem statement.}
+The specific problem addressed in this work is the absence of a transparent,
+physics-calibrated, and numerically robust workflow for semiconductor ultrafast
+dynamics that jointly satisfies three requirements: (i) first-principles
+provenance for key material parameters, (ii) tractable microscopic time-domain
+carrier and polarization evolution, and (iii) self-consistent propagation-level
+field updates under feedback. Existing single-scale studies provide essential
+insight but do not by themselves resolve the mapping problem between TDDFT
+outputs, DFT-derived transition-reduction outputs, SBE state variables, and
+UPPE source terms. In practical terms, this
+appears as sensitivity to scaling factors, instability in susceptibility
+extraction when the driving spectrum is weak, and insufficient reporting of
+convergence behavior across coupling iterations.
+
+%\paragraph{Motivation.}
+Our motivation is methodological and translational. Methodologically, we seek a
+workflow that preserves physical meaning at every interface: the periodic DFT
+dielectric and transition-reduction stage should inform model parameters rather
+than merely inspire them; SBE should provide structured nonequilibrium response
+rather than black-box fitting; and UPPE should propagate fields with source terms
+whose provenance is explicit and testable. Translationally,
+this is necessary for publication-quality predictive claims in laser processing,
+integrated photonics, and coherent semiconductor control, where reproducibility
+depends on whether another group can rerun the same pipeline and recover the same
+trends under controlled perturbations. We therefore treat calibration,
+robustness, and reporting discipline as central scientific outputs, not
+post-processing details.
+
+%\paragraph{Research questions.}
+This study is guided by the following research questions:
+\begin{enumerate}
+\item Can a DFT $\rightarrow$ SBE $\rightarrow$ UPPE pipeline be assembled so
+that parameter transfer and unit conventions remain explicit and reproducible?
+\item Which numerical controls dominate the reliability of extracted optical
+response functions, especially susceptibility-derived absorption in weak-support
+spectral regions?
+\item Under practical feedback mixing and normalization rules, does the coupled
+SBE-UPPE loop converge robustly, and how fast?
+\item After calibration to external optical references (primary Jellison, secondary
+Aspnes) with a DFT-derived transition basis, what level of
+shape agreement and spectral-support coverage is achievable without sacrificing
+propagation consistency?
+\end{enumerate}
+
+%\paragraph{Objectives.}
+To answer these questions, we pursue five concrete objectives:
+\begin{enumerate}
+\item Build a modular computational workflow with documented file-level data
+contracts across DFT, SBE, and UPPE stages.
+\item Implement physically interpretable derived outputs ($\alpha$, $n$, and
+$\kappa$) from complex susceptibility with explicit support masks.
+\item Quantify numerical robustness through targeted sweeps of time-step and
+response-support controls.
+\item Evaluate coupled-loop stability using reproducible convergence criteria and
+feedback diagnostics.
+\item Benchmark response-shape agreement against external optical references
+using consistent overlay metrics for primary and secondary datasets.
+\end{enumerate}
+
+\paragraph{Novel contributions.}
+The work makes six contributions relative to common single-scale practice.
+First, it introduces SBUP$^3$ as a practical multiscale workflow architecture
+rather than a single solver, emphasizing provenance and interface consistency.
+Second, it provides an explicit response-support extraction method for
+susceptibility inversion that suppresses divide-by-small-field artifacts while
+preserving physically relevant bandwidth. Third, it reports calibration and
+stability metrics in a machine-readable validation framework, enabling direct
+comparison across runs. Fourth, it demonstrates that support-aware tuning can
+substantially improve reference-aligned shape fidelity and overlap-point density
+without changing global propagation trends. Fifth, it reports coupled-feedback
+diagnostics under under-relaxed mixing and explicit normalization, making
+scale-alignment limits visible in a reproducible way. Sixth, it positions
+sequential and coupled outputs
+as complementary diagnostics: the sequential mode as a conservative calibration
+baseline and the coupled mode as a higher-gain regime requiring tighter absolute
+scaling checks.
+
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.8\textwidth]{ study_20260520/F0_intro_gaas_interaction.pdf}
+\caption{
+Conceptual ultrafast laser pulse drives
+nonequilibrium polarization and population dynamics in bulk GaAs, and the
+resulting optical response is reported through refractive-index, absorption, and
+propagated-field observables.
+}
+\label{fig:intro_gaas_interaction}
+\end{figure*}
+
+Beyond these headline contributions, the conceptual value of this framework lies
+in how it reorganizes modeling practice. In much of the ultrafast-solid
+literature, simulation components are selected by local convenience: one model
+for material properties, another for temporal response, another for propagation,
+with manual parameter passing between scripts. This approach can still produce
+important qualitative insight, but it makes it difficult to establish whether
+agreement with experiment is robust or accidental. A methods platform is useful
+only if each interface can be audited. SBUP$^3$ is explicitly designed around
+that requirement. Every stage emits reusable arrays with defined units, every
+calibration choice is represented as a parameterized control, and every run can
+be summarized by machine-readable diagnostics. This is a practical step toward
+making multiscale ultrafast modeling falsifiable in the same way as single-stage
+numerical benchmarks.
+
+The need for this shift is especially strong for semiconductors because the
+relevant physics is neither purely perturbative nor fully ionizing over many
+experimentally relevant regimes. Coherent interband polarization, intraband
+acceleration, dephasing, and field propagation all contribute on overlapping
+timescales. If one insists on purely first-principles propagation across full
+device scales, the problem becomes computationally prohibitive for systematic
+sensitivity studies. If one moves immediately to effective propagation models
+without first-principles anchors, one risks parameter degeneracy, where distinct
+microscopic assumptions produce similar macroscopic traces. The DFT-informed
+SBE reduction used here is intended as a middle path: retain explicit microscopic
+structure where it most directly constrains observables, while enabling enough
+runtime efficiency to perform stability and calibration sweeps that are essential
+for publication-grade confidence.
+
+GaAs is chosen as the benchmark not because it is the final target material, but
+because it offers a stringent and interpretable testbed. Its ultrafast response
+has been studied across perturbative and strong-field regimes, and its band
+structure enables direct comparison between first-principles transition energies
+and reduced-model resonance behavior. In this sense, GaAs functions as a
+calibration material: if interface consistency fails here, it is unlikely to
+hold in more complex heterostructures or defect-rich systems. Conversely, if a
+workflow can maintain numerical stability, traceable scaling, and interpretable
+agreement in GaAs, it becomes a credible foundation for more ambitious materials
+and geometries.
+
+It is equally important to define scope boundaries. This work does not claim a
+fully predictive digital twin of semiconductor strong-field response. The present
+SBE stage uses a reduced transition structure, and the calibration comparison is
+shape-focused rather than absolute-intensity complete. These choices are
+intentional at this stage. The objective is to establish a robust pipeline in
+which future physical refinements can be inserted without changing the
+reproducibility backbone. In other words, this paper prioritizes methodological
+closure before maximal model complexity. That ordering is deliberate: without
+numerical and interface robustness, additional physics terms can obscure rather
+than improve interpretation.
+
+Figure~\ref{fig:intro_gaas_interaction} gives a visual map of how the driving
+ultrafast pulse interacts with bulk GaAs in this study and how that interaction
+connects to the optical outputs used for calibration and validation.
+
+By framing the study around reproducible calibration rather than isolated
+numerical performance, this paper aims to strengthen the methodological basis for
+publishable ultrafast semiconductor simulations. The remainder of the manuscript
+details related work, model construction, numerical setup, validation protocol,
+and quantitative results for the GaAs benchmark, then discusses current limits
+and next steps toward predictive multiscale closure.
+
+\section{Related Work and Positioning}
+Prior work relevant to SBUP$^3$ can be grouped into three methodological
+streams.
+
+\paragraph{Microscopic semiconductor dynamics (SBE and many-body optics).}
+The semiconductor Bloch framework and related many-body formalisms provide a
+well-established description of coherent polarization dynamics, carrier
+population transfer, and dephasing in ultrafast excitation regimes
+\cite{rossi2002ultrafast,axt2004femtosecond}. In strong-field contexts, these
+models have been central to interpreting interband-intraband interference and
+high-harmonic mechanisms in solids
+\cite{golde2008hhg,vampa2014theoretical,vampa2015semiclassical}. Their strength
+is direct physical interpretability at the level of quantum kinetics. Their
+main limitation for direct comparison to measured pulse observables is that
+propagation is often externalized or simplified.
+
+\paragraph{First-principles real-time and linear-response TDDFT.}
+TDDFT has enabled predictive access to excitation channels and ultrafast
+response trends in solids under strong electromagnetic fields
+\cite{yabana2012tddft,floss2018abinitio}. In particular, TDDFT can constrain
+effective transition frequencies and oscillator strengths that are otherwise
+treated as fit parameters in reduced models. However, fully first-principles
+multiscale transport remains computationally expensive for broad sweep-based
+robustness studies, and practical interface rules from TDDFT outputs to
+reduced propagation models are often under-documented.
+
+\paragraph{Pulse propagation and unidirectional field solvers.}
+UPPE-type methods and single-cycle propagation theory are mature and
+computationally efficient for broadband ultrashort-pulse evolution in dispersive
+media \cite{brabec1997nonlinear,kolesik2002nonlinear,kolesik2004unidirectional}.
+These models scale well and are ideal for field-level diagnostics, but their
+predictive quality depends critically on the constitutive source term. In
+semiconductor applications, this source term is frequently phenomenological or
+only weakly connected to first-principles material provenance.
+
+\paragraph{Positioning of SBUP$^3$.}
+SBUP$^3$ is positioned at the interface of these streams. It is not introduced
+as a replacement for TDDFT, SBE, or UPPE individually; instead, it is a
+workflow architecture that enforces explicit contracts between them. The novelty
+is operational and methodological:
+\begin{itemize}
+\item first-principles-informed reduced modeling with explicit scalar handoff
+$(\omega_0, E_0, f_0, d_{\mathrm{eff}})$;
+\item response-support-aware susceptibility inversion to avoid unstable
+low-drive spectral division;
+\item machine-readable validation artifacts as first-class outputs;
+\item optional closed-loop SBE-UPPE feedback with reproducible convergence
+criteria.
+\end{itemize}
+This positioning reflects the manuscript goal: to establish a robust,
+publishable multiscale methods pipeline with auditable assumptions, rather than
+to claim final microscopic completeness in a single model stage.
+
+\section{Methodology}
+\begin{algorithm}[t]
+\caption{SBUP$^3$ end-to-end workflow (release protocol)}
+\KwIn{Material system, numerical controls, calibration and coupling flags}
+\KwOut{Validated observables and reproducible run artifacts}
+Generate or pin periodic dielectric reference and transition arrays\;
+Run the SBE stage with release controls and export
+$E(t)$, $P(t)$, $n(t)$, $\chi(\omega)$, $\alpha(\omega)$, $n(\omega)$\;
+Lift SBE traces to UPPE source terms and propagate
+to $z_{\mathrm{end}}$\;
+\If{coupling enabled}{
+  iterate the SBE-UPPE coupling stage until relative $L^2$ residual
+  is below tolerance\;
+}
+Run calibration/validation and write machine-readable JSON reports\;
+Render figure set F0--F6, S1--S4 from pinned reports only\;
+\end{algorithm}
+
+\subsection{Periodic DFT Optical Reference and Transition Reduction}
+The periodic DFT stage constructs a converged bulk GaAs ground state and then
+computes linear optical response on a denser periodic $k$-mesh. This stage
+produces an energy-resolved dielectric reference together with derived optical
+observables $\{n,\kappa,\alpha\}$. Publication mode enforces non-$\Gamma$-only
+sampling and records full provenance metadata for the ground-state and response
+steps. In the frozen release used here, the recorded setup is PW/PBE with 32
+ground-state bands and 200 eV cutoff, then response evaluation with 48 bands,
+$\eta=0.05$ eV, 150 eV response cutoff, and nonlinear frequency mesh up to
+8.0 eV.
+
+Reduced transitions are then extracted from the dielectric reference. Peaks are
+selected from $\varepsilon_2^{\mathrm{lf}}(\omega)$ with minimum relative height 0.01,
+minimum separation 0.02 eV, and bounded cardinality (16--24 transitions). The
+release transition model contains 16 transitions in
+1.482--2.964 eV with oscillator-sum 0.959264.
+
+\begin{algorithm}[t]
+\caption{Periodic DFT dielectric-reference and transition extraction}
+\KwIn{Converged periodic ground-state wavefunction artifact}
+\KwOut{Dielectric reference, reduced transition set, provenance metadata}
+Load periodic ground-state wavefunctions\;
+Restart at fixed density on dense response $k$-grid\;
+Diagonalize unoccupied bands for linear response\;
+Compute dielectric response over nonlinear frequency mesh\;
+Convert complex dielectric function to $(n,\kappa,\alpha)$\;
+Export optical constants and response metadata\;
+Extract reduced transitions from $\varepsilon_2^{\mathrm{lf}}$ peak structure and
+export transition arrays with metadata\;
+\end{algorithm}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{ study_20260520/F2_reference_optics_overlay.pdf}
+\caption{
+Reference optical context in GaAs: dielectric-reference, Jellison, and Aspnes
+overlays for absorption and refractive index.
+}
+\label{fig:method_reference_context}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=1\textwidth]{ study_20260520/F3_transition_model.pdf}
+\caption{
+Reduced transition model extracted from the dielectric reference: selected
+transition energies, oscillator weights, and cumulative oscillator sum.
+}
+\label{fig:method_transition_model}
+\end{figure*}
+
+\subsection{Reduced Multi-Transition SBE Dynamics}
+The SBE stage evolves transition-resolved coherence
+$p_j$ and population $n_j$ for each extracted transition $\omega_j,d_j,f_j$. The
+driving field is a Gaussian-envelope carrier
+\begin{align}
+E_{\mathrm{int}}(t)=E_{\mathrm{amp}}
+\exp\!\left[-\left(\frac{t-t_0}{\tau}\right)^2\right]
+\cos\!\left[\Omega_L(t-t_0)\right],
+\end{align}
+optionally mixed with UPPE feedback:
+\begin{align}
+E(t)=(1-\alpha_{\mathrm{mix}})E_{\mathrm{int}}(t)+
+\alpha_{\mathrm{mix}}E_{\mathrm{fb}}(t),
+\end{align}
+then clipped to $|E|\le E_{\max}$.
+
+The reduced equations are
+\begin{align}
+\frac{dp_j}{dt} &= -\left(i\omega_j+\gamma_j\right)p_j
++ i\frac{d_j}{\hbar}E(t)\left(1-2n_j\right),\\
+\frac{dn_j}{dt} &= -2\,\mathrm{Im}\!\left[\frac{d_j}{\hbar}E(t)p_j^*\right],
+\end{align}
+integrated with explicit RK4. With normalized weights
+$w_j=f_j/\sum_k f_k$, the exported macroscopic polarization is
+\begin{align}
+P_{\mathrm{mac}}(t)=S_P N \sum_j w_j d_j p_j(t),
+\end{align}
+where $N=\texttt{SBUP3\_DENSITY\_M3}$ and
+$S_P=\texttt{SBUP3\_POLARIZATION\_SCALE}$.
+
+SBUP$^3$ computes both drive-response and dedicated probe-response optics. The
+probe branch uses a weak Gaussian pulse
+(\texttt{SBUP3\_PROBE\_*} controls) and is used as the primary baseline source in
+calibration/validation when available.
+
+Susceptibility inversion is performed on Hann-windowed, mean-subtracted traces:
+\begin{align}
+\chi(\omega)=\frac{\tilde{P}(\omega)}{\varepsilon_0\tilde{E}(\omega)},
+\end{align}
+only on trusted support points satisfying
+\begin{align}
+|\tilde{E}_j| &> \max\!\left(10^{-30},\,\epsilon_{\chi}\max_k|\tilde{E}_k|\right),\\
+\sum_{k\le j}\frac{|\tilde{E}_k|^2}{\sum_\ell |\tilde{E}_\ell|^2} &\le p_{\mathrm{cut}},\\
+\omega_{\min}\le \omega_j &\le \omega_{\max}.
+\end{align}
+Optical outputs are then derived from $\tilde{n}=\sqrt{1+\chi}$:
+$n=\Re \tilde{n}$, $\kappa=\Im \tilde{n}$, $\alpha=2\omega\kappa/c$.
+
+\begin{algorithm}[t]
+\caption{SBE solve with drive/probe optical extraction}
+\KwIn{Transition arrays, drive/probe controls, scaling controls}
+\KwOut{$E(t)$, $P(t)$, $n(t)$, drive/probe $\chi(\omega)$ and optics outputs}
+Construct internal drive waveform\;
+\If{feedback available and valid}{
+  mix internal and feedback drives with $\alpha_{\mathrm{mix}}$\;
+}
+Clip field amplitude to $E_{\max}$\;
+Initialize $(p_j,n_j)\leftarrow(0,0)$ for all transitions\;
+\For{time steps}{
+  evaluate reduced multi-transition right-hand side\;
+  advance $(p_j,n_j)$ with RK4\;
+  accumulate weighted $P_{\mathrm{mac}}(t)$ and $n(t)$\;
+}
+Extract drive-response $\chi(\omega)$ on trusted support\;
+\If{probe mode enabled}{
+  run weak probe solve and extract probe-response $\chi(\omega)$\;
+}
+Write drive/probe optics arrays and transition metadata\;
+\end{algorithm}
+
+\subsection{UPPE Propagation Model}
+The UPPE stage is solved on a Cartesian $(x,t)$ grid with propagation along
+$z$. SBE temporal traces are lifted to 2D by a Gaussian transverse envelope,
+producing initial field $E(x,t,0)$ and source polarization $P(x,t)$. The solver
+uses a spectral representation in $(k_x,\omega)$ with a unidirectional update
+operator using $k_z=\sqrt{\max(k_0^2-k_x^2,0)}$, where
+$k_0(\omega)=n(|\omega|)\omega/c$ from a GaAs dispersion model.
+
+The propagation step combines exact linear phase accumulation
+$\exp(-ik_z\Delta z)$ with an additive source term proportional to
+$\omega^2\hat{P}/(2k_z+\varepsilon)$. The implementation is intentionally simple
+and stable for the present benchmark regime; polarization is treated as fixed
+within each UPPE run and updated only through outer-loop coupling.
+
+\begin{algorithm}[t]
+\caption{UPPE propagation in $(k_x,\omega)$ domain}
+\KwIn{$E_t$, $P_t$, $x$-grid, $t$-grid, $w_0$, $\Delta z$, $N_z$}
+\KwOut{$E(x,t,z_{\mathrm{end}})$}
+Lift 1D traces to 2D with Gaussian transverse envelope\;
+FFT to obtain $\hat{E}(k_x,\omega)$ and $\hat{P}(k_x,\omega)$\;
+Build dispersion arrays $k_0(\omega)$ and $k_z(k_x,\omega)$\;
+\For{$m=1$ to $N_z$}{
+  apply linear propagator $e^{-ik_z\Delta z}$\;
+  add source update
+  $i\Delta z\,\omega^2\hat{P}/(2k_z+\varepsilon)$\;
+}
+Inverse FFT and take real part\;
+\end{algorithm}
+
+\subsection{Self-Consistent Coupling Loop}
+In coupled mode, SBUP$^3$ iterates between SBE and UPPE until feedback
+stabilizes. After each UPPE run, the on-axis field
+$E_{\mathrm{out}}(t)=E(x\approx0,t)$ is extracted and combined with the previous
+feedback waveform through under-relaxed mixing. Optional RMS or peak
+normalization rescales feedback to the current SBE drive amplitude before
+writing the feedback waveform for the next iteration.
+
+Convergence is monitored by a relative $L^2$ update norm with absolute floor:
+\begin{align}
+r_q=\frac{\|E_{\mathrm{fb}}^{(q)}-E_{\mathrm{fb}}^{(q-1)}\|_2}
+{\max(\|E_{\mathrm{fb}}^{(q-1)}\|_2,\epsilon_{\mathrm{abs}})}.
+\end{align}
+Iteration stops once $r_q<r_{\mathrm{tol}}$ or once the iteration cap is
+reached.
+
+\begin{algorithm}[t]
+\caption{Self-consistent SBE-UPPE coupling}
+\KwIn{Initial controls, $\beta$, normalization mode, $r_{\mathrm{tol}}$, $N_{\max}$}
+\KwOut{Converged feedback field and final propagated state}
+Set previous feedback to null\;
+\For{$q=1$ to $N_{\max}$}{
+  run SBE with current feedback file (or internal drive at first pass)\;
+  run UPPE using current SBE outputs\;
+  extract on-axis output waveform $E_{\mathrm{out}}^{(q)}(t)$\;
+  \uIf{$q=1$}{
+    set $E_{\mathrm{fb}}^{(1)}\leftarrow E_{\mathrm{out}}^{(1)}$\;
+  }\Else{
+    set $E_{\mathrm{fb}}^{(q)}\leftarrow
+    (1-\beta)E_{\mathrm{fb}}^{(q-1)}+\beta E_{\mathrm{out}}^{(q)}$\;
+  }
+  optionally normalize feedback in RMS or peak mode\;
+  write feedback file for next SBE pass\;
+  \If{$q>1$ and relative $L^2$ update $< r_{\mathrm{tol}}$}{
+    stop iteration\;
+  }
+}
+\end{algorithm}
+
+\subsection{Physical Calibration and Uncertainty Model}
+Calibration is performed in physical mode, which fits carrier density $N$ and oscillator normalization
+$s_{\mathrm{osc}}$ (rather than a free global scale only). Let channel-wise
+comparison metrics be computed over overlapping energy windows using normalized
+RMSE. The data objective is
+\begin{align}
+\mathcal{J}_{\mathrm{data}}=
+\frac{\sum_c w_c\,\mathrm{RMSE}^{(c)}_{\mathrm{norm}}}{\sum_c w_c},
+\end{align}
+for channels $c\in\{\alpha,n,\chi',\chi''\}$ selected by the user. A log-space
+Gaussian prior penalty is added:
+\begin{align}
+\mathcal{J}_{\mathrm{tot}}=
+\mathcal{J}_{\mathrm{data}}+\lambda_{\mathrm{prior}}
+\left[\Pi_N(N)+\Pi_s(s_{\mathrm{osc}})\right].
+\end{align}
+The release calibration used equal channel weights for $\alpha$ and $n$,
+$\lambda_{\mathrm{prior}}=0.05$, and 101$\times$101 log grids over
+$N\in[0.1,10]\times N_{\mathrm{prior}}$ and
+$s_{\mathrm{osc}}\in[0.5,2.0]$.
+
+Uncertainty is reported as objective-threshold surrogate regions:
+68\% and 95\% boxes are defined by
+$\mathcal{J}_{\mathrm{tot}}\le \mathcal{J}_{\min}+\Delta$ with
+$(\Delta_{68},\Delta_{95})=(0.02,0.05)$. This is used as the manuscript
+uncertainty summary for calibration identifiability and residual shape mismatch.
+
+\section{Numerical Setup and Reproducibility}
+\subsection{Software Environment}
+The release workflow uses documented software environments for each stage. The
+primary run/calibration/validation environment records Python 3.14.0 and NumPy
+2.4.5. The periodic DFT stage records GPAW 25.7.0 with Python 3.10.18, ASE
+3.28.0, NumPy 2.2.6, and SciPy 1.15.3. Figure rendering is performed with
+Matplotlib 3.10.9. The environment snapshot and pinned export values are stored
+in the primary release-freeze record. Execution, validation, calibration, and
+figure generation are performed through dedicated workflow scripts that read
+only pinned study report paths.
+
+\subsection{Baseline Configuration}
+For the frozen release baseline (sequential mode), controls from
+the primary release run record are:
+$T=50$ fs, $\Delta t=5$ as, $\gamma=5\times10^{13}~\mathrm{s^{-1}}$,
+$E_{\mathrm{amp}}=10^7$ V/m, $\Omega_L=9.9883\times10^{14}$ rad/s,
+$E_{\max}=5\times10^7$ V/m, density
+$N=1.7585466510231837\times10^{28}~\mathrm{m^{-3}}$,
+$s_{\mathrm{osc}}=0.9592641193252643$, and
+$S_P=\texttt{SBUP3\_POLARIZATION\_SCALE}=1$.
+
+Trusted support controls are
+$\epsilon_{\chi}=10^{-12}$, $p_{\mathrm{cut}}=1.0$,
+$E_{\max}^{(\chi)}=3.0$ eV, with probe window
+1.5--3.0 eV and probe amplitude $5\times10^4$ V/m.
+UPPE controls are $N_x=256$, $x$-window $10~\mu$m, $w_0=2~\mu$m,
+$\Delta z=1~\mu$m, $N_z=100$.
+Coupling defaults (used in separate stability checks) are
+$\beta=0.2$, RMS normalization, $r_{\mathrm{tol}}=10^{-3}$, and
+$N_{\max}=10$.
+
+\begin{table}[t]
+\centering
+\caption{Primary simulation controls used for reported runs.}
+\label{tab:numerical_controls}
+\begin{tabular}{ll}
+\toprule
+Parameter & Value \\
+\midrule
+$T$ (SBE window) & $50~\mathrm{fs}$ \\
+$\Delta t$ (SBE) & $5~\mathrm{as}$ \\
+$\gamma$ & $5\times10^{13}~\mathrm{s^{-1}}$ \\
+$E_{\mathrm{amp}}$ & $10^7~\mathrm{V/m}$ \\
+$E_{\max}$ (clip) & $5\times10^7~\mathrm{V/m}$ \\
+$N$ (density) & $1.758546651\times10^{28}~\mathrm{m^{-3}}$ \\
+$s_{\mathrm{osc}}$ & $0.9592641193$ \\
+$S_P$ & $1.0$ \\
+$E_{\mathrm{probe}}$ & $5\times10^4~\mathrm{V/m}$ \\
+$[E_{\min}^{\chi,\mathrm{probe}},E_{\max}^{\chi,\mathrm{probe}}]$ & $[1.5,3.0]~\mathrm{eV}$ \\
+$N_x$ (UPPE) & $256$ \\
+$x$ window & $10~\mu\mathrm{m}$ \\
+$w_0$ & $2~\mu\mathrm{m}$ \\
+$\Delta z$, $N_z$ & $1~\mu\mathrm{m}$, $100$ \\
+$\epsilon_{\chi}$ & $10^{-12}$ \\
+$p_{\mathrm{cut}}$ & $1.0$ \\
+$E_{\max}^{(\chi)}$ & $3.0~\mathrm{eV}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Validation Protocol}
+Validation is executed by the automated validation stage. Each report
+stores finite-value counts, spectral centroids/RMS widths, dephasing-tail
+statistics, transverse energy-proxy drift, support coverage fractions, baseline
+fit metrics (scale, RMSE, normalized RMSE, shape RMSE, overlap count), and
+optional linearity checks.
+
+Primary baseline validation uses Jellison (1992) data in the probe-response
+window 1.5716--2.9777 eV. Secondary validation uses Aspnes (1986) on the same
+window. The release linearity check reports
+$\mathrm{ratio}_{P_{\max}}=1.999999430$ at
+$E_{\mathrm{amp}}=10^7$ V/m (ideal value 2.0).
+
+The release convergence panel (S4A) is built from four explicit sweep points:
+$(\Delta t,\Delta z)\in\{(5~\mathrm{as},1.0~\mu\mathrm{m}),
+(5~\mathrm{as},0.5~\mu\mathrm{m}),
+(2.5~\mathrm{as},1.0~\mu\mathrm{m}),
+(2.5~\mathrm{as},0.5~\mu\mathrm{m})\}$,
+with reported $\alpha_{\mathrm{abs}}$ shape RMSE, $n$ shape RMSE, and support
+coverage per point.
+
+\paragraph{Uncertainty statement for residual shape mismatch.}
+The remaining mismatch is quantified rather than inferred qualitatively:
+for the primary release baseline,
+$\mathrm{RMSE}^{\mathrm{shape}}_{\alpha_{\mathrm{abs}}}=0.3602$ and
+$\mathrm{RMSE}^{\mathrm{shape}}_{n}=0.2872$ over 84 overlap points, while the
+physical calibration uncertainty ranges are
+$N\in[1.6038,2.0191]\times10^{28}~\mathrm{m^{-3}}$ and
+$s_{\mathrm{osc}}\in[0.8467,1.1019]$ (68\%) and
+$N\in[1.4627,2.2139]\times10^{28}~\mathrm{m^{-3}}$,
+$s_{\mathrm{osc}}\in[0.7792,1.1975]$ (95\%). These bounds indicate that the
+dominant residual error is model-form shape mismatch, not numerical instability.
+
+\begin{algorithm}[t]
+\caption{Validation and tuning protocol}
+\KwIn{Reference dielectric-response dataset, baseline controls, sweep grids}
+\KwOut{Selected operating point and validation reports}
+Run baseline sequential pipeline and compute validation metrics\;
+Compute dielectric-reference overlay metrics (scale, RMSE, shape RMSE, overlap count)\;
+Execute coarse sweep over temporal and response-support controls\;
+Rank candidates by shape RMSE and overlap-point density\;
+Execute focused sweep around top candidates\;
+Select operating point with best shape-support tradeoff\;
+Run coupled verification and check feedback convergence\;
+Archive reports from selected controls\;
+\end{algorithm}
+
+\section{Results}
+This section reports four result layers in sequence: calibration-point
+identification, transfer to an independent reference set, numerical robustness,
+and propagation diagnostics. This ordering separates parameter fitting from
+dataset shift and discretization effects.
+
+\subsection{Release Calibration Point}
+The frozen physical-fit calibration (Jellison primary reference) selects
+$N=1.758546651\times10^{28}~\mathrm{m^{-3}}$ and
+$s_{\mathrm{osc}}=0.9592641193$, with effective ratio
+$r_{\mathrm{best}}=0.9549925860$. The objective decomposition is
+$\mathcal{J}_{\mathrm{tot}}=0.55484$,
+$\mathcal{J}_{\mathrm{data}}=0.55097$,
+$\mathcal{J}_{\mathrm{prior}}=0.07733$ (prior weight $0.05$).
+The calibrated channel metrics over 1.5716--2.9777 eV are
+$\mathrm{RMSE}_{\mathrm{norm}}(\alpha)=0.4817$ and
+$\mathrm{RMSE}_{\mathrm{norm}}(n)=0.6202$ (84 overlap points).
+
+Figure~\ref{fig:results_calibration} shows the objective landscape and the
+surrogate uncertainty envelopes. The reported 68\% set is
+$N\in[1.6038,2.0191]\times10^{28}~\mathrm{m^{-3}}$,
+$s_{\mathrm{osc}}\in[0.8467,1.1019]$; the 95\% set is
+$N\in[1.4627,2.2139]\times10^{28}~\mathrm{m^{-3}}$,
+$s_{\mathrm{osc}}\in[0.7792,1.1975]$.
+
+The uncertainty sets indicate a bounded neighborhood rather than a flat
+degenerate plateau. The data term dominates the total objective, while the prior
+term regularizes extreme density-oscillator combinations. We therefore treat
+this calibration point as the operational baseline for transfer and robustness
+tests, not as a claim of complete microscopic closure.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{ study_20260520/F4_calibration_landscape.pdf}
+\caption{
+Release physical-fit calibration landscape and surrogate uncertainty bounds from
+the pinned calibration report.
+}
+\label{fig:results_calibration}
+\end{figure*}
+
+\subsection{Post-Calibration Optical Agreement}
+Primary validation against Jellison (probe-response baseline) gives
+$\mathrm{RMSE}_{\mathrm{norm}}(\alpha_{\mathrm{abs}})=0.2470$,
+$\mathrm{RMSE}^{\mathrm{shape}}(\alpha_{\mathrm{abs}})=0.3602$,
+$\mathrm{RMSE}_{\mathrm{norm}}(n)=0.2600$, and
+$\mathrm{RMSE}^{\mathrm{shape}}(n)=0.2872$ over 84 overlap points in
+1.5716--2.9777 eV. The fitted amplitude factor from this baseline comparison is
+1.1718 for $\alpha_{\mathrm{abs}}$.
+
+Secondary validation against Aspnes gives
+$\mathrm{RMSE}_{\mathrm{norm}}(\alpha_{\mathrm{abs}})=0.2575$,
+$\mathrm{RMSE}^{\mathrm{shape}}(\alpha_{\mathrm{abs}})=0.4171$,
+$\mathrm{RMSE}_{\mathrm{norm}}(n)=0.2629$, and
+$\mathrm{RMSE}^{\mathrm{shape}}(n)=0.2944$ over 14 overlap points, with fitted
+factor 1.0408. The lower overlap cardinality in the secondary set is consistent
+with its sparser sampled reference grid in the release window.
+
+The transfer result is consistent with moderate degradation under dataset shift.
+Refractive-index metrics remain close between primary and secondary references,
+while absorption-shape mismatch increases on the secondary set. The secondary
+overlap count is smaller (14 points), so local reference differences carry more
+weight in aggregate metrics. The fitted absorption scale changes from 1.1718
+(primary) to 1.0408 (secondary), indicating bounded redistribution between scale
+and shape rather than loss of overall spectral structure.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.7\textwidth]{  study_20260520/F5_postcal_fit_jellison.pdf}
+\caption{
+Post-calibration primary overlay (Jellison): simulated probe-response
+$|\alpha|$ and $n$ against reference data in the 1.5--3.0 eV fit window.
+}
+\label{fig:results_postcal}
+\end{figure*}
+
+\subsection{Stability and Linearity}
+The convergence check uses four explicit sweep points:
+$(\Delta t,\Delta z)=(5~\mathrm{as},1.0~\mu\mathrm{m})$,
+$(5~\mathrm{as},0.5~\mu\mathrm{m})$,
+$(2.5~\mathrm{as},1.0~\mu\mathrm{m})$,
+$(2.5~\mathrm{as},0.5~\mu\mathrm{m})$.
+Across these points,
+$\mathrm{RMSE}^{\mathrm{shape}}(\alpha_{\mathrm{abs}})$ remains in
+[0.36019, 0.36021], while
+$\mathrm{RMSE}^{\mathrm{shape}}(n)$ remains in
+[0.28718, 0.28791]. The $\Delta z$ change has no visible effect at reported
+precision; changing $\Delta t$ mainly changes support coverage
+(probe support 0.003599 at 5 as vs 0.001800 at 2.5 as) with nearly unchanged
+shape error.
+
+Linearity is verified at $E_{\mathrm{amp}}=10^7$ V/m with
+$\mathrm{ratio}_{P_{\max}}=1.999999430$, i.e., relative deviation
+$|\mathrm{ratio}-2|/2=2.85\times10^{-7}$ from ideal first-order behavior.
+Figure~\ref{fig:results_stability} summarizes both checks.
+
+Within the tested control rectangle, the optical-shape conclusions are unchanged.
+Changing $\Delta z$ from 1.0 to 0.5~$\mu$m does not materially affect reported
+shape metrics. Changing $\Delta t$ from 5 to 2.5~as mainly reduces trusted
+support coverage, with nearly unchanged shape error.
+
+The linearity check supports this robustness result. The reported ratio is
+effectively ideal at the chosen amplitude, showing that response extraction and
+polarization scaling are consistent with local first-order behavior in this
+baseline regime.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{ study_20260520/S4_stability_linearity.pdf}
+\caption{
+Release numerical diagnostics: explicit convergence values across
+$(\Delta t,\Delta z)$ combinations and independent linearity check.
+}
+\label{fig:results_stability}
+\end{figure*}
+
+\subsection{Propagation Diagnostics}
+For the release baseline, spectral moments from validation give
+$(\mu_{\mathrm{in}},\sigma_{\mathrm{in}})=(0.65744,0.09746)$ eV and
+$(\mu_{\mathrm{out}},\sigma_{\mathrm{out}})=(0.67720,0.10651)$ eV, corresponding
+to a $+0.01975$ eV centroid shift and $+0.00905$ eV width increase at the UPPE
+output. Thus, in this release configuration, propagation broadens the spectrum
+and slightly shifts its centroid upward.
+
+To monitor propagation health, we track the transverse energy-like proxy
+\begin{align}
+Q_{\mathrm{proxy}}(t)=\int |E(x,t)|^2\,dx.
+\end{align}
+This quantity remains finite throughout the run. Its relative drift and
+standard-deviation indicators are $\mathrm{drift}_{\mathrm{rel}}=6.7456$ and
+$\mathrm{std}_{\mathrm{rel}}=1.4600$.
+
+The positive centroid shift and broader output width indicate measurable spectral
+redistribution during propagation. The shift is small but systematic, consistent
+with controlled nonlinear transport in the tested configuration.
+
+The $Q_{\mathrm{proxy}}$ indicators should be read as numerical health monitors,
+not strict conservation invariants. In the present reduced closure, the material
+source term is injected through a simplified source-updated path, so exact
+energy conservation is not the target diagnostic in this section. The key point
+is that the fields remain finite, the proxy remains trackable, and the
+spectral-moment trends are stable enough for cross-run comparison and future
+model refinement.
+
+Taken together, the Results show a bounded calibration region, transfer with
+moderate degradation on an independent reference set, numerical stability across
+the tested $(\Delta t,\Delta z)$ points, and interpretable propagation trends.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{ study_20260520/F6_uppe_field_evolution.pdf}
+\caption{
+Release UPPE propagation output: spatiotemporal field magnitude and transverse
+energy proxy from pinned baseline artifacts.
+}
+\label{fig:results_uppe_release}
+\end{figure*}
+
+\begin{table*}[t]
+\centering
+\caption{
+Pinned release optical-fit summary for primary (Jellison) and secondary
+(Aspnes) validations.
+}
+\label{tab:results_summary}
+\begin{tabular}{lcccccc}
+\toprule
+Reference set & $N_{\mathrm{pts}}$ & $\mathrm{RMSE}_{\mathrm{norm}}(\alpha_{\mathrm{abs}})$ & $\mathrm{RMSE}_{\mathrm{shape}}(\alpha_{\mathrm{abs}})$ & $\mathrm{RMSE}_{\mathrm{norm}}(n)$ & $\mathrm{RMSE}_{\mathrm{shape}}(n)$ & fitted $\alpha_{\mathrm{abs}}$ scale \\
+\midrule
+Primary (Jellison 1992) & 84 & 0.2470 & 0.3602 & 0.2600 & 0.2872 & 1.1718 \\
+Secondary (Aspnes 1986) & 14 & 0.2575 & 0.4171 & 0.2629 & 0.2944 & 1.0408 \\
+\bottomrule
+\end{tabular}
+\setlength{\tabcolsep}{6pt}
+\end{table*}
+
+\section{Discussion}
+The release study supports three method-level conclusions. First, the workflow
+is reproducible: run, calibration, and validation artifacts are pinned and
+hash-tracked, and the manuscript figures are regenerated from those exact
+artifacts. Second, the selected operating point is numerically stable under the
+reported sweep controls: shape metrics remain nearly invariant across tested
+$(\Delta t,\Delta z)$ values, and the linearity check remains effectively ideal
+($\mathrm{ratio}_{P_{\max}}=1.999999430$). Third, calibration is identifiable:
+the best-fit point lies within finite 68\%/95\% objective neighborhoods rather
+than on a broad flat direction.
+
+The main residual limitation remains model-form mismatch in optical shape, not
+solver instability. This is consistent with the reduced transition basis and the
+current single-scale macroscopic mapping. In practical terms, the current model
+captures reference-aligned trends in the fitted window, but still leaves
+structured residuals that should be attributed to missing physics (broader
+multi-band coupling, excitonic structure, and refined damping channels) before
+claiming predictive closure outside that calibrated regime.
+
+\begin{table*}[t]
+\centering
+\caption{
+External optical reference datasets used in the pinned release workflow.
+}
+\label{tab:discussion_reference_sources}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{p{0.23\textwidth}p{0.10\textwidth}p{0.12\textwidth}p{0.18\textwidth}p{0.30\textwidth}}
+\toprule
+Reference set & Citation & Native range (eV) & Provenance layer & Role in this study \\
+\midrule
+Jellison GaAs optical functions (1992) &
+\cite{jellison1992optical} &
+1.476--5.298 &
+Primary local reference snapshot &
+Primary physical-fit calibration target and primary post-calibration validation \\
+Aspnes GaAs/AlGaAs optical properties (1986) &
+\cite{aspnes1986optical} &
+1.500--6.001 &
+Secondary local reference snapshot &
+Secondary validation for out-of-sample consistency at fixed calibrated controls \\
+RefractiveIndex.INFO source manifests &
+\cite{polyanskiy2024refractiveindexinfo} &
+n/a &
+Source-manifest import layer &
+Import provenance layer for local experimental reference datasets \\
+\bottomrule
+\end{tabular}
+\setlength{\tabcolsep}{6pt}
+\end{table*}
+
+Table~\ref{tab:discussion_reference_sources} makes the reference-data boundary
+explicit: Jellison data define the fitted operating point, Aspnes data test
+cross-dataset behavior, and refractiveindex.info provides the import-provenance
+container for the local reference snapshots. This separation is important for
+interpretation because improved agreement with the primary fit set does not by
+itself imply robustness to dataset shift; the secondary reference is therefore a
+required check, not an optional visualization.
+
+The next step is to retain this release protocol while adding stronger
+absolute-scale checks and richer reduced-transition physics. This preserves
+comparability across revisions and improves physical completeness.
+
+\section{Practical Implications}
+This framework gives teams a reliable way to test ultrafast semiconductor
+scenarios before expensive lab campaigns. Instead of broad trial-and-error
+experiments, researchers can narrow parameter ranges in simulation and then
+prioritize the most informative measurements.
+
+It also improves day-to-day collaboration. Because the same pinned data, scripts,
+and figures can be rerun by different users, students and collaborators can
+reproduce the same baseline results and continue from the same starting point.
+
+For the broader community, the main value is a reusable reproducible template:
+shared inputs, fixed analysis steps, and transparent reporting of fit quality
+and remaining mismatch. This makes cross-study comparison easier and reduces
+ambiguity when extending the workflow to related materials.
+
+\section{Conclusion}
+SBUP$^3$ now provides a release-frozen, reproducible multiscale workflow that
+connects DFT-derived inputs, reduced semiconductor Bloch dynamics, and UPPE
+propagation for ultrafast GaAs studies. All reported figures and metrics are
+generated from pinned run, calibration, and validation artifacts.
+
+The physical-fit release calibration selects
+$N=1.758546651\times10^{28}~\mathrm{m^{-3}}$ and
+$s_{\mathrm{osc}}=0.9592641193$
+($r_{\mathrm{best}}=0.9549925860$), with finite 68\%/95\% objective regions.
+Post-calibration agreement is consistent across references: on the primary
+Jellison set, shape RMSE is 0.3602 for $\alpha_{\mathrm{abs}}$ and 0.2872 for
+$n$ (84 points), while on the secondary Aspnes set it is 0.4171 and 0.2944
+(14 points). Numerical behavior is stable under the reported
+$(\Delta t,\Delta z)$ sweeps, and the independent linearity test remains nearly
+ideal
+($\mathrm{ratio}_{P_{\max}}=1.999999430$). UPPE diagnostics show a small
+centroid up-shift ($+0.01975$ eV) with spectral broadening ($+0.00905$ eV).
+
+These results support SBUP$^3$ as a credible methods baseline for reproducible
+ultrafast semiconductor modeling. The main remaining limitation is optical
+shape mismatch from model form, not solver instability. The most direct next
+steps are to strengthen absolute-scale constraints, expand the reduced
+transition basis toward multi-band/excitonic response, and keep the same pinned
+release discipline so future improvements remain directly comparable.
+
+
+\section*{Nomenclature}
+\begin{table}[!h]
+\centering
+\caption{Core symbols used in SBUP$^3$.}
+\label{tab:nomenclature}
+\small
+\setlength{\tabcolsep}{2pt}
+\begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}lll}
+\toprule
+Symbol & Definition & Units \\
+\midrule
+$E_0$ & Bright excitation energy & eV \\
+$\omega_0$ & Transition frequency & rad s$^{-1}$ \\
+$f_0$ & Oscillator strength & 1 \\
+$d_{\mathrm{eff}}$ & Effective dipole & C m \\
+$E(t)$ & SBE drive field & V m$^{-1}$ \\
+$E_{\mathrm{fb}}(t)$ & UPPE feedback field & V m$^{-1}$ \\
+$p(t)$ & Interband coherence & 1 \\
+$n(t)$ & Excited population & 1 \\
+$\gamma$ & Dephasing rate & s$^{-1}$ \\
+$P_{\mathrm{mac}}(t)$ & Macroscopic polarization & C m$^{-2}$ \\
+$\chi(\omega)$ & Susceptibility & 1 \\
+$n(\omega),\kappa(\omega)$ & Refractive and loss terms & 1 \\
+$\alpha(\omega)$ & Absorption coefficient & m$^{-1}$ \\
+$\Delta t,\Delta z$ & Time and z steps & s, m \\
+$N_x,N_z$ & Grid points ($x,z$) & 1 \\
+$\beta$ & Mixing factor & 1 \\
+$r_q,r_{\mathrm{tol}}$ & Residual, tolerance & 1 \\
+\bottomrule
+\end{tabular*}
+\end{table}
+
+
+\section*{Author Contributions}
+
+D.D.K.W: conceptualization, methodology, validation and visualization, software, writing – original draft, review \& editing. P.G.C: methodology, validation and visualization, software, writing – original draft, review \& editing.  M.D.G: methodology, validation and visualization, software, writing – original draft, review \& editing.
+
+\section*{Acknowledgment(s)}
+The authors acknowledge contributors, users, and reviewers who provided feedback on decoding workflows, reproducibility scripts, and documentation quality. Any opinions, findings, conclusions, or recommendations expressed in this research are those of the author(s) and do not necessarily reflect the views of their respective affiliations.
+
+
+\section*{Data and Code Availability}
+Code and analysis workflows are available at: \url{https://github.com/DennisWayo/SBUP3-ultrafast}
+
+\section*{Funding}
+This research was not funded.
+
+
+\section*{Disclosure statement}
+No potential conflict of interest was reported by the author(s).
+
+
+\appendix
+
+\section{Equation Details}\label{sec:appendix_math}
+\subsection{Legacy Scalar Mapping (Compatibility Path)}
+For compatibility with legacy single-transition runs, the electronic-structure
+stage can provide a bright excitation energy $E_0$ (in eV) and oscillator
+strength $f_0$. These are mapped to effective two-level SBE parameters as
+\begin{align}
+\omega_0 &= \frac{E_0 e}{\hbar}, \\
+|d_{\mathrm{eff}}| &= \sqrt{\frac{3\hbar e^2}{2m_e\omega_0} f_0},
+\end{align}
+where $e$ is the elementary charge and $m_e$ is the electron mass. The second
+relation is the isotropic oscillator-strength inversion used in the
+compatibility code path.
+
+\subsection{Driven Reduced Semiconductor Bloch Model}
+The internal driving field is defined as a Gaussian-envelope carrier,
+\begin{align}
+E_{\mathrm{int}}(t)
+= E_{\mathrm{amp}}
+\exp\!\left[-\left(\frac{t-t_0}{\tau}\right)^2\right]
+\cos\!\left[\Omega_L(t-t_0)\right],
+\end{align}
+with $t_0=T/2$ and $\tau=0.15T$ for total window $T$.
+
+
+
+\begin{table*}[t]
+\centering
+\caption{
+Supplementary release snapshots from pinned machine-readable validation reports
+(support fraction corresponds to probe-response support coverage).
+}
+\label{tab:appendix_validation}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lccccccc}
+\toprule
+Case & Report ID & RMSE$_{\mathrm{shape}}(|\alpha|)$ & RMSE$_{\mathrm{shape}}(n)$ & $N_{\mathrm{pts}}$ & Support frac. & Feedback rel-$L^2$ & Drift rel. \\
+\midrule
+Primary release (Jellison) & 20260520\_081916\_104478 & 0.36021 & 0.28718 & 84 & 0.003599 & 1.425 & 6.746 \\
+Convergence ($\Delta t=5$ as, $\Delta z=1.0~\mu$m) & 20260520\_081928\_899769 & 0.36021 & 0.28718 & 84 & 0.003599 & 2.250 & 6.746 \\
+Convergence ($\Delta t=2.5$ as, $\Delta z=0.5~\mu$m) & 20260520\_081928\_899769 & 0.36019 & 0.28791 & 84 & 0.001800 & 1.447 & 6.746 \\
+Secondary release (Aspnes) & 20260520\_082112\_511494 & 0.41706 & 0.29439 & 14 & 0.001800 & 1.447 & 6.746 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+\setlength{\tabcolsep}{6pt}
+
+
+\begin{table*}[t]
+\centering
+\caption{Periodic DFT dielectric-response setup used in this work (GaAs benchmark).}
+\label{tab:appendix_dft_settings}
+\begin{tabular}{ll}
+\toprule
+Setting & Value \\
+\midrule
+Code & GPAW + ASE \\
+Ground-state XC & PBE \\
+$\,$Ground-state mode & PW (plane-wave) \\
+$k$-point grid (ground state) & $(4,4,4)$ (frozen metadata) \\
+$k$-point grid (response) & $(6,6,6)$ (frozen metadata) \\
+PW cutoff (ground state) & 200 eV \\
+Number of bands (ground state) & 32 \\
+Number of bands (response) & 48 (frozen metadata) \\
+Smearing (Fermi-Dirac) & 0.01 eV \\
+Dielectric broadening $\eta$ & 0.05 eV \\
+Dielectric cutoff & 150 eV \\
+Frequency mesh & nonlinear ($d\omega_0=0.02$, $\omega_2=5.0$, $\omega_{\max}=8.0$ eV) \\
+Integration mode & point integration \\
+Intraband term & disabled (semiconductor response path) \\
+Ground-state logs & \texttt{gaas\_pw.txt} \\
+Ground-state metadata & \texttt{gaas\_ground\_state\_meta.json} \\
+Dielectric metadata & \texttt{gaas\_dielectric\_meta.json} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+
+
+\begin{table*}[t]
+\centering
+\caption{Legacy scalar transition outputs (compatibility path, not primary calibration).}
+\label{tab:appendix_tddft_outputs}
+\begin{tabular}{ll}
+\toprule
+Quantity & Value \\
+\midrule
+$E_0$ & 0.657444 eV \\
+$\omega_0$ & $9.98833\times 10^{14}$ rad/s \\
+$f_0$ & $1.25957\times 10^{-3}$ \\
+$|d_{\mathrm{eff}}|$ & $2.37090\times 10^{-30}$ C$\cdot$m \\
+$|d_{\mathrm{eff}}|$ (Debye) & 0.711 D \\
+Reference transition entries (CSV) & 48 \\
+Release primary fit reference (outside compatibility path) & \texttt{analysis/data/gaas\_exp\_jellison\_1992.csv} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+
+If feedback exists and is enabled, the drive is mixed as
+\begin{align}
+E(t) = (1-\alpha_{\mathrm{mix}})E_{\mathrm{int}}(t)
++ \alpha_{\mathrm{mix}}E_{\mathrm{fb}}(t),
+\end{align}
+then clipped to $|E(t)|\le E_{\max}$ for stability.
+
+For transition-resolved states $(p_j,n_j)$, the implemented reduced equations
+are
+\begin{align}
+\frac{dp_j}{dt}
+&= -\left(i\omega_j+\gamma_j\right)p_j
++ i\frac{d_j}{\hbar}E(t)\left(1-2n_j\right), \\
+\frac{dn_j}{dt}
+&= -2\,\mathrm{Im}\!\left[
+\frac{d_j}{\hbar}E(t)p_j^*(t)\right],
+\end{align}
+where $\gamma_j$ may include the optional linear energy-dependent slope used in
+the code. With normalized oscillator weights
+$w_j=f_j/\sum_k f_k$, the effective coherence is
+\begin{align}
+p_{\mathrm{eff}}(t)=\sum_j w_j d_j p_j(t),
+\end{align}
+and the macroscopic polarization exported to UPPE is
+\begin{align}
+P_{\mathrm{mac}}(t)
+= S_P N\,p_{\mathrm{eff}}(t),
+\end{align}
+with density $N$ and user scale factor $S_P$.
+
+\subsection{RK4 Time Integration}
+With timestep $\Delta t$, the solver updates the stacked transition state
+$\mathbf{y}=(\mathbf{p},\mathbf{n})^T$ using explicit RK4:
+\begin{align}
+\mathbf{y}_{m+1}
+= \mathbf{y}_m + \frac{\Delta t}{6}
+\left(\mathbf{k}_1+2\mathbf{k}_2+2\mathbf{k}_3+\mathbf{k}_4\right),
+\end{align}
+where
+$\mathbf{k}_1=\mathbf{F}(\mathbf{y}_m,t_m)$,
+$\mathbf{k}_2=\mathbf{F}(\mathbf{y}_m+\frac{\Delta t}{2}\mathbf{k}_1,t_m+\frac{\Delta t}{2})$,
+$\mathbf{k}_3=\mathbf{F}(\mathbf{y}_m+\frac{\Delta t}{2}\mathbf{k}_2,t_m+\frac{\Delta t}{2})$,
+$\mathbf{k}_4=\mathbf{F}(\mathbf{y}_m+\Delta t\,\mathbf{k}_3,t_m+\Delta t)$.
+
+\subsection{Susceptibility Extraction with Response Support}
+After propagation, the code applies a Hann window to mean-subtracted traces:
+\begin{align}
+\tilde{E}_j &= \mathcal{F}\!\left[w_m(E_m-\bar{E})\right]_j, \\
+\tilde{P}_j &= \mathcal{F}\!\left[w_m\mathrm{Re}(P_m-\bar{P})\right]_j.
+\end{align}
+The frequency grid is the nonnegative branch from a real-input FFT
+($\mathrm{rFFT}$), $\omega_j=2\pi f_j$.
+
+Susceptibility is inverted only on a trusted support mask $\mathcal{S}$:
+\begin{align}
+\chi_j = \frac{\tilde{P}_j}{\varepsilon_0\tilde{E}_j},
+\qquad j\in\mathcal{S},
+\end{align}
+and set to NaN otherwise. The mask is the intersection of four criteria:
+\begin{align}
+|\tilde{E}_j| &> \max\!\left(10^{-30},\,\epsilon_{\chi}\max_k|\tilde{E}_k|\right),\\
+j &\le j_{\mathrm{cut}}, \quad
+j_{\mathrm{cut}}=\min\left\{j:\frac{\sum_{k=0}^j|\tilde{E}_k|^2}{\sum_{k}|\tilde{E}_k|^2}
+\ge p_{\mathrm{cut}}\right\},\\
+\omega_j &\ge \omega_{\min},\\
+\omega_j &\le \omega_{\max},
+\end{align}
+with user controls $\epsilon_{\chi}$, $p_{\mathrm{cut}}$, and
+$(\omega_{\min},\omega_{\max})=(E_{\min}^{(\chi)}e/\hbar,\,
+E_{\max}^{(\chi)}e/\hbar)$. In the release workflow, the probe branch uses
+$E_{\min}^{(\chi)}=1.5$ eV and $E_{\max}^{(\chi)}=3.0$ eV.
+
+Optical observables are then derived from
+$\tilde{n}(\omega)=\sqrt{1+\chi(\omega)}=n(\omega)+i\kappa(\omega)$:
+\begin{align}
+n(\omega)&=\mathrm{Re}\,\tilde{n}(\omega),\\
+\kappa(\omega)&=\mathrm{Im}\,\tilde{n}(\omega),\\
+\alpha(\omega)&=\frac{2\omega\kappa(\omega)}{c}.
+\end{align}
+
+\subsection{UPPE Propagation Operator Used in SBUP$^3$}
+The temporal SBE fields are lifted to 2D using a Gaussian transverse envelope:
+\begin{align}
+E(x,t,0) &= \exp\!\left(-\frac{x^2}{w_0^2}\right)E_t(t),\\
+P(x,t)   &= \exp\!\left(-\frac{x^2}{w_0^2}\right)P_t(t).
+\end{align}
+In $(k_x,\omega)$ space:
+\begin{align}
+k_0(\omega) &= \frac{n(|\omega|)\omega}{c},\\
+k_z(k_x,\omega) &= \sqrt{\max\!\left(k_0^2-k_x^2,\,0\right)}.
+\end{align}
+For each propagation step $\Delta z$, the implemented update is
+\begin{align}
+\hat{E}^{(m+1)}
+= \hat{E}^{(m)}e^{-ik_z\Delta z}
++ i\Delta z\,
+\frac{\omega^2}{2k_z+\varepsilon}\,\hat{P},
+\end{align}
+with small denominator floor $\varepsilon=10^{-30}$. The polarization source is
+treated as fixed along $z$ within a run, i.e., no intra-step material update is
+performed inside UPPE. The propagated field is returned as
+$E(x,t,z_{\mathrm{end}})=\mathrm{Re}\,\mathcal{F}^{-1}\{\hat{E}\}$.
+
+\subsection{Self-Consistent Feedback Loop}
+At coupling iteration $q$, UPPE output is sampled on axis:
+\begin{align}
+E_{\mathrm{out}}^{(q)}(t)=E^{(q)}(x\!\approx\!0,t).
+\end{align}
+Feedback is under-relaxed as
+\begin{align}
+E_{\mathrm{fb}}^{(1)}(t) &= E_{\mathrm{out}}^{(1)}(t),\\
+E_{\mathrm{fb}}^{(q)}(t) &=
+(1-\beta)E_{\mathrm{fb}}^{(q-1)}(t)+\beta E_{\mathrm{out}}^{(q)}(t), \quad q\ge2,
+\end{align}
+with $0<\beta\le1$.
+
+Optional amplitude normalization then rescales $E_{\mathrm{fb}}^{(q)}$ to the
+current SBE drive $E_{\mathrm{drv}}^{(q)}$:
+\begin{align}
+E_{\mathrm{fb}}^{(q)} \leftarrow
+E_{\mathrm{fb}}^{(q)}
+\frac{\mathrm{RMS}(E_{\mathrm{drv}}^{(q)})}{\mathrm{RMS}(E_{\mathrm{fb}}^{(q)})}
+\quad \text{(RMS mode)},
+\end{align}
+or analogously with peak amplitudes in peak mode.
+
+Convergence is checked by relative $L^2$ update norm,
+\begin{align}
+r_q=
+\frac{\left\|E_{\mathrm{fb}}^{(q)}-E_{\mathrm{fb}}^{(q-1)}\right\|_2}
+{\max\!\left(\left\|E_{\mathrm{fb}}^{(q-1)}\right\|_2,\epsilon_{\mathrm{abs}}\right)},
+\end{align}
+and iteration stops when $r_q<r_{\mathrm{tol}}$.
+
+\subsection{Validation Metrics Used in This Work}
+Two spectral moments are computed from normalized spectral power $S_j$:
+\begin{align}
+\mu &= \sum_j \hbar\omega_j S_j, \\
+\sigma &= \sqrt{\sum_j (\hbar\omega_j-\mu)^2 S_j}.
+\end{align}
+The transverse energy diagnostic is
+\begin{align}
+\mathcal{E}(t)=\int |E(x,t)|^2\,dx,
+\end{align}
+
+reported through mean, standard deviation, and relative drift over the time
+window. These diagnostics are used for release baselines, convergence sweeps,
+and secondary cross-dataset checks under the same reporting protocol.
+
+\section{Supplementary Figures}
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.5\textwidth]{ study_20260520/S1_postcal_fit_aspnes.pdf}
+\caption{
+Secondary post-calibration optical overlay (Aspnes): simulated probe-response
+$|\alpha|$ and $n$ compared against the secondary validation reference over the
+same analysis window used for primary validation.
+}
+\label{fig:supp_aspnes_overlay}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.5\textwidth]{ study_20260520/S2_probe_vs_drive_response.pdf}
+\caption{
+Drive-versus-probe susceptibility extraction comparison, including trusted
+support masks.
+}
+\label{fig:supp_probe_drive}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.5\textwidth]{ study_20260520/S3_support_window_diagnostics.pdf}
+\caption{
+Support-window diagnostics from the release baseline, including probe trusted
+support region and coverage summary.
+}
+\label{fig:supp_support_window}
+\end{figure}
+
+
+
+\section{DFT Provenance Tables}
+Table~\ref{tab:appendix_dft_settings} summarizes the electronic-structure setup
+used to generate DFT-informed parameters for SBUP$^3$. The workflow enforces
+periodic non-$\Gamma$-only sampling for publication calibration and records both
+ground-state and response artifacts. Table~\ref{tab:appendix_tddft_outputs}
+lists legacy scalar quantities retained for compatibility.
+
+Implementation-level DFT artifacts are organized as follows: ground-state
+construction (\texttt{dft/gaas\_bulk\_gpaw.py}), dielectric-response extraction
+(\texttt{dft/gaas\_dielectric\_response.py}), and transition reduction
+(\texttt{dft/build\_transitions\_from\_dielectric.py}). Provenance for these
+steps is recorded in \texttt{dft/gaas\_ground\_state\_meta.json},
+\texttt{dft/gaas\_dielectric\_meta.json}, and
+\texttt{dft/transitions\_meta.json}.
+
+
+In the current implementation, the primary transition path is serialized in
+\texttt{dft/transitions\_E\_eV.npy},
+\texttt{dft/transitions\_f.npy}, and \texttt{dft/transitions\_meta.json}, then
+consumed directly by \texttt{sbe/sbe\_rk4.py}. The legacy scalar files
+\texttt{dft/E0\_eV.npy}, \texttt{dft/omega0\_rad\_s.npy},
+\texttt{dft/f0.npy}, and \texttt{dft/d\_eff\_Cm.npy} remain available for the
+compatibility path.
+
+
+
+\clearpage
+\bibliographystyle{apsrev4-2}
+\bibliography{references}
+
+\end{document}

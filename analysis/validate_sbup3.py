@@ -12,7 +12,6 @@ import argparse
 import csv
 import json
 import os
-import re
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -60,33 +59,82 @@ def _run(cmd: list[str], cwd: Path, env: dict[str, str]) -> None:
     subprocess.run(cmd, cwd=str(cwd), env=env, check=True)
 
 
+def _utc_timestamp() -> str:
+    return datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S_%f")
+
+
+def _unique_validation_report_path(report_dir: Path, timestamp_utc: str) -> Path:
+    path = report_dir / f"validation_{timestamp_utc}.json"
+    if not path.exists():
+        return path
+    idx = 1
+    while True:
+        candidate = report_dir / f"validation_{timestamp_utc}_{idx:02d}.json"
+        if not candidate.exists():
+            return candidate
+        idx += 1
+
+
+def _load_response_set(sbe: Path, prefix: str = "") -> dict[str, Any] | None:
+    omega_path = sbe / f"{prefix}omega_rad_s.npy"
+    chi_r_path = sbe / f"{prefix}chi_eff_real.npy"
+    chi_i_path = sbe / f"{prefix}chi_eff_imag.npy"
+    if not (omega_path.exists() and chi_r_path.exists() and chi_i_path.exists()):
+        return None
+
+    alpha_path = sbe / f"{prefix}alpha_m_inv.npy"
+    if not alpha_path.exists():
+        alpha_path = sbe / f"{prefix}alpha_rel.npy"
+    if not alpha_path.exists():
+        return None
+
+    n_path = sbe / f"{prefix}n_real.npy"
+    if not n_path.exists():
+        n_path = sbe / f"{prefix}n_rel.npy"
+    if not n_path.exists():
+        return None
+
+    support_path = sbe / f"{prefix}chi_support_mask.npy"
+    return {
+        "omega": np.load(omega_path),
+        "chi_r": np.load(chi_r_path),
+        "chi_i": np.load(chi_i_path),
+        "alpha": np.load(alpha_path),
+        "n": np.load(n_path),
+        "chi_support_mask": np.load(support_path).astype(bool) if support_path.exists() else None,
+    }
+
+
 def _load_outputs(base: Path) -> dict[str, Any]:
     sbe = base / "sbe"
     uppe = base / "uppe" / "outputs"
-    alpha_path = sbe / "alpha_m_inv.npy"
-    if not alpha_path.exists():
-        alpha_path = sbe / "alpha_rel.npy"
+    drive_response = _load_response_set(sbe, "")
+    if drive_response is None:
+        raise FileNotFoundError("Missing drive-response SBE optical outputs.")
+    probe_response = _load_response_set(sbe, "probe_")
 
-    n_path = sbe / "n_real.npy"
-    if not n_path.exists():
-        n_path = sbe / "n_rel.npy"
-
-    support_path = sbe / "chi_support_mask.npy"
+    transition_model_path = sbe / "transition_model.json"
+    transition_energy_used_path = sbe / "transition_energy_eV_used.npy"
+    transition_osc_used_path = sbe / "transition_osc_used.npy"
     data = {
         "time_s": np.load(sbe / "time_s.npy"),
         "E_t": np.load(sbe / "E_t.npy"),
         "P_t": np.load(sbe / "polarization.npy"),
         "n_t": np.load(sbe / "population.npy"),
-        "omega": np.load(sbe / "omega_rad_s.npy"),
-        "chi_r": np.load(sbe / "chi_eff_real.npy"),
-        "chi_i": np.load(sbe / "chi_eff_imag.npy"),
-        "alpha": np.load(alpha_path),
-        "n_rel": np.load(n_path),
-        "chi_support_mask": np.load(support_path).astype(bool) if support_path.exists() else None,
+        "omega": drive_response["omega"],
+        "chi_r": drive_response["chi_r"],
+        "chi_i": drive_response["chi_i"],
+        "alpha": drive_response["alpha"],
+        "n_rel": drive_response["n"],
+        "chi_support_mask": drive_response["chi_support_mask"],
+        "probe_response": probe_response,
         "E_xt": np.load(uppe / "E_xt_out.npy"),
         "x_m": np.load(uppe / "x_m.npy"),
         "time_s_uppe": np.load(uppe / "time_s.npy"),
         "E_t_feedback": (sbe / "E_t_feedback.npy"),
+        "transition_model_path": transition_model_path,
+        "transition_energy_used": np.load(transition_energy_used_path) if transition_energy_used_path.exists() else None,
+        "transition_osc_used": np.load(transition_osc_used_path) if transition_osc_used_path.exists() else None,
     }
     return data
 
@@ -123,9 +171,8 @@ def _load_reference_csv(path: Path) -> dict[str, np.ndarray]:
             "energy_eV": col_energy,
             "chi_real": pick("chireal", "rechi", "chire"),
             "chi_imag": pick("chiimag", "imchi", "chiim"),
-            "alpha": pick("alpha", "absorption", "absorptioncoeff"),
+            "alpha": pick("alpha", "alphaminv", "absorption", "absorptioncoeff"),
             "n": pick("n", "refractiveindex"),
-            "osc": pick("osc", "f", "oscillatorstrength", "oscstrength"),
         }
 
         data = {k: [] for k, v in cols.items() if v is not None}
@@ -146,53 +193,18 @@ def _load_reference_csv(path: Path) -> dict[str, np.ndarray]:
                 continue
 
     out = {k: np.asarray(v, dtype=float) for k, v in data.items()}
+    supported = [k for k in ("chi_real", "chi_imag", "alpha", "n") if k in out]
+    if not supported:
+        raise ValueError(
+            "Reference CSV must include at least one real optical column: "
+            "chi_real, chi_imag, alpha (or alpha_m_inv), or n."
+        )
     # Sort by energy
     idx = np.argsort(out["energy_eV"])
     for k in out:
         out[k] = out[k][idx]
 
     return out
-
-
-def _load_reference_log(base: Path) -> tuple[dict[str, np.ndarray], str] | None:
-    log_paths = [
-        base / "dft" / "gaas_lrtddft.log",
-        base / "dft" / "lrtddft.log",
-    ]
-    pattern = re.compile(r"om=([0-9.+-Ee]+)\[eV\]\s+\|me\|=([0-9.+-Ee]+)")
-    pattern_kss = re.compile(r"eji=([0-9.+-Ee]+)\[eV\]\s+\(([^)]+)\)")
-
-    for path in log_paths:
-        if not path.exists():
-            continue
-        energies: list[float] = []
-        osc: list[float] = []
-        for line in path.read_text(errors="ignore").splitlines():
-            match = pattern.search(line)
-            if match:
-                energies.append(float(match.group(1)))
-                osc.append(float(match.group(2)))
-                continue
-            match_kss = pattern_kss.search(line)
-            if match_kss:
-                try:
-                    energy = float(match_kss.group(1))
-                    vec = [float(v.strip()) for v in match_kss.group(2).split(",")]
-                    if len(vec) == 3:
-                        energies.append(energy)
-                        osc.append(float(np.linalg.norm(vec)))
-                except Exception:
-                    continue
-        if energies:
-            ref = {
-                "energy_eV": np.asarray(energies, dtype=float),
-                "osc": np.asarray(osc, dtype=float),
-            }
-            idx = np.argsort(ref["energy_eV"])
-            for k in ref:
-                ref[k] = ref[k][idx]
-            return ref, str(path)
-    return None
 
 
 def _spectral_moments(freq_eV: np.ndarray, spectrum: np.ndarray) -> tuple[float, float]:
@@ -253,6 +265,23 @@ def _compare_series(
     }
 
 
+def _select_baseline_response(data: dict[str, Any]) -> tuple[str, dict[str, Any]]:
+    probe = data.get("probe_response")
+    if probe is not None:
+        return "probe", probe
+    return (
+        "drive",
+        {
+            "omega": data["omega"],
+            "chi_r": data["chi_r"],
+            "chi_i": data["chi_i"],
+            "alpha": data["alpha"],
+            "n": data["n_rel"],
+            "chi_support_mask": data["chi_support_mask"],
+        },
+    )
+
+
 def compute_metrics(base: Path) -> dict[str, Any]:
     data = _load_outputs(base)
 
@@ -295,6 +324,24 @@ def compute_metrics(base: Path) -> dict[str, Any]:
         if np.any(support):
             support_max_eV = float((HBAR * omega[support] / E0).max())
 
+    probe_support_coverage = None
+    probe_support_min_eV = None
+    probe_support_max_eV = None
+    probe_response = data.get("probe_response")
+    if probe_response is not None:
+        probe_support = probe_response.get("chi_support_mask")
+        probe_omega = probe_response.get("omega")
+        if (
+            probe_support is not None
+            and probe_omega is not None
+            and len(probe_support) == len(probe_omega)
+        ):
+            probe_support_coverage = float(np.mean(probe_support))
+            if np.any(probe_support):
+                probe_energy = HBAR * probe_omega[probe_support] / E0
+                probe_support_min_eV = float(np.min(probe_energy))
+                probe_support_max_eV = float(np.max(probe_energy))
+
     # Energy proxy
     energy_xt = np.trapezoid(np.abs(E_xt) ** 2, x_m, axis=0)
     energy_mean = float(np.mean(energy_xt))
@@ -327,6 +374,25 @@ def compute_metrics(base: Path) -> dict[str, Any]:
         eps = 1e-30
         decay_slope = float(np.polyfit(t_tail, np.log(tail + eps), 1)[0])
 
+    transition_model = None
+    tmodel_path = data["transition_model_path"]
+    if tmodel_path.exists():
+        try:
+            transition_model = json.loads(tmodel_path.read_text())
+        except Exception:
+            transition_model = None
+
+    transition_summary = None
+    t_energy = data["transition_energy_used"]
+    t_osc = data["transition_osc_used"]
+    if t_energy is not None and t_osc is not None and len(t_energy) == len(t_osc) and len(t_energy) > 0:
+        transition_summary = {
+            "n_transitions": int(len(t_energy)),
+            "energy_min_eV": float(np.min(t_energy)),
+            "energy_max_eV": float(np.max(t_energy)),
+            "osc_sum": float(np.sum(t_osc)),
+        }
+
     # NaN/Inf checks
     def _finite_stats(arr: np.ndarray) -> dict[str, int]:
         return {
@@ -351,6 +417,12 @@ def compute_metrics(base: Path) -> dict[str, Any]:
             "coverage_fraction": support_coverage,
             "max_energy_eV": support_max_eV,
         },
+        "probe_response": {
+            "available": bool(probe_response is not None),
+            "coverage_fraction": probe_support_coverage,
+            "min_energy_eV": probe_support_min_eV,
+            "max_energy_eV": probe_support_max_eV,
+        },
         "dephasing": {
             "tail_max_over_peak": tail_ratio,
             "tail_mean": tail_mean,
@@ -371,59 +443,41 @@ def compute_metrics(base: Path) -> dict[str, Any]:
             "std_rel": energy_std / energy_mean if energy_mean else None,
         },
         "feedback_rel_l2": fb_rel_l2,
+        "transition_model": transition_model,
+        "transition_summary": transition_summary,
     }
 
     return metrics
-
-
-def _oscillator_spectrum(energy_grid: np.ndarray, e0: np.ndarray, osc: np.ndarray, sigma: float) -> np.ndarray:
-    if sigma <= 0:
-        sigma = 0.05
-    spec = np.zeros_like(energy_grid, dtype=float)
-    for e, f in zip(e0, osc):
-        spec += f * np.exp(-0.5 * ((energy_grid - e) / sigma) ** 2)
-    return spec
 
 
 def _baseline_from_ref(
     data: dict[str, Any],
     ref: dict[str, np.ndarray],
     label: str,
-    osc_sigma: float,
 ) -> dict[str, Any]:
-    omega = data["omega"]
+    response_source, response = _select_baseline_response(data)
+    omega = response["omega"]
     omega_eV = HBAR * omega / E0
 
-    baseline: dict[str, Any] = {"path": label, "metrics": {}}
-    if label.endswith(".log"):
-        baseline["notes"] = "Reference built from LR-TDDFT log (transition vectors or |me| used as oscillator proxy)."
-
+    baseline: dict[str, Any] = {"path": label, "response_source": response_source, "metrics": {}}
     if "chi_real" in ref:
         baseline["metrics"]["chi_real"] = _compare_series(
-            omega_eV, data["chi_r"], ref["energy_eV"], ref["chi_real"]
+            omega_eV, response["chi_r"], ref["energy_eV"], ref["chi_real"]
         )
     if "chi_imag" in ref:
         baseline["metrics"]["chi_imag"] = _compare_series(
-            omega_eV, data["chi_i"], ref["energy_eV"], ref["chi_imag"]
+            omega_eV, response["chi_i"], ref["energy_eV"], ref["chi_imag"]
         )
     if "alpha" in ref:
         baseline["metrics"]["alpha"] = _compare_series(
-            omega_eV, data["alpha"], ref["energy_eV"], ref["alpha"]
+            omega_eV, response["alpha"], ref["energy_eV"], ref["alpha"]
         )
         baseline["metrics"]["alpha_abs"] = _compare_series(
-            omega_eV, np.abs(data["alpha"]), ref["energy_eV"], ref["alpha"]
-        )
-    elif "osc" in ref:
-        ref_alpha = _oscillator_spectrum(omega_eV, ref["energy_eV"], ref["osc"], osc_sigma)
-        baseline["metrics"]["alpha_from_osc"] = _compare_series(
-            omega_eV, data["alpha"], omega_eV, ref_alpha
-        )
-        baseline["metrics"]["alpha_from_osc_abs"] = _compare_series(
-            omega_eV, np.abs(data["alpha"]), omega_eV, ref_alpha
+            omega_eV, np.abs(response["alpha"]), ref["energy_eV"], ref["alpha"]
         )
     if "n" in ref:
         baseline["metrics"]["n"] = _compare_series(
-            omega_eV, data["n_rel"], ref["energy_eV"], ref["n"]
+            omega_eV, response["n"], ref["energy_eV"], ref["n"]
         )
 
     # Recommend polarization scaling from alpha (preferred) or chi_imag
@@ -431,18 +485,10 @@ def _baseline_from_ref(
         scale = baseline["metrics"]["alpha_abs"]["scale"]
         baseline["recommended_polarization_scale"] = scale
         baseline["recommended_source"] = "alpha_abs"
-    elif baseline["metrics"].get("alpha_from_osc_abs") and baseline["metrics"]["alpha_from_osc_abs"] is not None:
-        scale = baseline["metrics"]["alpha_from_osc_abs"]["scale"]
-        baseline["recommended_polarization_scale"] = scale
-        baseline["recommended_source"] = "alpha_from_osc_abs"
     elif baseline["metrics"].get("alpha") and baseline["metrics"]["alpha"] is not None:
         scale = baseline["metrics"]["alpha"]["scale"]
         baseline["recommended_polarization_scale"] = scale
         baseline["recommended_source"] = "alpha"
-    elif baseline["metrics"].get("alpha_from_osc") and baseline["metrics"]["alpha_from_osc"] is not None:
-        scale = baseline["metrics"]["alpha_from_osc"]["scale"]
-        baseline["recommended_polarization_scale"] = scale
-        baseline["recommended_source"] = "alpha_from_osc"
     elif baseline["metrics"].get("chi_imag") and baseline["metrics"]["chi_imag"] is not None:
         scale = baseline["metrics"]["chi_imag"]["scale"]
         baseline["recommended_polarization_scale"] = scale
@@ -451,10 +497,10 @@ def _baseline_from_ref(
     return baseline
 
 
-def compute_baseline(base: Path, ref_csv: Path, osc_sigma: float) -> dict[str, Any]:
+def compute_baseline(base: Path, ref_csv: Path) -> dict[str, Any]:
     data = _load_outputs(base)
     ref = _load_reference_csv(ref_csv)
-    return _baseline_from_ref(data, ref, str(ref_csv), osc_sigma)
+    return _baseline_from_ref(data, ref, str(ref_csv))
 
 
 def _run_sbe_only(sbe_dir: Path, env: dict[str, str]) -> float:
@@ -499,13 +545,19 @@ def main() -> None:
     )
     parser.add_argument("--sweep-coupling-iters", default=None, help="Coupling iters for sweeps")
     parser.add_argument("--ref-csv", default=None, help="Reference CSV for baseline comparison")
-    parser.add_argument("--osc-broadening", type=float, default=0.1, help="Sigma [eV] for oscillator spectrum")
     parser.add_argument("--linear-check", action="store_true", help="Run linear-regime check")
     parser.add_argument("--linear-amp", type=float, default=None, help="Base amplitude for linear check")
     args = parser.parse_args()
 
     base = Path(__file__).resolve().parents[1]
     sbe_dir = base / "sbe"
+    ref_path: Path | None = None
+    if args.ref_csv:
+        cand = Path(args.ref_csv)
+        if not cand.is_absolute():
+            cand = base / cand
+        if cand.exists():
+            ref_path = cand.resolve()
 
     dt_list = _parse_list(args.sweep_dt_as, float) if args.sweep_dt_as else []
     dz_list = _parse_list(args.sweep_dz, float) if args.sweep_dz else []
@@ -520,7 +572,7 @@ def main() -> None:
     do_sweep = any([dt_list, dz_list, nx_list, z_steps_list, x_window_list, mixing_list, beta_list, norm_list])
 
     report: dict[str, Any] = {
-        "timestamp_utc": datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S"),
+        "timestamp_utc": _utc_timestamp(),
         "git": _git_info(base),
         "scaling": {
             "density_m3": os.getenv("SBUP3_DENSITY_M3"),
@@ -534,19 +586,8 @@ def main() -> None:
 
     if not do_sweep:
         report["metrics"] = compute_metrics(base)
-        if args.ref_csv:
-            ref_path = Path(args.ref_csv)
-            if ref_path.exists():
-                report["baseline"] = compute_baseline(base, ref_path, args.osc_broadening)
-        else:
-            fallback = _load_reference_log(base)
-            if fallback:
-                ref, label = fallback
-                report["baseline"] = _baseline_from_ref(_load_outputs(base), ref, label, args.osc_broadening)
-            else:
-                ref_path = base / "analysis" / "data" / "gaas_tddft_reference.csv"
-                if ref_path.exists():
-                    report["baseline"] = compute_baseline(base, ref_path, args.osc_broadening)
+        if ref_path is not None:
+            report["baseline"] = compute_baseline(base, ref_path)
         if args.linear_check:
             base_amp = args.linear_amp
             if base_amp is None:
@@ -621,11 +662,14 @@ def main() -> None:
                                             _run([sys.executable, "-m", "uppe.uppe_2d"], cwd=base, env=env)
 
                                         metrics = compute_metrics(base)
-                                        report["sweep"].append({"params": params, "metrics": metrics})
+                                        entry: dict[str, Any] = {"params": params, "metrics": metrics}
+                                        if ref_path is not None:
+                                            entry["baseline"] = compute_baseline(base, ref_path)
+                                        report["sweep"].append(entry)
 
     report_dir = base / args.report_dir
     report_dir.mkdir(parents=True, exist_ok=True)
-    report_path = report_dir / f"validation_{report['timestamp_utc']}.json"
+    report_path = _unique_validation_report_path(report_dir, str(report["timestamp_utc"]))
     report_path.write_text(json.dumps(report, indent=2))
 
     print(f"\n[OK] Wrote validation report: {report_path}")

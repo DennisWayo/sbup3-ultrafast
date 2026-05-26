@@ -1,0 +1,11 @@
+{
+  "input_yaml": "/Users/denniswayo/sbup3-ultrafast/analysis/data/sources/gaas/Aspnes_1986.yml",
+  "output_csv": "/Users/denniswayo/sbup3-ultrafast/analysis/data/gaas_exp_aspnes_1986.csv",
+  "source_label": "Aspnes1986_GaAs",
+  "source_url": "https://refractiveindex.info/?shelf=main&book=GaAs&page=Aspnes",
+  "references": "D. E. Aspnes, S. M. Kelso, R. A. Logan, R. Bhat. Optical properties of Al<sub>x</sub>Ga<sub>1\u2212x</sub>As. <a href=\"https://doi.org/10.1063/1.337426\"><i>J. Appl. Phys.</i> <b>60</b>, 754-767 (1986)</a>",
+  "comments": "Crysal orientation: <100>; Doping: 1.7\u00d710<sup>17</sup> cm<sup>-3</sup>, n; Room temperature",
+  "n_rows": 46,
+  "energy_min_eV": 1.499929814096301,
+  "energy_max_eV": 6.001171269757998
+}

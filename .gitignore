@@ -3,11 +3,17 @@
 .vscode/
 .DS_Store
 .mplconfig/
+.matplotlib/
 .cache/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
 # Python
 __pycache__/
 *.pyc
+.venv*/
 
 # Jupyter
 notebooks/
@@ -19,8 +25,19 @@ notebooks/
 *.log
 *.txt
 *.gpw
-*.tex
-*.bib
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.out
+*.pdf
+*.synctex.gz
+sbe/root-run-outputs/
 uppe/outputs/
 analysis/figures/
 analysis/reports/
+sbe/transition_model.json
+dft/transitions_meta.json
+dft/gaas_ground_state_meta.json
+dft/gaas_dielectric_meta.json
