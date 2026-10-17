@@ -1,0 +1,81 @@
+{
+  "release_id": "primary_jellison_20260520_081916",
+  "git": {
+    "commit": "fcb91a39e89f33ca14f6210e557ac7f102d893ad",
+    "dirty": true
+  },
+  "env_exports": {
+    "SBUP3_DENSITY_M3": "1.758546651023198e+28",
+    "SBUP3_OSC_NORM_FACTOR": "0.9592641193252643",
+    "SBUP3_POLARIZATION_SCALE": "1"
+  },
+  "run_notes": {
+    "reference_csv": "analysis/data/gaas_exp_jellison_1992.csv",
+    "chi_eps": "1e-12",
+    "response_power_cutoff": "1.0",
+    "chi_max_ev": "3.0",
+    "transition_extraction_defaults": {
+      "min_rel_height": 0.01,
+      "min_sep_ev": 0.02,
+      "min_count": 16,
+      "max_count": 24,
+      "sum_f": 1.0
+    }
+  },
+  "artifacts": [
+    {
+      "path": "analysis/reports/study/run_release_primary_jellison_20260520_081916.json",
+      "exists": true,
+      "sha256": "20df73db48ae49fbaa70315ca07419515774047debe0eea3831e4280dcc73477",
+      "size_bytes": 14405
+    },
+    {
+      "path": "analysis/reports/study/calibration_release_primary_jellison.json",
+      "exists": true,
+      "sha256": "25a6fa643408b59609ed2fb0ec94a01808b648e5d23f02fa395f01e266c5a8c5",
+      "size_bytes": 3642
+    },
+    {
+      "path": "analysis/reports/study/validation_release_primary_jellison_20260520_081916_104478.json",
+      "exists": true,
+      "sha256": "88d431f4f0164d369f36e87de250973b52d01440cb539b35ce0a5d62a1156f6b",
+      "size_bytes": 3911
+    },
+    {
+      "path": "analysis/reports/study/validation_linearity_primary_jellison_20260520_081928_899730.json",
+      "exists": true,
+      "sha256": "fd9097818178ba16ce50eb09736d35509203888425388842fb9e71f4b2edd844",
+      "size_bytes": 3977
+    },
+    {
+      "path": "analysis/reports/study/validation_convergence_primary_jellison_20260520_081928_899769.json",
+      "exists": true,
+      "sha256": "c5eab5cd9c59d4faf9d5ac56aee3449cabeac2ee10f76e442f3a014657fcffb2",
+      "size_bytes": 17270
+    },
+    {
+      "path": "analysis/reports/study/polarization_release_primary_jellison.env",
+      "exists": true,
+      "sha256": "c64745a96cf668c1931a15efb478f0f84d10b66c8b37ec7ef4951d59c1484bac",
+      "size_bytes": 163
+    },
+    {
+      "path": "dft/transitions_meta.json",
+      "exists": true,
+      "sha256": "d41cfb52b32dcbbedeb11ab026a216c1c1943868ce0f686efa0244fd5883b0df",
+      "size_bytes": 326
+    },
+    {
+      "path": "dft/transitions_E_eV.npy",
+      "exists": true,
+      "sha256": "4c7170b370f44d85275ae7afc1a44b7606c9e4570fe5fba85c3a1387745e16b3",
+      "size_bytes": 256
+    },
+    {
+      "path": "dft/transitions_f.npy",
+      "exists": true,
+      "sha256": "a1792b2e06bb97e7fd6c8873e8418ab1587b0d6584bf26fb6a8d2a54b19c8747",
+      "size_bytes": 256
+    }
+  ]
+}
