@@ -1,0 +1,17 @@
+{
+  "model": "100 micrometre sequential GaAs propagation with a 2 micrometre Gaussian transverse waist",
+  "grid": "10 micrometre/256 and 20 micrometre/512 periodic FFT windows; same spatial step",
+  "interpretation": "Step refinement agrees, but box-size sensitivity prevents a finite-beam field claim",
+  "inputs_sha256": {
+    "time_s": "023e036187ec369342694fc627fb05edf4860cf0ebe139260606b26f587fb2ff",
+    "E_t": "1fbb86fe99b95aca29a6fc3a18a3a3aaf53e649a306184af62b5309e6c46bc81",
+    "polarization": "b13997dd54eb877cd299cd414fc7cce2f7eb60a5faa16a2cef03574a4e31b532"
+  },
+  "solver_sha256": "d22220bf7149ece5f31e0ce4c53adb2cf06791ae317ef717fa35e34a2094a5a7",
+  "metrics": {
+    "step_100_to_200_relative_rms": 6.8464774217977734e-15,
+    "window_10_to_20um_central_relative_rms": 0.920093315507155,
+    "outer_20_percent_energy_fraction_10um": 0.07851223861187374,
+    "outer_20_percent_energy_fraction_20um": 0.32816179794787587
+  }
+}

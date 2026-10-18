@@ -1,0 +1,228 @@
+{
+  "window_eV": [
+    1.5715537,
+    2.9776807
+  ],
+  "measured_points": 84,
+  "reference": {
+    "path": "/Users/denniswayo/sbup3-ultrafast/analysis/data/gaas_exp_jellison_1992.csv",
+    "sha256": "be9c5b3c0dd1a6533bfeeef6d817bca28888b2d8f06f3b59cf30f8c364e0acb0"
+  },
+  "normalization": "RMSE divided by the maximum absolute Jellison value in the same channel",
+  "interpolation": "linear, model to measured energy grid; no extrapolation or fitting",
+  "interpretation": "Finite parameter sensitivities, not a declaration of convergence or experimental agreement",
+  "cases": {
+    "legacy_gs4_resp6_b48_e150": {
+      "csv_path": "/Users/denniswayo/sbup3-ultrafast/analysis/data/gaas_dielectric_reference.csv",
+      "csv_sha256": "a1e105dae38a0ce17283c451f870983ae9177cec374023973539548cc49ee4c4",
+      "rows": 242,
+      "nrmse_against_jellison": {
+        "n": 0.1793434715122847,
+        "alpha_m_inv": 0.3596076470205093
+      }
+    },
+    "gs6_resp6_b48_e150": {
+      "csv_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_k6_b48_e150.csv",
+      "csv_sha256": "8e09e1e2822ea9e457bf3ae9b69951064ef4fd7b7d3b02c08642d1330f693d6e",
+      "rows": 242,
+      "nrmse_against_jellison": {
+        "n": 0.17888426276783412,
+        "alpha_m_inv": 0.35636979523035117
+      },
+      "meta_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_k6_b48_e150.meta.json",
+      "meta_sha256": "5daa35fb558136aee2f0a3bb2584d4f69d70326bc29eb8216751b4408df7f974"
+    },
+    "gs6_resp6_b48_e200": {
+      "csv_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_k6_b48_e200.csv",
+      "csv_sha256": "712c63819a3ffa06b01f25ea5bbef82874950e74b45157f4e0f61e28cc7410df",
+      "rows": 242,
+      "nrmse_against_jellison": {
+        "n": 0.1788900360205107,
+        "alpha_m_inv": 0.35621263420795185
+      },
+      "meta_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_k6_b48_e200.meta.json",
+      "meta_sha256": "e97c0ab2650bdfe2a1b72dbeff9cf527614320003b623da59af896888986939f"
+    },
+    "gs6_resp6_b48_eta003": {
+      "csv_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_k6_b48_eta003.csv",
+      "csv_sha256": "b8de61ec4adf85bd3847b36dc11c39b0c92b1d1939b64a1b83f3e7cea7d69a64",
+      "rows": 242,
+      "nrmse_against_jellison": {
+        "n": 0.21154567235991067,
+        "alpha_m_inv": 0.41888224235816945
+      },
+      "meta_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_k6_b48_eta003.meta.json",
+      "meta_sha256": "fba02a25640aeb1d52fda03a7e3fa9e113a3d2a383d69fdcbfc8c73e30feb0a0"
+    },
+    "gs6_resp6_b48_freq001": {
+      "csv_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_k6_b48_freq001.csv",
+      "csv_sha256": "c8838c855d0419c6905eb9589f0e28ecfeb0a7dee660de44a076e4e6612f11d5",
+      "rows": 483,
+      "nrmse_against_jellison": {
+        "n": 0.1819377919969735,
+        "alpha_m_inv": 0.3626586912203883
+      },
+      "meta_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_k6_b48_freq001.meta.json",
+      "meta_sha256": "42e3679a66491ba0a2ab0092d0c64c5cf856aa9d24c656b737e759a8313289ad"
+    },
+    "gs6_resp6_b48_freq0005": {
+      "csv_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_k6_b48_freq0005.csv",
+      "csv_sha256": "2b81379ba43f2c90f820e3270356c6112762c219b2b9d11d0bf02c0a3ef26bb9",
+      "rows": 964,
+      "nrmse_against_jellison": {
+        "n": 0.18283613574767163,
+        "alpha_m_inv": 0.3647409582715899
+      },
+      "meta_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_k6_b48_freq0005.meta.json",
+      "meta_sha256": "979a00f2998caacac4e6ccab4d02dc9012a7d3e4c841a26ba3c5fad02d5d1a4a"
+    },
+    "gs6_resp8_b48_e150": {
+      "csv_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_k8_b48_e150.csv",
+      "csv_sha256": "55c0d866b13505c88cc250d20959bd362055b7c1090ca2c6c1f93f1f706fa225",
+      "rows": 242,
+      "nrmse_against_jellison": {
+        "n": 0.1656349521898493,
+        "alpha_m_inv": 0.33490578877951555
+      },
+      "meta_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_k8_b48_e150.meta.json",
+      "meta_sha256": "7783479a6c1b1816cbfdef4d480c2a8a36568381da9e442755fbcbe63acba829"
+    },
+    "gs6_resp10_b48_e150": {
+      "csv_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_k10_b48_e150.csv",
+      "csv_sha256": "aa0e232b5c1407ecd58d6c56958490c4732d017bbb4c9b1989d5a1cb4b86dffb",
+      "rows": 242,
+      "nrmse_against_jellison": {
+        "n": 0.16299132241427255,
+        "alpha_m_inv": 0.32767128282339575
+      },
+      "meta_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_k10_b48_e150.meta.json",
+      "meta_sha256": "43d4d2f934ec1dbdb2e60dd08765c1e24ed81a995a3842cf457b5139b3b334f2"
+    },
+    "gs6_resp6_b64_e150": {
+      "csv_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_k6_b64_e150.csv",
+      "csv_sha256": "8e09e1e2822ea9e457bf3ae9b69951064ef4fd7b7d3b02c08642d1330f693d6e",
+      "rows": 242,
+      "nrmse_against_jellison": {
+        "n": 0.17888426276783412,
+        "alpha_m_inv": 0.35636979523035117
+      },
+      "meta_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_k6_b64_e150.meta.json",
+      "meta_sha256": "e361d5ad0b530dbb1f4670efbeb3163228e4eb8f89847c9e07ca9ecb772c9e10"
+    },
+    "gs6_pw250_resp6_b48_e150": {
+      "csv_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_pw250_k6_b48_e150.csv",
+      "csv_sha256": "dea2e99654af8712326e6770a016190b613b5d2242a1a61f1eb95f78b2935e38",
+      "rows": 242,
+      "nrmse_against_jellison": {
+        "n": 0.17885138017662586,
+        "alpha_m_inv": 0.3566959467920623
+      },
+      "meta_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_pw250_k6_b48_e150.meta.json",
+      "meta_sha256": "43e0a3e6449248ba1a859053f51c5281ab091dbe68c5352f08feb741c03c29a5"
+    },
+    "gs8_resp8_b48_e150": {
+      "csv_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs8_k8_b48_e150.csv",
+      "csv_sha256": "e6f8f8ae816a7098c81cc0a990c7787e533e3fb05a7767c6d57e9fed70b649ba",
+      "rows": 242,
+      "nrmse_against_jellison": {
+        "n": 0.16531682404348333,
+        "alpha_m_inv": 0.3334884882695132
+      },
+      "meta_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs8_k8_b48_e150.meta.json",
+      "meta_sha256": "e22332d7f98347a85984e6165b606155fed9c19205cef8d22a2046f08ecca00e"
+    }
+  },
+  "comparisons": [
+    {
+      "first": "legacy_gs4_resp6_b48_e150",
+      "second": "gs6_resp6_b48_e150",
+      "parameter_changed": "combined GS k-grid and band change",
+      "nrmse_between_curves_normalized_to_measured_max": {
+        "n": 0.021455249410683545,
+        "alpha_m_inv": 0.04712073935619959
+      }
+    },
+    {
+      "first": "gs6_resp6_b48_e150",
+      "second": "gs6_resp6_b48_e200",
+      "parameter_changed": "response cutoff",
+      "nrmse_between_curves_normalized_to_measured_max": {
+        "n": 8.875311446005803e-05,
+        "alpha_m_inv": 0.00023556504441800044
+      }
+    },
+    {
+      "first": "gs6_resp6_b48_e150",
+      "second": "gs6_resp6_b48_eta003",
+      "parameter_changed": "broadening",
+      "nrmse_between_curves_normalized_to_measured_max": {
+        "n": 0.056348920775678664,
+        "alpha_m_inv": 0.10949574811936684
+      }
+    },
+    {
+      "first": "gs6_resp6_b48_e150",
+      "second": "gs6_resp6_b48_freq001",
+      "parameter_changed": "frequency grid seed",
+      "nrmse_between_curves_normalized_to_measured_max": {
+        "n": 0.00978031878632921,
+        "alpha_m_inv": 0.022332846585816538
+      }
+    },
+    {
+      "first": "gs6_resp6_b48_freq001",
+      "second": "gs6_resp6_b48_freq0005",
+      "parameter_changed": "frequency grid seed",
+      "nrmse_between_curves_normalized_to_measured_max": {
+        "n": 0.0030956075049451827,
+        "alpha_m_inv": 0.006731422599048064
+      }
+    },
+    {
+      "first": "gs6_resp6_b48_e150",
+      "second": "gs6_resp8_b48_e150",
+      "parameter_changed": "response k-grid",
+      "nrmse_between_curves_normalized_to_measured_max": {
+        "n": 0.0955061700178783,
+        "alpha_m_inv": 0.17574389832855394
+      }
+    },
+    {
+      "first": "gs6_resp8_b48_e150",
+      "second": "gs6_resp10_b48_e150",
+      "parameter_changed": "response k-grid",
+      "nrmse_between_curves_normalized_to_measured_max": {
+        "n": 0.09827038892952862,
+        "alpha_m_inv": 0.19576569100128766
+      }
+    },
+    {
+      "first": "gs6_resp6_b48_e150",
+      "second": "gs6_resp6_b64_e150",
+      "parameter_changed": "response bands",
+      "nrmse_between_curves_normalized_to_measured_max": {
+        "n": 0.0,
+        "alpha_m_inv": 0.0
+      }
+    },
+    {
+      "first": "gs6_resp6_b48_e150",
+      "second": "gs6_pw250_resp6_b48_e150",
+      "parameter_changed": "ground-state PW cutoff",
+      "nrmse_between_curves_normalized_to_measured_max": {
+        "n": 0.0006944207295405559,
+        "alpha_m_inv": 0.0016557457996126633
+      }
+    },
+    {
+      "first": "gs6_resp8_b48_e150",
+      "second": "gs8_resp8_b48_e150",
+      "parameter_changed": "ground-state k-grid",
+      "nrmse_between_curves_normalized_to_measured_max": {
+        "n": 0.0027312494304491167,
+        "alpha_m_inv": 0.005696461724558196
+      }
+    }
+  ],
+  "missing_cases": []
+}
