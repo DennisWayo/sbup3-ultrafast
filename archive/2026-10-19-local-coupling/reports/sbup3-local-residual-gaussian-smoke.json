@@ -1,0 +1,78 @@
+{
+  "model": "Dispersive linear reduced-SBE background plus local nonlinear SBE residual recomputed at each z step",
+  "source_rule": "Predictor-corrector average of beginning and predicted end-step residual polarization",
+  "z_um": 2.0,
+  "dz_um": 0.25,
+  "z_steps": 8,
+  "peak_field_vpm": 10000000.0,
+  "peak_population": 4.406767082094821e-07,
+  "relative_rms_vs_frozen_residual": 0.0003065517350329257,
+  "step_diagnostics": [
+    {
+      "step": 1,
+      "z_um": 0.25,
+      "peak_field_vpm": 9960453.466413416,
+      "relative_polarization_change": 1.0867458566237769
+    },
+    {
+      "step": 2,
+      "z_um": 0.5,
+      "peak_field_vpm": 9911713.267147576,
+      "relative_polarization_change": 1.0863906818765727
+    },
+    {
+      "step": 3,
+      "z_um": 0.75,
+      "peak_field_vpm": 9854173.925294707,
+      "relative_polarization_change": 1.0860368757845693
+    },
+    {
+      "step": 4,
+      "z_um": 1.0,
+      "peak_field_vpm": 9788309.60352931,
+      "relative_polarization_change": 1.0856821127715388
+    },
+    {
+      "step": 5,
+      "z_um": 1.25,
+      "peak_field_vpm": 9714645.191484727,
+      "relative_polarization_change": 1.0853263760194023
+    },
+    {
+      "step": 6,
+      "z_um": 1.5,
+      "peak_field_vpm": 9633732.614599692,
+      "relative_polarization_change": 1.0849697057445262
+    },
+    {
+      "step": 7,
+      "z_um": 1.75,
+      "peak_field_vpm": 9546167.058223132,
+      "relative_polarization_change": 1.0846120867152163
+    },
+    {
+      "step": 8,
+      "z_um": 2.0,
+      "peak_field_vpm": 9452562.154361924,
+      "relative_polarization_change": 1.0842536559822282
+    }
+  ],
+  "width_um": 10.0,
+  "dx_nm": 156.25,
+  "waist_um": 2.0,
+  "time_stride": 10,
+  "zero_field_tail_fs": 150.00000000000003,
+  "time_samples": 4000,
+  "density_m3": 1.758546651023198e+28,
+  "polarization_scale": 1.0,
+  "gamma_s": 50000000000000.0,
+  "input_sha256": {
+    "time": "023e036187ec369342694fc627fb05edf4860cf0ebe139260606b26f587fb2ff",
+    "field": "1fbb86fe99b95aca29a6fc3a18a3a3aaf53e649a306184af62b5309e6c46bc81",
+    "omega": "4d2b319262fb5058d049c36aff582d6cb09b7b55f5353d19747cc318f289de5e",
+    "dipole": "220476dc6d23942cfecfaa81c7329d432853b04868543548dad4fa68c7058b63",
+    "weights": "a1792b2e06bb97e7fd6c8873e8418ab1587b0d6584bf26fb6a8d2a54b19c8747",
+    "model": "0193b978d8206f8145202a358c200b039d00d19d8a52b20a22b5c621d4e4319e"
+  },
+  "output_npz_sha256": "047dc731774e3666e1379fdae36e947d3f972aa04ccb4b5e0822982d977ddf50"
+}
