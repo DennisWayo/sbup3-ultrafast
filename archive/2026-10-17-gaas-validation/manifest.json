@@ -1,12 +1,12 @@
 {
   "schema": 1,
   "archive": "2026-10-17-gaas-validation",
-  "file_count": 39,
+  "file_count": 54,
   "files": [
     {
       "path": "README.md",
-      "size_bytes": 3421,
-      "sha256": "24ee138c4414297a388f4a7c5de027bc8add48addc7e6ed1b252b6ce09d33146"
+      "size_bytes": 5034,
+      "sha256": "a7e1ed9353951dc5762e4c831a207598f5a87b662f2818c328927e1054e6fdcf"
     },
     {
       "path": "code_used/gaas_bulk_gpaw.py",
@@ -17,6 +17,16 @@
       "path": "code_used/gaas_dielectric_response.py",
       "size_bytes": 9881,
       "sha256": "6cc1a6371fbb0ed6428238b051348376221c0d050c16d9b872667523e9f72e7c"
+    },
+    {
+      "path": "code_used/gaas_gaussian_window_sweep.py",
+      "size_bytes": 7022,
+      "sha256": "f640e65358fe59a025cd678a888831ef1c803df52c5a75eb802891408d4274a9"
+    },
+    {
+      "path": "code_used/reprocess_dielectric_restart.py",
+      "size_bytes": 2949,
+      "sha256": "9faa643cb782bce3091fc58438a0d8f4c5efcd200cc0dc047e16499071e5ce83"
     },
     {
       "path": "code_used/sbe_rk4.py",
@@ -37,6 +47,56 @@
       "path": "dft/gaas_dielectric_gs6_k10_b48_e150.meta.json",
       "size_bytes": 611,
       "sha256": "43d4d2f934ec1dbdb2e60dd08765c1e24ed81a995a3842cf457b5139b3b334f2"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k10_b48_eta020.csv",
+      "size_bytes": 25149,
+      "sha256": "f337598b3da1fa8cedf48e4035235d153fef6d6e8d2d9502a1507d3893ba89fc"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k10_b48_eta020.meta.json",
+      "size_bytes": 542,
+      "sha256": "0276bbd135f31f63258de45095b356a2e2029d6fd2eb3a5ffeab2b4e638a1a33"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k12_b48_e150.csv",
+      "size_bytes": 25168,
+      "sha256": "8f159e05fffee7229e77be14d74ed5241fb81eb8f9e34f3e51b0c27cb9b6f92f"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k12_b48_e150.meta.json",
+      "size_bytes": 611,
+      "sha256": "5902505de3e4d158d9408735c4ebc12f7595356755e0c81dda90f48822ff4da9"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k12_b48_eta020.csv",
+      "size_bytes": 25162,
+      "sha256": "9fc662c97f65a14433f54c57b7262253c2f579d9123e3782f1b3074886b72a4f"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k12_b48_eta020.meta.json",
+      "size_bytes": 542,
+      "sha256": "e35994fd23ba2447f7c06a2406b661b27c7373e6713f2610117cefa66641a8de"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k14_b48_e150.csv",
+      "size_bytes": 25181,
+      "sha256": "8e3543de6ebbf48cb03916d6847b0bb51ed8acaba5e22c04a47a9508386f1cb2"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k14_b48_e150.meta.json",
+      "size_bytes": 611,
+      "sha256": "518c000f1eeae6826204c99a25243ec2b111366aaca23af16bda465d98e0a064"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k14_b48_eta020.csv",
+      "size_bytes": 25149,
+      "sha256": "c76b67e09ae00d9cb07a0c294b4633a581db1cf788a76f4ce407f92989e7970f"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k14_b48_eta020.meta.json",
+      "size_bytes": 542,
+      "sha256": "51666c44c2ec22eaa147732f89f439e8b20e8414c9b43fffabad10999c0a1c2e"
     },
     {
       "path": "dft/gaas_dielectric_gs6_k6_b48_e150.csv",
@@ -109,6 +169,16 @@
       "sha256": "7783479a6c1b1816cbfdef4d480c2a8a36568381da9e442755fbcbe63acba829"
     },
     {
+      "path": "dft/gaas_dielectric_gs6_k8_b48_eta020.csv",
+      "size_bytes": 25152,
+      "sha256": "8d4f17d16caa1c486fbed48d47119f95e0283fec4553afdb47df766f11c94f44"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k8_b48_eta020.meta.json",
+      "size_bytes": 540,
+      "sha256": "9fc32d1e1eb95948047f9928c8d1740e990f0aae8926a54184ad832ff0ccdc64"
+    },
+    {
       "path": "dft/gaas_dielectric_gs6_pw250_k6_b48_e150.csv",
       "size_bytes": 25162,
       "sha256": "dea2e99654af8712326e6770a016190b613b5d2242a1a61f1eb95f78b2935e38"
@@ -145,13 +215,18 @@
     },
     {
       "path": "dft_convergence_report.json",
-      "size_bytes": 10031,
-      "sha256": "de4fe554f2b752c2826364c4c573be31a353294802835d2709a3be0ee56765ca"
+      "size_bytes": 15502,
+      "sha256": "71171d94fb2fff781892c5027a713e6adadd932c4ce599befa1bebc4014c8d57"
     },
     {
       "path": "gaas_gaussian_box_diagnostic.json",
       "size_bytes": 943,
       "sha256": "7222372bbd9160270232aaf83a49cc1ac359b1b6c641bc94321ebd6710ec5d5b"
+    },
+    {
+      "path": "gaas_gaussian_window_sweep.json",
+      "size_bytes": 2682,
+      "sha256": "566d46e31d2da8e53d34ddf5c1091f90381381154be86745c9503b00a6f95711"
     },
     {
       "path": "gaas_uniform_100um.npz",
