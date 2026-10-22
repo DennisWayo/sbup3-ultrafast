@@ -1,3 +1,4 @@
 # Preserve exported GPAW CSV bytes so archived SHA-256 digests remain valid.
 archive/2026-10-17-gaas-validation/dft/*.csv -text
 archive/2026-10-19-dft-highgrid/dft/*.csv -text whitespace=cr-at-eol
+archive/2026-10-22-dft-k24/dft/*.csv -text whitespace=cr-at-eol
