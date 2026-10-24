@@ -1,0 +1,235 @@
+{
+  "historical_report": "archive/2026-10-17-solver-optics/legacy/run_release_primary_jellison_20260520_081916.json",
+  "historical_report_sha256": "20df73db48ae49fbaa70315ca07419515774047debe0eea3831e4280dcc73477",
+  "counts": {
+    "match": 4,
+    "mismatch": 24,
+    "missing": 0
+  },
+  "outputs": [
+    {
+      "group": "sbe",
+      "key": "time_s",
+      "path": "sbe/time_s.npy",
+      "expected_sha256": "023e036187ec369342694fc627fb05edf4860cf0ebe139260606b26f587fb2ff",
+      "observed_sha256": "033fe9414123ea53f669aea52bd9d666f65143416e6f0f3c4df07c8a79dbd800",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "E_t",
+      "path": "sbe/E_t.npy",
+      "expected_sha256": "1fbb86fe99b95aca29a6fc3a18a3a3aaf53e649a306184af62b5309e6c46bc81",
+      "observed_sha256": "92bfeac4f7eb90d5fc3382d49a87fe73be0653b98927e2d586a01f6a017e0d77",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "polarization",
+      "path": "sbe/polarization.npy",
+      "expected_sha256": "8027b7255ad472fbde6fa6c101a595c36fca984719b478e7c1a11caeb8af60ec",
+      "observed_sha256": "2e3c3b92c0871915aec0a051a63ef2c2ec453f2f3188bc83b916355119c4bfd4",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "population",
+      "path": "sbe/population.npy",
+      "expected_sha256": "7deaaceef78321abc58ce8ac822c2f0b8e0b4d4a92c4dba1675b0477d3538fb8",
+      "observed_sha256": "5ff6e588a91e0bc93c75ee1e535eaf22b0d5a970f5134809c0931097c7727770",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "omega_rad_s",
+      "path": "sbe/omega_rad_s.npy",
+      "expected_sha256": "9b295727c83aa9c40a9dac3c45a1ab8c38a5b2e8a2b983c1e8c5cfc41469caa9",
+      "observed_sha256": "b2b875d95ccea15a9107b783c1ed14d42410c64c83b81cac9c437ada5c33c106",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "chi_eff_complex",
+      "path": "sbe/chi_eff_complex.npy",
+      "expected_sha256": "e958a236e8cd666a8a099850a400567ec598a88a6e8f39ea4d54817ee3c957b3",
+      "observed_sha256": "20f0e6cce3c135f26518d17a345b63a069f6ab437ccda41ab395f0c83e3ea390",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "chi_eff_real",
+      "path": "sbe/chi_eff_real.npy",
+      "expected_sha256": "5a760cf2824e7ff24bced3ba6b6758dd032cc6bf160cd901990d2b83a8d65f14",
+      "observed_sha256": "6be1f7d6f3f8036b436e305d8a9ecc1b716891519dd93ecb4f8535d027929ce9",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "chi_eff_imag",
+      "path": "sbe/chi_eff_imag.npy",
+      "expected_sha256": "3b723b34fd6887805031a48f8d9cf327c8e6d0cacd341e63cbc598c32e44d835",
+      "observed_sha256": "9d99c35692a279eb8ccc6fe52dca47fc6149bb6a02251ec62b5d900cd7d0e29f",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "probe_chi_eff_complex",
+      "path": "sbe/probe_chi_eff_complex.npy",
+      "expected_sha256": "0a86ecd28e794a8ae1564d06a67140389555eee362204a0cfb1fe20f507eaf65",
+      "observed_sha256": "d42150c6feebb5bcfba282219a01e3c96e9cfb5eace9c23ade4dd79a7f016e99",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "probe_chi_eff_real",
+      "path": "sbe/probe_chi_eff_real.npy",
+      "expected_sha256": "be5375bcc12a70e604b728c05e45054108a32737e937d41e72ef692a7c3e2084",
+      "observed_sha256": "b94059ecb8eff31b34dc5046055dd21ac5fe30b9ca52450e7ea5b5cee33a3564",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "probe_chi_eff_imag",
+      "path": "sbe/probe_chi_eff_imag.npy",
+      "expected_sha256": "af106eb1cba4437123ed8775f78d2eb8f42037f861445100e86057438b8a0abc",
+      "observed_sha256": "d92854b6fcc26dcc5bbd8f8530497634b2311ad836bc525d4acb17356dbc80b1",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "probe_chi_support_mask",
+      "path": "sbe/probe_chi_support_mask.npy",
+      "expected_sha256": "5905c526f07e183a092151f2e29b3d6f3d66ba90990fc8df435cca69523a90da",
+      "observed_sha256": "ea709cd33318638e82db86e9a117cf26fa859c003ac63fa9459beac3f37870ce",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "alpha_rel",
+      "path": "sbe/alpha_rel.npy",
+      "expected_sha256": "fed57e500bff0e52f2eeb732e63f53ae7806e24bec551473d7497ac373a494b0",
+      "observed_sha256": "b4d6ad9b4d26812189dceec44aedf40bd862960ec392b6c93dd095fcec81507e",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "n_rel",
+      "path": "sbe/n_rel.npy",
+      "expected_sha256": "c99a57e931e5ed9959a753cc5d9f7deeb696318ce581d28e2a8f7025b4e7e8fb",
+      "observed_sha256": "1258adf32cc33ad8fecb79f57caadb58dbaad460d70b4f00b7824913dfd3299b",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "probe_alpha_rel",
+      "path": "sbe/probe_alpha_rel.npy",
+      "expected_sha256": "bcd33cc312d26139e94614c32cbd808d24e6963fb8634a1f5e79fd2c3d8d535b",
+      "observed_sha256": "ba4c06bb0d19441cd404303938d2e903d171b04943330013dfd707499e792a85",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "probe_n_rel",
+      "path": "sbe/probe_n_rel.npy",
+      "expected_sha256": "811d8ef282feaebe0510a0904f994529b722a948ae56e21acf6946376988b293",
+      "observed_sha256": "6c60276ad6731568589ce692c31dcf7e04e8df2f7dbd56744c35d08ec7a52a05",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "probe_alpha_m_inv",
+      "path": "sbe/probe_alpha_m_inv.npy",
+      "expected_sha256": "bcd33cc312d26139e94614c32cbd808d24e6963fb8634a1f5e79fd2c3d8d535b",
+      "observed_sha256": "ba4c06bb0d19441cd404303938d2e903d171b04943330013dfd707499e792a85",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "probe_n_real",
+      "path": "sbe/probe_n_real.npy",
+      "expected_sha256": "cc275b7d15a4806cadaa28b99720ed008a6ac12881a5fcfd54caefedc7246914",
+      "observed_sha256": "cc4e1bfbafdc3a04bb3f44366bc03971ccc85578d597f9467f26d7a51e7f1e5b",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "E_t_feedback",
+      "path": "sbe/E_t_feedback.npy",
+      "expected_sha256": "3f991018357f84c92cdd48071eb6b7e0654a20a42a440b4253bfb41b8d58aba3",
+      "observed_sha256": "3f991018357f84c92cdd48071eb6b7e0654a20a42a440b4253bfb41b8d58aba3",
+      "state": "match"
+    },
+    {
+      "group": "sbe",
+      "key": "transition_model",
+      "path": "sbe/transition_model.json",
+      "expected_sha256": "6ddfa1441b476e16e4a1579fc0e51c34d120debd01387f7b4aa300f5ecfa1266",
+      "observed_sha256": "639b85f8a9de0b65b13471abe4167a8c78e0ff0413934f39afb87662fe7fbdd3",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "transition_omega_rad_s_used",
+      "path": "sbe/transition_omega_rad_s_used.npy",
+      "expected_sha256": "4d2b319262fb5058d049c36aff582d6cb09b7b55f5353d19747cc318f289de5e",
+      "observed_sha256": "4d2b319262fb5058d049c36aff582d6cb09b7b55f5353d19747cc318f289de5e",
+      "state": "match"
+    },
+    {
+      "group": "sbe",
+      "key": "transition_d_eff_Cm_used",
+      "path": "sbe/transition_d_eff_Cm_used.npy",
+      "expected_sha256": "220476dc6d23942cfecfaa81c7329d432853b04868543548dad4fa68c7058b63",
+      "observed_sha256": "4c5e7c885382931daf08c0d484505a2d08e464a219832ed027723437e8324bb5",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "transition_osc_used",
+      "path": "sbe/transition_osc_used.npy",
+      "expected_sha256": "3a6c40d92eed1c6394881b3e7e1f89546e0287081ae1976337905b61d295cbb3",
+      "observed_sha256": "a1792b2e06bb97e7fd6c8873e8418ab1587b0d6584bf26fb6a8d2a54b19c8747",
+      "state": "mismatch"
+    },
+    {
+      "group": "sbe",
+      "key": "transition_weight_used",
+      "path": "sbe/transition_weight_used.npy",
+      "expected_sha256": "a1792b2e06bb97e7fd6c8873e8418ab1587b0d6584bf26fb6a8d2a54b19c8747",
+      "observed_sha256": "a1792b2e06bb97e7fd6c8873e8418ab1587b0d6584bf26fb6a8d2a54b19c8747",
+      "state": "match"
+    },
+    {
+      "group": "sbe",
+      "key": "transition_energy_eV_used",
+      "path": "sbe/transition_energy_eV_used.npy",
+      "expected_sha256": "42eb8243ccf7a27145e1dfe35039fc5d6579d91e6eebfe76b177c52c8b43f7f9",
+      "observed_sha256": "42eb8243ccf7a27145e1dfe35039fc5d6579d91e6eebfe76b177c52c8b43f7f9",
+      "state": "match"
+    },
+    {
+      "group": "uppe",
+      "key": "E_xt_out",
+      "path": "uppe/outputs/E_xt_out.npy",
+      "expected_sha256": "57b4436d4061850c806d4135ea6054960bb6903781d0c3ca1742c7a945e968bd",
+      "observed_sha256": "800d5e7e5da8dc2d8a6f82ced9f9da6e954f065c6df78ba49b5fd078f93d0b58",
+      "state": "mismatch"
+    },
+    {
+      "group": "uppe",
+      "key": "x_m",
+      "path": "uppe/outputs/x_m.npy",
+      "expected_sha256": "3ae18349ee12416369a39c7b88549adeb4aa018d3ef61699fb657501166578e1",
+      "observed_sha256": "980ddcc9da541cfc73d6c30c9748ae194b31a0ef6559615ba7792e49b0672b8f",
+      "state": "mismatch"
+    },
+    {
+      "group": "uppe",
+      "key": "time_s",
+      "path": "uppe/outputs/time_s.npy",
+      "expected_sha256": "023e036187ec369342694fc627fb05edf4860cf0ebe139260606b26f587fb2ff",
+      "observed_sha256": "033fe9414123ea53f669aea52bd9d666f65143416e6f0f3c4df07c8a79dbd800",
+      "state": "mismatch"
+    }
+  ]
+}

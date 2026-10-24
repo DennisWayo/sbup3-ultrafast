@@ -1,0 +1,96 @@
+{
+  "window_eV": [
+    1.5715537,
+    2.9776807
+  ],
+  "measured_points": 84,
+  "reference_path": "/Users/denniswayo/sbup3-ultrafast/analysis/data/gaas_exp_jellison_1992.csv",
+  "reference_sha256": "be9c5b3c0dd1a6533bfeeef6d817bca28888b2d8f06f3b59cf30f8c364e0acb0",
+  "common_settings": {
+    "gs_kpts": [
+      6,
+      6,
+      6
+    ],
+    "nbands": 48,
+    "eta_eV": 0.05,
+    "ecut_eV": 150.0,
+    "integrationmode": "point integration",
+    "frequencies": {
+      "type": "nonlinear",
+      "domega0_eV": 0.02,
+      "omega2_eV": 5.0,
+      "omegamax_eV": 8.0
+    }
+  },
+  "normalization": "RMSE divided by maximum absolute Jellison value in each channel",
+  "cases": {
+    "14": {
+      "csv_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_k14_b48_e150.csv",
+      "csv_sha256": "8e3543de6ebbf48cb03916d6847b0bb51ed8acaba5e22c04a47a9508386f1cb2",
+      "meta_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/dft/gaas_dielectric_gs6_k14_b48_e150.meta.json",
+      "meta_sha256": "518c000f1eeae6826204c99a25243ec2b111366aaca23af16bda465d98e0a064",
+      "direct_nrmse": {
+        "n": 0.158815232915376,
+        "alpha_m_inv": 0.318195834585199
+      }
+    },
+    "16": {
+      "csv_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-19-dft-highgrid/dft/gaas_dielectric_gs6_k16_b48_e150.csv",
+      "csv_sha256": "b901774ca7e6d5435ee69a2d83bafea706bd8af5d1a614ce7115596939206d09",
+      "meta_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-19-dft-highgrid/dft/gaas_dielectric_gs6_k16_b48_e150.meta.json",
+      "meta_sha256": "51eaa4810aeef4a68076597a2716207c65f84b3dc230b7255f4fc7cd401cb0c0",
+      "direct_nrmse": {
+        "n": 0.16300080839237413,
+        "alpha_m_inv": 0.3259436982813876
+      }
+    },
+    "18": {
+      "csv_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-19-dft-highgrid/dft/gaas_dielectric_gs6_k18_b48_e150.csv",
+      "csv_sha256": "d6f3b6fb8bde368bc9c54bb0b6f67827b0a854eb0efd4b5b4b30067bcc922677",
+      "meta_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-19-dft-highgrid/dft/gaas_dielectric_gs6_k18_b48_e150.meta.json",
+      "meta_sha256": "b9fcbdc3a3cf3fb9ab149ebb28b4b79c3ff852a957590b2c18ca85b46c2bf650",
+      "direct_nrmse": {
+        "n": 0.17476959926233343,
+        "alpha_m_inv": 0.33113525568012087
+      }
+    },
+    "20": {
+      "csv_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-19-dft-highgrid/dft/gaas_dielectric_gs6_k20_b48_e150.csv",
+      "csv_sha256": "9c68b3c17839d4573d03c954a46d8f41a51cba978dac6dd42bb096a14bdeabb2",
+      "meta_path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-19-dft-highgrid/dft/gaas_dielectric_gs6_k20_b48_e150.meta.json",
+      "meta_sha256": "56b3096d4bdf1025aa290a2da9c6f0af02b87f9e8a9d82974b8d0ea241a077e1",
+      "direct_nrmse": {
+        "n": 0.17013370080709592,
+        "alpha_m_inv": 0.3247449628499299
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "from_k": 14,
+      "to_k": 16,
+      "nrmse_between_curves_normalized_to_measured_max": {
+        "n": 0.05445431481808993,
+        "alpha_m_inv": 0.12821102404099485
+      }
+    },
+    {
+      "from_k": 16,
+      "to_k": 18,
+      "nrmse_between_curves_normalized_to_measured_max": {
+        "n": 0.039927498736835695,
+        "alpha_m_inv": 0.08544415024740802
+      }
+    },
+    {
+      "from_k": 18,
+      "to_k": 20,
+      "nrmse_between_curves_normalized_to_measured_max": {
+        "n": 0.03344718179711909,
+        "alpha_m_inv": 0.06923885512089818
+      }
+    }
+  ],
+  "interpretation": "Finite response-grid changes, not a certification of convergence or experimental agreement"
+}

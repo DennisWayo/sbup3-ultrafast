@@ -1,0 +1,119 @@
+{
+  "timestamp_utc": "20260520_081901",
+  "reference_csv": "/Users/denniswayo/sbup3-ultrafast/analysis/data/gaas_exp_jellison_1992.csv",
+  "response_source": "probe",
+  "fit_mode": "physical",
+  "fit_channels": [
+    "alpha",
+    "n"
+  ],
+  "weights": {
+    "alpha": 1.0,
+    "n": 1.0,
+    "chi_real": 1.0,
+    "chi_imag": 1.0
+  },
+  "fit": {
+    "mode": "physical",
+    "best_on_boundary": false,
+    "best_on_density_boundary": false,
+    "best_on_osc_boundary": false,
+    "objective_total": 0.5548369658115013,
+    "objective_data": 0.5509705722885776,
+    "objective_prior": 0.07732787045847372,
+    "channel_metrics": {
+      "alpha": {
+        "energy_min_eV": 1.5715537238681454,
+        "energy_max_eV": 2.977680739960696,
+        "rmse": 27328090.379033517,
+        "rmse_norm": 0.48173012180117525,
+        "mae": 21047560.704582974,
+        "mae_norm": 0.37101911773591584,
+        "n_points": 84
+      },
+      "n": {
+        "energy_min_eV": 1.5715537238681454,
+        "energy_max_eV": 2.977680739960696,
+        "rmse": 3.1953271893418487,
+        "rmse_norm": 0.62021102277598,
+        "mae": 3.1277421779876278,
+        "mae_norm": 0.6070928140503936,
+        "n_points": 84
+      }
+    },
+    "search": {
+      "density_m3_min": 1.8414244013656915e+27,
+      "density_m3_max": 1.8414244013656916e+29,
+      "density_points": 101,
+      "osc_norm_min": 0.5,
+      "osc_norm_max": 2.0,
+      "osc_points": 101
+    },
+    "priors": {
+      "density_prior_m3": 1.8414244013656914e+28,
+      "density_rel_sigma": 0.25,
+      "osc_prior": 1.0,
+      "osc_rel_sigma": 0.25,
+      "prior_weight": 0.05
+    },
+    "uncertainty": {
+      "delta68": 0.02,
+      "delta95": 0.05,
+      "bounds68": {
+        "count": 96,
+        "density_m3_min": 1.6038136072461941e+28,
+        "density_m3_max": 2.019081705943494e+28,
+        "osc_norm_min": 0.8467453123625271,
+        "osc_norm_max": 1.1019051158766107,
+        "ratio_min": 0.8014499396214952,
+        "ratio_max": 1.1699432586455074
+      },
+      "bounds95": {
+        "count": 239,
+        "density_m3_min": 1.4626953941150217e+28,
+        "density_m3_max": 2.2138790667986403e+28,
+        "osc_norm_min": 0.7791645796604998,
+        "osc_norm_max": 1.1974787046189286,
+        "ratio_min": 0.7141236251498795,
+        "ratio_max": 1.3130092899604384
+      }
+    }
+  },
+  "base_state": {
+    "base_scale": 1.0,
+    "base_density_m3": 1.8414244013656914e+28,
+    "base_osc_norm_factor": 0.9592641193252643,
+    "pair_density_m3": 2.213879066798629e+28,
+    "transition_model": {
+      "multi_enable": true,
+      "source": "/Users/denniswayo/sbup3-ultrafast/dft/transitions_E_eV.npy",
+      "n_transitions": 16,
+      "energy_min_eV": 1.482068,
+      "energy_max_eV": 2.964497,
+      "n_transitions_used": 16,
+      "oscillator_sum_used": 0.9592641193252643,
+      "density_m3": 1.8414244013656914e+28,
+      "polarization_scale": 1.0,
+      "osc_norm_factor": 0.9592641193252643,
+      "chi_eps": 1e-12,
+      "response_power_cutoff": 1.0,
+      "chi_max_ev": 3.0,
+      "probe_enable": true,
+      "probe_e_field_ampl": 50000.0,
+      "probe_t0_fs": 25.0,
+      "probe_tau_fs": 0.35,
+      "probe_omega_l": 0.0,
+      "probe_chi_eps": 1e-12,
+      "probe_response_power_cutoff": 1.0,
+      "probe_chi_min_ev": 1.5,
+      "probe_chi_max_ev": 3.0
+    }
+  },
+  "best_ratio": 0.9549925860214369,
+  "recommended_density_m3": 1.758546651023198e+28,
+  "recommended_osc_norm_factor": 0.9592641193252643,
+  "recommended_scale": 1.0,
+  "recommended_effective_factor_scale_density_osc": 1.686910704486161e+28,
+  "target_density_m3": null,
+  "recommended_scale_for_target_density": null
+}

@@ -1,0 +1,70 @@
+{
+  "model": "Exact forward Fourier propagation with analytic local linear SBE susceptibility; effective oscillator parameters",
+  "meaning": "Self-consistent linear constitutive response, not nonlinear field-SBE feedback or first-principles prediction",
+  "z_um": 100.0,
+  "dx_nm": 39.0625,
+  "waist_um": 2.0,
+  "time_stride": 5,
+  "time_samples": 8000,
+  "zero_field_tail_fs": 150.00000000000003,
+  "gamma_s": 50000000000000.0,
+  "chi_imag_max": 0.0,
+  "input_sha256": {
+    "time": "023e036187ec369342694fc627fb05edf4860cf0ebe139260606b26f587fb2ff",
+    "field": "1fbb86fe99b95aca29a6fc3a18a3a3aaf53e649a306184af62b5309e6c46bc81",
+    "omega": "4d2b319262fb5058d049c36aff582d6cb09b7b55f5353d19747cc318f289de5e",
+    "dipole": "220476dc6d23942cfecfaa81c7329d432853b04868543548dad4fa68c7058b63",
+    "weights": "a1792b2e06bb97e7fd6c8873e8418ab1587b0d6584bf26fb6a8d2a54b19c8747",
+    "model": "0193b978d8206f8145202a358c200b039d00d19d8a52b20a22b5c621d4e4319e"
+  },
+  "cases": [
+    {
+      "width_um": 10.0,
+      "nx": 256,
+      "central_rms_vpm": 249674.015256705,
+      "outer_20_percent_energy_fraction": 0.17981327899171995
+    },
+    {
+      "width_um": 20.0,
+      "nx": 512,
+      "central_rms_vpm": 183840.63457861936,
+      "outer_20_percent_energy_fraction": 0.320833611730213,
+      "central_relative_rms_vs_previous": 0.9189694304091507
+    },
+    {
+      "width_um": 40.0,
+      "nx": 1024,
+      "central_rms_vpm": 139331.08182847936,
+      "outer_20_percent_energy_fraction": 0.1391732161506039,
+      "central_relative_rms_vs_previous": 0.8007059812270634
+    },
+    {
+      "width_um": 80.0,
+      "nx": 2048,
+      "central_rms_vpm": 136566.79329719185,
+      "outer_20_percent_energy_fraction": 0.022928538572866707,
+      "central_relative_rms_vs_previous": 0.20386772092001024
+    },
+    {
+      "width_um": 160.0,
+      "nx": 4096,
+      "central_rms_vpm": 136554.09505469014,
+      "outer_20_percent_energy_fraction": 0.0002821753359595296,
+      "central_relative_rms_vs_previous": 0.013632341697437827
+    },
+    {
+      "width_um": 320.0,
+      "nx": 8192,
+      "central_rms_vpm": 136554.77397329366,
+      "outer_20_percent_energy_fraction": 1.8198674288316135e-06,
+      "central_relative_rms_vs_previous": 0.0008961815376960095
+    },
+    {
+      "width_um": 640.0,
+      "nx": 16384,
+      "central_rms_vpm": 136554.8054505639,
+      "outer_20_percent_energy_fraction": 4.979923488263633e-08,
+      "central_relative_rms_vs_previous": 0.00012503264811276245
+    }
+  ]
+}

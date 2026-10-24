@@ -1,0 +1,30 @@
+{
+  "gs_gpw": "dft/gaas_pw.gpw",
+  "gs_meta_json": "dft/gaas_ground_state_meta.json",
+  "gs_meta_loaded": true,
+  "gs_kpts": [
+    6,
+    6,
+    6
+  ],
+  "response_gpw": "dft/gaas_response_gs6_k14_b48.gpw",
+  "out_csv": "analysis/data/gaas_dielectric_gs6_k14_b48_e150.csv",
+  "kpts_response": [
+    14,
+    14,
+    14
+  ],
+  "nbands": 48,
+  "eta_eV": 0.05,
+  "ecut_eV": 150.0,
+  "frequencies": {
+    "type": "nonlinear",
+    "domega0_eV": 0.02,
+    "omega2_eV": 5.0,
+    "omegamax_eV": 8.0
+  },
+  "intraband": false,
+  "integrationmode": "point integration",
+  "publication_grade_kmesh": true,
+  "n_rows": 242
+}

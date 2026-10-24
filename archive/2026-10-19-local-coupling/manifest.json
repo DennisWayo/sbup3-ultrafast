@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "archive": "2026-10-19-local-coupling",
+  "file_count": 13,
+  "files": [
+    {
+      "path": "README.md",
+      "size_bytes": 3933,
+      "sha256": "bc9dfbb04561310a69d7e9f6a7a9432d55884a0b136e3cfb86106e44983ab1bd"
+    },
+    {
+      "path": "inputs/E_t.npy",
+      "size_bytes": 80128,
+      "sha256": "1fbb86fe99b95aca29a6fc3a18a3a3aaf53e649a306184af62b5309e6c46bc81"
+    },
+    {
+      "path": "inputs/time_s.npy",
+      "size_bytes": 80128,
+      "sha256": "023e036187ec369342694fc627fb05edf4860cf0ebe139260606b26f587fb2ff"
+    },
+    {
+      "path": "inputs/transition_d_eff_Cm_used.npy",
+      "size_bytes": 256,
+      "sha256": "220476dc6d23942cfecfaa81c7329d432853b04868543548dad4fa68c7058b63"
+    },
+    {
+      "path": "inputs/transition_model.json",
+      "size_bytes": 692,
+      "sha256": "0193b978d8206f8145202a358c200b039d00d19d8a52b20a22b5c621d4e4319e"
+    },
+    {
+      "path": "inputs/transition_omega_rad_s_used.npy",
+      "size_bytes": 256,
+      "sha256": "4d2b319262fb5058d049c36aff582d6cb09b7b55f5353d19747cc318f289de5e"
+    },
+    {
+      "path": "inputs/transition_weight_used.npy",
+      "size_bytes": 256,
+      "sha256": "a1792b2e06bb97e7fd6c8873e8418ab1587b0d6584bf26fb6a8d2a54b19c8747"
+    },
+    {
+      "path": "reports/linear_material_window.json",
+      "size_bytes": 2503,
+      "sha256": "2c4fb4446ec20181dc9f9830b656c80c0c7eb10f54ccd6c2e1332719a4aadfb6"
+    },
+    {
+      "path": "reports/sbup3-local-convergence.json",
+      "size_bytes": 2182,
+      "sha256": "410d4b4fdcc8b3f22ccbdf09e09b2ea3ebecff0c306ea6948fd182000f12bd58"
+    },
+    {
+      "path": "reports/sbup3-local-dz0125.json",
+      "size_bytes": 3702,
+      "sha256": "b1cdb7a0216708fe0d6b742cca00bb8379abcccbb3405b67ef1abcefb6ec4772"
+    },
+    {
+      "path": "reports/sbup3-local-residual-gaussian-smoke.json",
+      "size_bytes": 2480,
+      "sha256": "0b90911cea8af99035dc07f9f1de988b68fccc1885abcb1201c7b2a4fb747e5f"
+    },
+    {
+      "path": "reports/sbup3-local-stride5.json",
+      "size_bytes": 2477,
+      "sha256": "5f8a5f102eea8439941921cfa11f7db481ad7ba5f5eff59a8ecf9e25809e698a"
+    },
+    {
+      "path": "reports/sbup3-local-width20.json",
+      "size_bytes": 2478,
+      "sha256": "9ac2383ad5acf9639b5618da42e6b0f4b7a2b8f4765d74bfa2d5f84ba8d55cbd"
+    }
+  ]
+}

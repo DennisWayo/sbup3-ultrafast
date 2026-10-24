@@ -1,0 +1,61 @@
+{
+  "protocol": "direct DFT vs measurement on archived probe-support window; no fitting",
+  "requested_window_eV": [
+    1.5715537238681454,
+    2.977680739960696
+  ],
+  "comparisons": [
+    {
+      "dft_file": "analysis/data/gaas_dielectric_reference.csv",
+      "dft_sha256": "a1e105dae38a0ce17283c451f870983ae9177cec374023973539548cc49ee4c4",
+      "measurement_file": "analysis/data/gaas_exp_jellison_1992.csv",
+      "measurement_sha256": "be9c5b3c0dd1a6533bfeeef6d817bca28888b2d8f06f3b59cf30f8c364e0acb0",
+      "window_eV": [
+        1.579416541,
+        2.966129149
+      ],
+      "metrics": {
+        "n": {
+          "rmse": 0.9239775652312907,
+          "nrmse_max_reference": 0.1793434715122847,
+          "mean_bias": -0.47136694038222043,
+          "mae": 0.7938284533244662,
+          "n_points": 84
+        },
+        "alpha": {
+          "rmse": 20400198.854129627,
+          "nrmse_max_reference": 0.3596076470205093,
+          "mean_bias": 14362863.947135434,
+          "mae": 14362863.947135434,
+          "n_points": 84
+        }
+      }
+    },
+    {
+      "dft_file": "analysis/data/gaas_dielectric_reference.csv",
+      "dft_sha256": "a1e105dae38a0ce17283c451f870983ae9177cec374023973539548cc49ee4c4",
+      "measurement_file": "analysis/data/gaas_exp_aspnes_1986.csv",
+      "measurement_sha256": "0699576898ca2640b59e16570b4bfd25cbc4d49aa1b8e41c229a4e00366f2b3d",
+      "window_eV": [
+        1.600002561,
+        2.900215168
+      ],
+      "metrics": {
+        "n": {
+          "rmse": 0.8735749460151632,
+          "nrmse_max_reference": 0.172916655980832,
+          "mean_bias": -0.4476151817409129,
+          "mae": 0.731777422072222,
+          "n_points": 14
+        },
+        "alpha": {
+          "rmse": 22871105.09443829,
+          "nrmse_max_reference": 0.4520979463160577,
+          "mean_bias": 15935526.858203666,
+          "mae": 15935526.858203666,
+          "n_points": 14
+        }
+      }
+    }
+  ]
+}
