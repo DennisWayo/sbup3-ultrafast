@@ -1,0 +1,2 @@
+dft/*.csv -text whitespace=cr-at-eol
+logs/*.log -text -whitespace
