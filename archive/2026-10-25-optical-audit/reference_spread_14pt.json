@@ -1,0 +1,68 @@
+{
+  "purpose": "Common-energy optical comparison; no fitting or extrapolation",
+  "interpretation": "Cross-study spread is not a measurement uncertainty bound or an additive error-budget term",
+  "window_eV": [
+    1.5715537,
+    2.9776807
+  ],
+  "common_points": 14,
+  "common_energy_minmax_eV": [
+    1.600002561,
+    2.900215168
+  ],
+  "normalization": "RMSE divided by maximum absolute reference value in each pair and channel",
+  "sources": {
+    "Jellison": {
+      "path": "/Users/denniswayo/sbup3-ultrafast/analysis/data/gaas_exp_jellison_1992.csv",
+      "sha256": "be9c5b3c0dd1a6533bfeeef6d817bca28888b2d8f06f3b59cf30f8c364e0acb0"
+    },
+    "Aspnes": {
+      "path": "/Users/denniswayo/sbup3-ultrafast/analysis/data/gaas_exp_aspnes_1986.csv",
+      "sha256": "0699576898ca2640b59e16570b4bfd25cbc4d49aa1b8e41c229a4e00366f2b3d"
+    },
+    "PBE36": {
+      "path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-25-dft-k32-k36/dft/gaas_dielectric_gs6_k36_b48_e150.csv",
+      "sha256": "25d909a551006071b615119346fe9fc362becd970e5e6b49f589af269f558278"
+    },
+    "PBE36_metadata": {
+      "path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-25-dft-k32-k36/dft/gaas_dielectric_gs6_k36_b48_e150.meta.json",
+      "sha256": "e0b8d59ec97400f72acece846a6a60946cb6afd4adcfd85b60b42696984da4f4"
+    }
+  },
+  "channels": {
+    "n": {
+      "Jellison_minus_Aspnes": {
+        "rmse": 0.019607294330384224,
+        "nrmse_max_reference": 0.0038810954731560224,
+        "mean_bias": 0.005458712873983045
+      },
+      "PBE36_minus_Aspnes": {
+        "rmse": 0.8052422762047493,
+        "nrmse_max_reference": 0.15939079101440012,
+        "mean_bias": -0.2910880106720221
+      },
+      "PBE36_minus_Jellison": {
+        "rmse": 0.8221120943442578,
+        "nrmse_max_reference": 0.16074017175450808,
+        "mean_bias": -0.29654672354600514
+      }
+    },
+    "alpha_m_inv": {
+      "Jellison_minus_Aspnes": {
+        "rmse": 1468576.4284588383,
+        "nrmse_max_reference": 0.02902965923915352,
+        "mean_bias": -987032.3721802102
+      },
+      "PBE36_minus_Aspnes": {
+        "rmse": 20008336.393238425,
+        "nrmse_max_reference": 0.39550899509371046,
+        "mean_bias": 15776750.363821419
+      },
+      "PBE36_minus_Jellison": {
+        "rmse": 20890509.417960856,
+        "nrmse_max_reference": 0.4468995123686309,
+        "mean_bias": 16763782.73600163
+      }
+    }
+  }
+}
