@@ -82,21 +82,30 @@ def main() -> int:
                         help="Python interpreter in the GPAW environment")
     parser.add_argument("--grids", default="32,36",
                         help="Exactly two serial response grids (default: 32,36)")
+    parser.add_argument("--baseline-grid", type=int, default=28,
+                        help="Existing lower response grid with a matching CSV and metadata")
+    parser.add_argument("--status-name", default=None,
+                        help="Status JSON filename (default names the requested grids)")
+    parser.add_argument("--case-timeout-hours", type=float, default=18.0)
     parser.add_argument("--plan", action="store_true", help="Validate and print plan only")
     args = parser.parse_args()
     root = args.root.resolve()
     grids = [int(value) for value in args.grids.split(",")]
-    if len(grids) != 2 or grids != sorted(set(grids)) or grids[0] <= 28:
-        parser.error("This bounded sweep requires two increasing grids above 28")
+    if (len(grids) != 2 or grids != sorted(set(grids))
+            or args.baseline_grid < 6 or grids[0] <= args.baseline_grid):
+        parser.error("Require two increasing grids above the existing baseline grid")
+    if not (0 < args.case_timeout_hours <= 24):
+        parser.error("Case timeout must be positive and at most 24 hours")
     script = root / "dft/gaas_dielectric_response.py"
     gs = root / "dft/gaas_pw.gpw"
     gs_meta = root / "dft/gaas_ground_state_meta.json"
-    baseline_csv = root / "dft/gaas_dielectric_gs6_k28_b48_e150.csv"
-    baseline_meta = root / "dft/gaas_dielectric_gs6_k28_b48_e150.meta.json"
+    baseline_stem = f"gaas_dielectric_gs6_k{args.baseline_grid}_b48_e150"
+    baseline_csv = root / f"dft/{baseline_stem}.csv"
+    baseline_meta = root / f"dft/{baseline_stem}.meta.json"
     for path in (args.python, script, gs, gs_meta, baseline_csv, baseline_meta):
         if not path.is_file():
             raise FileNotFoundError(path)
-    baseline = validate_output(baseline_csv, baseline_meta, 28)
+    baseline = validate_output(baseline_csv, baseline_meta, args.baseline_grid)
     outputs = []
     for grid in grids:
         stem = f"gaas_dielectric_gs6_k{grid}_b48_e150"
@@ -114,16 +123,21 @@ def main() -> int:
                    "--omega2", "5", "--omegamax", "8",
                    "--integrationmode", "point integration"]
         outputs.append((grid, csv_path, meta_path, log, command))
-    status_path = root / "response_grid_sweep_32_36.json"
+    status_name = args.status_name or f"response_grid_sweep_{grids[0]}_{grids[1]}.json"
+    if Path(status_name).name != status_name or not status_name.endswith(".json"):
+        parser.error("Status name must be a simple .json filename")
+    status_path = root / status_name
     if status_path.exists():
         raise FileExistsError(f"Refusing to overwrite sweep record: {status_path}")
     state = {
         "purpose": "One bounded response-grid sensitivity sweep; not a convergence certification",
         "started_utc": utc_now(), "state": "planned", "pid": os.getpid(),
+        "baseline_grid": args.baseline_grid,
+        "case_timeout_hours": args.case_timeout_hours,
         "ground_state_sha256": digest(gs),
         "ground_state_metadata_sha256": digest(gs_meta),
         "response_script_sha256": digest(script),
-        "baseline_k28": baseline,
+        "baseline": baseline,
         "points": [{"grid": grid, "state": "pending", "command": command,
                     "log": str(log)} for grid, _, _, log, command in outputs],
     }
@@ -137,9 +151,18 @@ def main() -> int:
         point["started_utc"] = utc_now()
         state["state"] = "running"
         save_status(status_path, state)
-        with log.open("w") as stream:
-            completed = subprocess.run(command, cwd=root, stdout=stream,
-                                       stderr=subprocess.STDOUT, check=False)
+        try:
+            with log.open("w") as stream:
+                completed = subprocess.run(command, cwd=root, stdout=stream,
+                                           stderr=subprocess.STDOUT, check=False,
+                                           timeout=args.case_timeout_hours * 3600)
+        except subprocess.TimeoutExpired:
+            point["state"] = "failed"
+            point["error"] = "Response calculation exceeded the case time limit"
+            point["finished_utc"] = utc_now()
+            state["state"] = "failed"
+            save_status(status_path, state)
+            return 1
         point["exit_code"] = completed.returncode
         point["finished_utc"] = utc_now()
         if completed.returncode != 0:
