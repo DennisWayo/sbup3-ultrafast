@@ -1,0 +1,202 @@
+{
+  "purpose": "Bounded 100 \u00b5m reduced-model numerical sensitivity, not physical validation",
+  "state": "completed",
+  "started_utc": "2026-10-25T09:09:20.178810+00:00",
+  "pid": 28140,
+  "source_sha256": "b4040cf0837fa79615d6213d63d0dd81914a65d7158593e8cee7c4eef80df6cc",
+  "runner_sha256": "889f1b18fc4ca761bd68cc47d98a8bc91377d49520030700cc1cf3464ac0d5c6",
+  "dependency_sha256": {
+    "analysis/gaas_linear_material_window.py": "093ea9c022bfd680c68db468cb78727e77f8c97d842cb0e1554be00c52d8b186",
+    "sbe/local_response.py": "91ec3f8d522fce4b04c69ea7e5d3faa475b0fb719c48063cfb84e794a56d8675",
+    "uppe/dispersive_residual.py": "b080fa8ebce88a3fa896c69ff4f8eac29017851de16ee826bcd3ed7101d0043e"
+  },
+  "input_sha256": {
+    "time": "023e036187ec369342694fc627fb05edf4860cf0ebe139260606b26f587fb2ff",
+    "field": "1fbb86fe99b95aca29a6fc3a18a3a3aaf53e649a306184af62b5309e6c46bc81",
+    "omega": "4d2b319262fb5058d049c36aff582d6cb09b7b55f5353d19747cc318f289de5e",
+    "dipole": "220476dc6d23942cfecfaa81c7329d432853b04868543548dad4fa68c7058b63",
+    "weights": "a1792b2e06bb97e7fd6c8873e8418ab1587b0d6584bf26fb6a8d2a54b19c8747",
+    "model": "0193b978d8206f8145202a358c200b039d00d19d8a52b20a22b5c621d4e4319e"
+  },
+  "case_timeout_hours": 8.0,
+  "cases": [
+    {
+      "case": "w160_dz050_dt050",
+      "state": "completed",
+      "command": [
+        "/Users/dela/miniforge3/envs/gpaw-cpu-opt/bin/python",
+        "-m",
+        "analysis.gaas_local_sbe_uppe",
+        "--sbe-dir",
+        "/Users/dela/sbup3-longrange-20261025/archive/2026-10-19-local-coupling/inputs",
+        "--out-prefix",
+        "/Users/dela/sbup3-longrange-results-20261025/w160_dz050_dt050",
+        "--width-um",
+        "160.0",
+        "--dx-nm",
+        "156.25",
+        "--waist-um",
+        "2",
+        "--z-um",
+        "100",
+        "--dz-um",
+        "0.5",
+        "--stride",
+        "10",
+        "--tail-fs",
+        "150",
+        "--max-field-vpm",
+        "1e9"
+      ],
+      "log": "/Users/dela/sbup3-longrange-results-20261025/w160_dz050_dt050.log",
+      "started_utc": "2026-10-25T09:09:20.179453+00:00",
+      "exit_code": 0,
+      "finished_utc": "2026-10-27T09:50:13.978535+00:00",
+      "output": {
+        "report": "/Users/dela/sbup3-longrange-results-20261025/w160_dz050_dt050.json",
+        "report_sha256": "39cf483c4f304f915e4642d35d06dd14cd3eed05667d24c35cf1a1d83b7d4198",
+        "field": "/Users/dela/sbup3-longrange-results-20261025/w160_dz050_dt050.npz",
+        "field_sha256": "3ed96179f07044f8578be8336f5d4b7a6af7a5703c9a68ccdeb046329e667aec",
+        "peak_population": 4.406767082094821e-07,
+        "peak_field_vpm": 10000000.0
+      },
+      "reused_existing_output": true
+    },
+    {
+      "case": "w160_dz025_dt050",
+      "state": "completed",
+      "command": [
+        "/Users/dela/miniforge3/envs/gpaw-cpu-opt/bin/python",
+        "-m",
+        "analysis.gaas_local_sbe_uppe",
+        "--sbe-dir",
+        "/Users/dela/sbup3-longrange-20261025/archive/2026-10-19-local-coupling/inputs",
+        "--out-prefix",
+        "/Users/dela/sbup3-longrange-results-20261025/w160_dz025_dt050",
+        "--width-um",
+        "160.0",
+        "--dx-nm",
+        "156.25",
+        "--waist-um",
+        "2",
+        "--z-um",
+        "100",
+        "--dz-um",
+        "0.25",
+        "--stride",
+        "10",
+        "--tail-fs",
+        "150",
+        "--max-field-vpm",
+        "1e9"
+      ],
+      "log": "/Users/dela/sbup3-longrange-results-20261025/w160_dz025_dt050.log",
+      "started_utc": "2026-10-27T09:50:13.978972+00:00",
+      "exit_code": 0,
+      "output": {
+        "report": "/Users/dela/sbup3-longrange-results-20261025/w160_dz025_dt050.json",
+        "report_sha256": "629f42ae7b67c33e02d16d8bf6f477e3518de73836196faccc9ae5a868573235",
+        "field": "/Users/dela/sbup3-longrange-results-20261025/w160_dz025_dt050.npz",
+        "field_sha256": "6ea104269258f1b7e923075a914443700646eece805a3d8b2d6effa798eebb54",
+        "peak_population": 4.406767082094821e-07,
+        "peak_field_vpm": 10000000.0
+      },
+      "finished_utc": "2026-10-27T10:17:45.440661+00:00"
+    },
+    {
+      "case": "w160_dz025_dt025",
+      "state": "completed",
+      "command": [
+        "/Users/dela/miniforge3/envs/gpaw-cpu-opt/bin/python",
+        "-m",
+        "analysis.gaas_local_sbe_uppe",
+        "--sbe-dir",
+        "/Users/dela/sbup3-longrange-20261025/archive/2026-10-19-local-coupling/inputs",
+        "--out-prefix",
+        "/Users/dela/sbup3-longrange-results-20261025/w160_dz025_dt025",
+        "--width-um",
+        "160.0",
+        "--dx-nm",
+        "156.25",
+        "--waist-um",
+        "2",
+        "--z-um",
+        "100",
+        "--dz-um",
+        "0.25",
+        "--stride",
+        "5",
+        "--tail-fs",
+        "150",
+        "--max-field-vpm",
+        "1e9"
+      ],
+      "log": "/Users/dela/sbup3-longrange-results-20261025/w160_dz025_dt025.log",
+      "started_utc": "2026-10-27T10:17:45.441190+00:00",
+      "exit_code": 0,
+      "output": {
+        "report": "/Users/dela/sbup3-longrange-results-20261025/w160_dz025_dt025.json",
+        "report_sha256": "a68d2d3a74a8bffe85e4d79334f0fb7af91d0bd0e20b6cc4e2f26bda61de7b64",
+        "field": "/Users/dela/sbup3-longrange-results-20261025/w160_dz025_dt025.npz",
+        "field_sha256": "ba60f0dfd7527ca7b211680a8d506248e5e7c3d1cb3c4210e0e3cd7f409a518d",
+        "peak_population": 4.4095933956945743e-07,
+        "peak_field_vpm": 10000000.0
+      },
+      "finished_utc": "2026-10-27T11:15:15.738786+00:00"
+    },
+    {
+      "case": "w320_dz025_dt050",
+      "state": "completed",
+      "command": [
+        "/Users/dela/miniforge3/envs/gpaw-cpu-opt/bin/python",
+        "-m",
+        "analysis.gaas_local_sbe_uppe",
+        "--sbe-dir",
+        "/Users/dela/sbup3-longrange-20261025/archive/2026-10-19-local-coupling/inputs",
+        "--out-prefix",
+        "/Users/dela/sbup3-longrange-results-20261025/w320_dz025_dt050",
+        "--width-um",
+        "320.0",
+        "--dx-nm",
+        "156.25",
+        "--waist-um",
+        "2",
+        "--z-um",
+        "100",
+        "--dz-um",
+        "0.25",
+        "--stride",
+        "10",
+        "--tail-fs",
+        "150",
+        "--max-field-vpm",
+        "1e9"
+      ],
+      "log": "/Users/dela/sbup3-longrange-results-20261025/w320_dz025_dt050.log",
+      "started_utc": "2026-10-27T11:15:15.739324+00:00",
+      "exit_code": 0,
+      "output": {
+        "report": "/Users/dela/sbup3-longrange-results-20261025/w320_dz025_dt050.json",
+        "report_sha256": "bb23b92ec7e2bb644e1867db563b43c8a8c7768aef0dff686e26319aa7879529",
+        "field": "/Users/dela/sbup3-longrange-results-20261025/w320_dz025_dt050.npz",
+        "field_sha256": "0c78930060bdccd45b29bca8a8701439de6ad5fd44118ea5d97b32b1455a7150",
+        "peak_population": 4.406767082094821e-07,
+        "peak_field_vpm": 10000000.0
+      },
+      "finished_utc": "2026-10-27T12:08:55.085774+00:00"
+    }
+  ],
+  "recovery_history": [
+    {
+      "started_utc": "2026-10-27T09:50:13.848147+00:00",
+      "previous_state": "failed",
+      "previous_error": "/Users/dela/sbup3-longrange-results-20261025/w160_dz050_dt050: unexpected z_um: 99.99999999999999",
+      "resume_runner_sha256": "d5e7d154722a06035995f64034823a785cf35690e8b812dc449a75ed7f67a4d6"
+    }
+  ],
+  "sensitivity_report": {
+    "path": "/Users/dela/sbup3-longrange-results-20261025/longrange_sensitivity.json",
+    "sha256": "edc2a64c17d54b0602c8b9d368abd8d9b02315a519ee62ed7d4689bc466e47eb"
+  },
+  "finished_utc": "2026-10-27T12:08:55.739657+00:00"
+}
