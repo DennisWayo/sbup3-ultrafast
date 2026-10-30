@@ -1,0 +1,54 @@
+{
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 66,
+      "sha256": "5297feff53f692a1db52006ccf305a6657ad4816bc453d4f2fbcdcb6dcec33b7"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1626,
+      "sha256": "be94b8f7905314d315f39b38f9b36cf7b35533c5596f2bf13229125156f75da2"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k32_b48_e150.csv",
+      "bytes": 25207,
+      "sha256": "80ba61d0e66d3058913f4dbe336f819bee784991489ea83e2cb67a7e7a5a10b6"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k32_b48_e150.meta.json",
+      "bytes": 745,
+      "sha256": "1681e03448f8b1e12b241b4b40b6007cd9e547564380551945bfd949e029a746"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k36_b48_e150.csv",
+      "bytes": 25244,
+      "sha256": "25d909a551006071b615119346fe9fc362becd970e5e6b49f589af269f558278"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k36_b48_e150.meta.json",
+      "bytes": 745,
+      "sha256": "e0b8d59ec97400f72acece846a6a60946cb6afd4adcfd85b60b42696984da4f4"
+    },
+    {
+      "path": "dft_k28_k32_k36_report.json",
+      "bytes": 2896,
+      "sha256": "050a540032e3b9004835b8199a29fb90126977403172567aa0d7da87231d3b8c"
+    },
+    {
+      "path": "logs/k32_eta005.log",
+      "bytes": 16135,
+      "sha256": "9cab176916e71f88eabb6dd3b15f824926ae79b27adfcae9f5a69948b47bf639"
+    },
+    {
+      "path": "logs/k36_eta005.log",
+      "bytes": 16154,
+      "sha256": "568fc61296abcdac117221a38f2a553a36213cfc74ba4154f6fb1b1cc891e596"
+    },
+    {
+      "path": "response_grid_sweep_32_36.json",
+      "bytes": 4476,
+      "sha256": "2c7da2cadc93b476af3bcffa4346984b3367b4c66d6c9afa93f3d2d936eef763"
+    }
+  ]
+}

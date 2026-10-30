@@ -1,0 +1,78 @@
+{
+  "window_eV": [
+    1.5715537,
+    2.9776807
+  ],
+  "measured_points": 84,
+  "reference_path": "/Users/dela/sbup3-longrange-20261025/analysis/data/gaas_exp_jellison_1992.csv",
+  "reference_sha256": "acb640173762f3cdfc4c058926a5214ea6adcf4b047824e5b0b67c5670767cf5",
+  "common_settings": {
+    "gs_kpts": [
+      6,
+      6,
+      6
+    ],
+    "nbands": 48,
+    "eta_eV": 0.05,
+    "ecut_eV": 150.0,
+    "integrationmode": "point integration",
+    "frequencies": {
+      "type": "nonlinear",
+      "domega0_eV": 0.02,
+      "omega2_eV": 5.0,
+      "omegamax_eV": 8.0
+    }
+  },
+  "normalization": "RMSE divided by maximum absolute Jellison value in each channel",
+  "cases": {
+    "36": {
+      "csv_path": "/Users/dela/sbup3-validation-20261019/dft/gaas_dielectric_gs6_k36_b48_e150.csv",
+      "csv_sha256": "25d909a551006071b615119346fe9fc362becd970e5e6b49f589af269f558278",
+      "meta_path": "/Users/dela/sbup3-validation-20261019/dft/gaas_dielectric_gs6_k36_b48_e150.meta.json",
+      "meta_sha256": "e0b8d59ec97400f72acece846a6a60946cb6afd4adcfd85b60b42696984da4f4",
+      "direct_nrmse": {
+        "n": 0.1656307221986837,
+        "alpha_m_inv": 0.31887442119186965
+      }
+    },
+    "40": {
+      "csv_path": "/Users/dela/sbup3-validation-20261019/dft/gaas_dielectric_gs6_k40_b48_e150.csv",
+      "csv_sha256": "77acdc34d165b79d92638ca2a2b14abc5567030f8b503a06f3d5654a7fcf8e71",
+      "meta_path": "/Users/dela/sbup3-validation-20261019/dft/gaas_dielectric_gs6_k40_b48_e150.meta.json",
+      "meta_sha256": "e2594b57566dd4878b69d5603be7bf0633deff8c2f067609bd01a909f649b09c",
+      "direct_nrmse": {
+        "n": 0.16611179931343334,
+        "alpha_m_inv": 0.32096118381035044
+      }
+    },
+    "44": {
+      "csv_path": "/Users/dela/sbup3-validation-20261019/dft/gaas_dielectric_gs6_k44_b48_e150.csv",
+      "csv_sha256": "94f4c0013b2eef13e78c16662199219a3c12c9aa868726c464043f3c9249a5ec",
+      "meta_path": "/Users/dela/sbup3-validation-20261019/dft/gaas_dielectric_gs6_k44_b48_e150.meta.json",
+      "meta_sha256": "d5fcceb0372e55c1e2ae4dfe05e39df0e8226201e1582fc2af94349fd2f5b4b4",
+      "direct_nrmse": {
+        "n": 0.16618379817240891,
+        "alpha_m_inv": 0.3193779256878149
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "from_k": 36,
+      "to_k": 40,
+      "nrmse_between_curves_normalized_to_measured_max": {
+        "n": 0.010785785183075396,
+        "alpha_m_inv": 0.02271315831850816
+      }
+    },
+    {
+      "from_k": 40,
+      "to_k": 44,
+      "nrmse_between_curves_normalized_to_measured_max": {
+        "n": 0.008609200588904612,
+        "alpha_m_inv": 0.017890237682486185
+      }
+    }
+  ],
+  "interpretation": "Finite response-grid changes, not a certification of convergence or experimental agreement"
+}

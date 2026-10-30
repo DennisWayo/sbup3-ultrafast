@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import csv
 import json
+import argparse
 from pathlib import Path
 from typing import Any
 
@@ -214,7 +215,9 @@ def _cal_objective_grid(
 
 def main() -> None:
     base = Path(__file__).resolve().parents[1]
-    out_dir = base / "analysis/figures/study_20260520"
+    parser = argparse.ArgumentParser(description="Regenerate figures from pinned study artifacts")
+    parser.add_argument("--out-dir", type=Path, default=base / "analysis/figures/study_20260520")
+    out_dir = parser.parse_args().out_dir
     out_dir.mkdir(parents=True, exist_ok=True)
     _set_pub_style()
 
@@ -469,48 +472,52 @@ def main() -> None:
 
     # F2
     fig, axes = plt.subplots(2, 1, figsize=(8.8, 7.2), sharex=True, constrained_layout=True)
-    axes[0].plot(die_e, np.abs(die_alpha), label="DFT dielectric reference", color=PALETTE["sim"])
-    axes[0].plot(jel_e, jel_alpha, label="Jellison 1992", color=PALETTE["ref_primary"])
-    axes[0].plot(asp_e, asp_alpha, label="Aspnes 1986", color=PALETTE["ref_secondary"])
+    axes[0].plot(die_e, np.abs(die_alpha), label="PBE dielectric input", color="#24536a", lw=1.6)
+    axes[0].plot(jel_e, jel_alpha, label="Jellison 1992", color="#aa6949", ls="--", lw=1.7)
+    axes[0].plot(asp_e, asp_alpha, label="Aspnes 1986", color="#477e79", ls=":", lw=2.0)
     axes[0].axvspan(1.5, 3.0, color=PALETTE["muted"], alpha=0.10, zorder=0)
     axes[0].set_ylabel(r"$\alpha$ [m$^{-1}$]")
-    axes[0].legend(loc="upper left", frameon=True)
-    axes[0].set_title("A) Absorption Comparison")
+    axes[0].legend(loc="upper left", frameon=False)
+    axes[0].text(0.99, 0.98, "(a)", transform=axes[0].transAxes, ha="right", va="top", weight="bold")
 
-    axes[1].plot(die_e, die_n, label="DFT dielectric reference", color=PALETTE["sim"])
-    axes[1].plot(jel_e, jel_n, label="Jellison 1992", color=PALETTE["ref_primary"])
-    axes[1].plot(asp_e, asp_n, label="Aspnes 1986", color=PALETTE["ref_secondary"])
+    axes[1].plot(die_e, die_n, label="PBE dielectric input", color="#24536a", lw=1.6)
+    axes[1].plot(jel_e, jel_n, label="Jellison 1992", color="#aa6949", ls="--", lw=1.7)
+    axes[1].plot(asp_e, asp_n, label="Aspnes 1986", color="#477e79", ls=":", lw=2.0)
     axes[1].axvspan(1.5, 3.0, color=PALETTE["muted"], alpha=0.10, zorder=0)
     axes[1].set_ylabel("n")
     axes[1].set_xlabel("Photon energy [eV]")
-    axes[1].set_title("B) Refractive Index Comparison")
+    axes[1].text(0.01, 0.98, "(b)", transform=axes[1].transAxes, va="top", weight="bold")
+    for ax in axes:
+        ax.spines[["top", "right"]].set_visible(False)
     _save(fig, out_dir, "F2_reference_optics_overlay")
     plt.close(fig)
 
     # F3
     fig, axes = plt.subplots(1, 3, figsize=(12.6, 4.4), constrained_layout=True)
-    axes[0].plot(die_e, die_eps2, color=PALETTE["sim"])
+    axes[0].plot(die_e, die_eps2, color="#24536a")
     stem_heights = np.interp(trans_e, die_e, die_eps2)
-    axes[0].vlines(trans_e, 0.0, stem_heights, color=PALETTE["ref_primary"], alpha=0.72, lw=1.2)
+    axes[0].vlines(trans_e, 0.0, stem_heights, color="#aa6949", alpha=0.85, lw=1.2)
     axes[0].set_xlim(0.0, 3.1)
     axes[0].set_xlabel("Energy [eV]")
     axes[0].set_ylabel(r"$\epsilon_2^{LF}$")
-    axes[0].set_title("A) Transition-Energy Selection")
+    axes[0].text(0.02, 0.98, "(a)", transform=axes[0].transAxes, va="top", weight="bold")
 
     markerline, stemlines, _ = axes[1].stem(trans_e, trans_f, basefmt=" ")
-    plt.setp(markerline, markersize=4.2, markerfacecolor=PALETTE["accent"], markeredgecolor=PALETTE["accent"])
-    plt.setp(stemlines, color=PALETTE["accent"], linewidth=1.2)
+    plt.setp(markerline, markersize=4.2, markerfacecolor="#aa6949", markeredgecolor="#aa6949")
+    plt.setp(stemlines, color="#aa6949", linewidth=1.2)
     axes[1].set_xlim(0.0, 3.1)
     axes[1].set_xlabel("Energy [eV]")
-    axes[1].set_ylabel("Oscillator weight")
-    axes[1].set_title("B) Reduced Weights")
+    axes[1].set_ylabel("Effective spectral weight")
+    axes[1].text(0.02, 0.98, "(b)", transform=axes[1].transAxes, va="top", weight="bold")
 
     csum = np.cumsum(trans_f)
-    axes[2].plot(np.arange(1, len(trans_f) + 1), csum, "o-", color=PALETTE["ref_secondary"])
+    axes[2].plot(np.arange(1, len(trans_f) + 1), csum, "o-", color="#477e79")
     axes[2].set_xlabel("Transition index")
-    axes[2].set_ylabel("Cumulative weight")
+    axes[2].set_ylabel("Cumulative effective weight")
     axes[2].set_ylim(0.0, max(1.02, float(np.max(csum) * 1.05)))
-    axes[2].set_title("C) Cumulative Oscillator Sum")
+    axes[2].text(0.02, 0.98, "(c)", transform=axes[2].transAxes, va="top", weight="bold")
+    for ax in axes:
+        ax.spines[["top", "right"]].set_visible(False)
     _save(fig, out_dir, "F3_transition_model")
     plt.close(fig)
 

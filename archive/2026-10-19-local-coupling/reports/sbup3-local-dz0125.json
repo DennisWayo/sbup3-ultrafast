@@ -1,0 +1,126 @@
+{
+  "model": "Dispersive linear reduced-SBE background plus local nonlinear SBE residual recomputed at each z step",
+  "source_rule": "Predictor-corrector average of beginning and predicted end-step residual polarization",
+  "z_um": 2.0,
+  "dz_um": 0.125,
+  "z_steps": 16,
+  "peak_field_vpm": 10000000.0,
+  "peak_population": 4.406767082094821e-07,
+  "relative_rms_vs_frozen_residual": 0.0003671463311860002,
+  "step_diagnostics": [
+    {
+      "step": 1,
+      "z_um": 0.125,
+      "peak_field_vpm": 9978205.107394641,
+      "relative_polarization_change": 0.5677190174523308
+    },
+    {
+      "step": 2,
+      "z_um": 0.25,
+      "peak_field_vpm": 9960456.570517855,
+      "relative_polarization_change": 0.5676129292460694
+    },
+    {
+      "step": 3,
+      "z_um": 0.375,
+      "peak_field_vpm": 9934109.83965906,
+      "relative_polarization_change": 0.5675113306511856
+    },
+    {
+      "step": 4,
+      "z_um": 0.5,
+      "peak_field_vpm": 9911721.867921704,
+      "relative_polarization_change": 0.5674096200058628
+    },
+    {
+      "step": 5,
+      "z_um": 0.625,
+      "peak_field_vpm": 9881010.523168419,
+      "relative_polarization_change": 0.5673078079657884
+    },
+    {
+      "step": 6,
+      "z_um": 0.75,
+      "peak_field_vpm": 9854190.119774356,
+      "relative_polarization_change": 0.5672058926976888
+    },
+    {
+      "step": 7,
+      "z_um": 0.875,
+      "peak_field_vpm": 9819339.00199705,
+      "relative_polarization_change": 0.5671038665781309
+    },
+    {
+      "step": 8,
+      "z_um": 1.0,
+      "peak_field_vpm": 9788335.378947617,
+      "relative_polarization_change": 0.567001732293075
+    },
+    {
+      "step": 9,
+      "z_um": 1.125,
+      "peak_field_vpm": 9749590.400681403,
+      "relative_polarization_change": 0.5668994916976327
+    },
+    {
+      "step": 10,
+      "z_um": 1.25,
+      "peak_field_vpm": 9714682.632317092,
+      "relative_polarization_change": 0.5667971393866513
+    },
+    {
+      "step": 11,
+      "z_um": 1.375,
+      "peak_field_vpm": 9672295.332904555,
+      "relative_polarization_change": 0.566694680718848
+    },
+    {
+      "step": 12,
+      "z_um": 1.5,
+      "peak_field_vpm": 9633783.433126006,
+      "relative_polarization_change": 0.5665921241437544
+    },
+    {
+      "step": 13,
+      "z_um": 1.625,
+      "peak_field_vpm": 9588021.768749041,
+      "relative_polarization_change": 0.566489461531507
+    },
+    {
+      "step": 14,
+      "z_um": 1.75,
+      "peak_field_vpm": 9546233.0625494,
+      "relative_polarization_change": 0.5663866902173503
+    },
+    {
+      "step": 15,
+      "z_um": 1.8749999999999998,
+      "peak_field_vpm": 9497373.900259512,
+      "relative_polarization_change": 0.5662838325048539
+    },
+    {
+      "step": 16,
+      "z_um": 2.0,
+      "peak_field_vpm": 9452644.9035869,
+      "relative_polarization_change": 0.5661808964403449
+    }
+  ],
+  "width_um": 10.0,
+  "dx_nm": 156.25,
+  "waist_um": 2.0,
+  "time_stride": 10,
+  "zero_field_tail_fs": 150.00000000000003,
+  "time_samples": 4000,
+  "density_m3": 1.758546651023198e+28,
+  "polarization_scale": 1.0,
+  "gamma_s": 50000000000000.0,
+  "input_sha256": {
+    "time": "023e036187ec369342694fc627fb05edf4860cf0ebe139260606b26f587fb2ff",
+    "field": "1fbb86fe99b95aca29a6fc3a18a3a3aaf53e649a306184af62b5309e6c46bc81",
+    "omega": "4d2b319262fb5058d049c36aff582d6cb09b7b55f5353d19747cc318f289de5e",
+    "dipole": "220476dc6d23942cfecfaa81c7329d432853b04868543548dad4fa68c7058b63",
+    "weights": "a1792b2e06bb97e7fd6c8873e8418ab1587b0d6584bf26fb6a8d2a54b19c8747",
+    "model": "0193b978d8206f8145202a358c200b039d00d19d8a52b20a22b5c621d4e4319e"
+  },
+  "output_npz_sha256": "71590c089444a926dc791cbcf75f54b6cd2dd18c5ca719326e9cd573831fcaf5"
+}

@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "archive": "2026-10-22-dft-k24",
+  "file_count": 4,
+  "files": [
+    {
+      "path": "README.md",
+      "size_bytes": 2157,
+      "sha256": "4730460abfcee9c871140abce0ec90ad9cfbb2e0fa37a0c8b45be33a8cd4e979"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k24_b48_e150.csv",
+      "size_bytes": 25157,
+      "sha256": "66f2165e45245d588b692021f5fddd6b60c4841da5c97fe37b3dc90a77b2f019"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k24_b48_e150.meta.json",
+      "size_bytes": 593,
+      "sha256": "276bd986ee42e077cb859a0bf5ecfb409060040d955cc9680d1ab802080a5f47"
+    },
+    {
+      "path": "dft_k24_report.json",
+      "size_bytes": 4427,
+      "sha256": "b4382868193a69b5e071db0540fed704b539b9c2aa17b5337e80d37b731f5eb6"
+    }
+  ]
+}
