@@ -1,0 +1,102 @@
+{
+  "archive_id": "sbup3_solver_optical_audit_20261017",
+  "historical_run_id": "primary_jellison_20260520_081916",
+  "scope": "operator manufactured-field checks, direct PBE optics, and output provenance; no corrected GaAs field run",
+  "files": [
+    {
+      "path": "analysis/audit_release_outputs.py",
+      "sha256": "5469d56d970b2aac9e0577d5b788dbf5902048ed7cd8723b1a7c74b9c248e752",
+      "bytes": 1672
+    },
+    {
+      "path": "analysis/data/gaas_dielectric_reference.csv",
+      "sha256": "a1e105dae38a0ce17283c451f870983ae9177cec374023973539548cc49ee4c4",
+      "bytes": 25144
+    },
+    {
+      "path": "analysis/data/gaas_exp_aspnes_1986.csv",
+      "sha256": "0699576898ca2640b59e16570b4bfd25cbc4d49aa1b8e41c229a4e00366f2b3d",
+      "bytes": 4954
+    },
+    {
+      "path": "analysis/data/gaas_exp_jellison_1992.csv",
+      "sha256": "be9c5b3c0dd1a6533bfeeef6d817bca28888b2d8f06f3b59cf30f8c364e0acb0",
+      "bytes": 20277
+    },
+    {
+      "path": "analysis/optical_error_budget.py",
+      "sha256": "3c741b48932e25808427b16101dfc53d384be7d5c0af7ba9afe50bc6b98fb704",
+      "bytes": 2684
+    },
+    {
+      "path": "analysis/propagation_benchmark.py",
+      "sha256": "d1ca5fcbeaf0207decd21854a8888ac8a0dbceeb2b56ad6afc39ea1d958fffeb",
+      "bytes": 3448
+    },
+    {
+      "path": "archive/2026-10-17-solver-optics/README.md",
+      "sha256": "b9c4793f260e0cae1c994c366c9b481ea3cf31de776cf2cc794234cb45e7df4d",
+      "bytes": 3081
+    },
+    {
+      "path": "archive/2026-10-17-solver-optics/legacy/calibration_release_primary_jellison.json",
+      "sha256": "25a6fa643408b59609ed2fb0ec94a01808b648e5d23f02fa395f01e266c5a8c5",
+      "bytes": 3642
+    },
+    {
+      "path": "archive/2026-10-17-solver-optics/legacy/gaas_dielectric_meta.json",
+      "sha256": "6f22b3947d8093bbfe168b0f512d7739fc1343967eac441cc8b9a9885342e736",
+      "bytes": 725
+    },
+    {
+      "path": "archive/2026-10-17-solver-optics/legacy/gaas_ground_state_meta.json",
+      "sha256": "b5c4401f86f7f43a3f8f1846a321544653ca38c2b64b3f36d02f82f372628009",
+      "bytes": 317
+    },
+    {
+      "path": "archive/2026-10-17-solver-optics/legacy/release_freeze_primary_jellison_20260520_081916.json",
+      "sha256": "aa135afa27c1419bc468500418ba5f86d92b04286ea375618d7718430a3f6ad5",
+      "bytes": 2656
+    },
+    {
+      "path": "archive/2026-10-17-solver-optics/legacy/run_release_primary_jellison_20260520_081916.json",
+      "sha256": "20df73db48ae49fbaa70315ca07419515774047debe0eea3831e4280dcc73477",
+      "bytes": 14405
+    },
+    {
+      "path": "archive/2026-10-17-solver-optics/legacy/transitions_meta.json",
+      "sha256": "d41cfb52b32dcbbedeb11ab026a216c1c1943868ce0f686efa0244fd5883b0df",
+      "bytes": 326
+    },
+    {
+      "path": "archive/2026-10-17-solver-optics/legacy/validation_release_primary_jellison_20260520_081916_104478.json",
+      "sha256": "88d431f4f0164d369f36e87de250973b52d01440cb539b35ce0a5d62a1156f6b",
+      "bytes": 3911
+    },
+    {
+      "path": "archive/2026-10-17-solver-optics/optical_error_budget.json",
+      "sha256": "fd6f5c6bf78df359daf214c2bd3ba4f37b85df0f9cfdd997ae23357ffa83aad3",
+      "bytes": 1944
+    },
+    {
+      "path": "archive/2026-10-17-solver-optics/propagation_benchmark.json",
+      "sha256": "ca9c58744d2cf6ebf76ddb6002150bc0ecfe0197bff18458f60c37ef244817c4",
+      "bytes": 810
+    },
+    {
+      "path": "archive/2026-10-17-solver-optics/provenance_audit.json",
+      "sha256": "f7552dfe6c908ace4317feeae22acc645a5066cfaaafbb48b5a5e6f1231f3fd2",
+      "bytes": 9229
+    },
+    {
+      "path": "tests/test_uppe_real_field.py",
+      "sha256": "c0e9cade50a85ce2193f772602079825164ff02af60610f48e235fc7641f99ef",
+      "bytes": 3508
+    },
+    {
+      "path": "uppe/uppe_2d.py",
+      "sha256": "d22220bf7149ece5f31e0ce4c53adb2cf06791ae317ef717fa35e34a2094a5a7",
+      "bytes": 6953
+    }
+  ]
+}

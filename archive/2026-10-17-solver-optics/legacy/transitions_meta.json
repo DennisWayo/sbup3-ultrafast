@@ -1,0 +1,16 @@
+{
+  "source_csv": "analysis/data/gaas_dielectric_reference.csv",
+  "strength_column": "eps2_lf",
+  "energy_window_eV": [
+    0.0,
+    3.0
+  ],
+  "min_rel_height": 0.01,
+  "min_sep_eV": 0.02,
+  "min_count": 16,
+  "max_count": 24,
+  "sum_f": 1.0,
+  "n_transitions": 16,
+  "energy_min_eV": 1.482068,
+  "energy_max_eV": 2.964497
+}

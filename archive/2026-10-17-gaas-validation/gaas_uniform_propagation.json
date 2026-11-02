@@ -1,0 +1,55 @@
+{
+  "model": "GaAs SBE drive, frozen full polarization, uniform transverse field, vacuum-background real-field UPPE",
+  "scope": "Corrected sequential propagation; not self-consistent intra-step field-material coupling",
+  "length_m": 0.0001,
+  "nx": 16,
+  "time_samples": 10000,
+  "inputs": {
+    "time_s": {
+      "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/time_s.npy",
+      "size_bytes": 80128,
+      "sha256": "023e036187ec369342694fc627fb05edf4860cf0ebe139260606b26f587fb2ff"
+    },
+    "E_t": {
+      "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/E_t.npy",
+      "size_bytes": 80128,
+      "sha256": "1fbb86fe99b95aca29a6fc3a18a3a3aaf53e649a306184af62b5309e6c46bc81"
+    },
+    "polarization": {
+      "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/polarization.npy",
+      "size_bytes": 160128,
+      "sha256": "b13997dd54eb877cd299cd414fc7cce2f7eb60a5faa16a2cef03574a4e31b532"
+    }
+  },
+  "code": {
+    "sbe": {
+      "path": "/Users/denniswayo/sbup3-ultrafast/sbe/sbe_rk4.py",
+      "size_bytes": 24153,
+      "sha256": "c9ca6b28c9991382fa1c04189b1da0e38399c450a43bd5ab3e603d4b193277fd"
+    },
+    "uppe": {
+      "path": "/Users/denniswayo/sbup3-ultrafast/uppe/uppe_2d.py",
+      "size_bytes": 6953,
+      "sha256": "d22220bf7149ece5f31e0ce4c53adb2cf06791ae317ef717fa35e34a2094a5a7"
+    },
+    "study": {
+      "path": "/Users/denniswayo/sbup3-ultrafast/analysis/gaas_uniform_propagation.py",
+      "size_bytes": 4641,
+      "sha256": "e5bdc3fd5ecbb2a95954bcd24072927160339535df3a559ff5d81986854ce191"
+    }
+  },
+  "metrics": {
+    "step_100_to_200_relative_rms": 7.532939320892172e-15,
+    "step_100_to_1_relative_rms": 5.4119411717851245e-12,
+    "window_10_to_80um_relative_rms": 0.0,
+    "transverse_spread_V_m": 0.0,
+    "input_rms_V_m": 3065918.464258379,
+    "output_rms_V_m": 4168337.814171099,
+    "output_peak_abs_V_m": 13093702.28765362
+  },
+  "output": {
+    "path": "/Users/denniswayo/sbup3-ultrafast/archive/2026-10-17-gaas-validation/gaas_uniform_100um.npz",
+    "size_bytes": 3462720,
+    "sha256": "a9a0df39b3bf1ca607f187d628af2c47ef02eadabb6cfe1bd47152ca2b61da6a"
+  }
+}

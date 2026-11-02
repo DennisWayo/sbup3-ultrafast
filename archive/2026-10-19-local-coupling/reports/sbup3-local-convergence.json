@@ -1,0 +1,62 @@
+{
+  "model": "Dispersive linear reduced-SBE background plus local nonlinear SBE residual recomputed at each z step",
+  "comparison_region_um": [
+    -5.0,
+    4.84375
+  ],
+  "propagation_um": 2.0,
+  "relative_rms": {
+    "dz_0p25_vs_0p125_um": 6.292019580235691e-05,
+    "dt_0p05_vs_0p025_fs": 0.0002277111701271162,
+    "box_10_vs_20_um": 0.0014080585177920653
+  },
+  "peak_population": {
+    "base": 4.406767082094821e-07,
+    "half_dz": 4.406767082094821e-07,
+    "half_dt": 4.4095933956945743e-07,
+    "double_width": 4.406767082094821e-07
+  },
+  "source_files": {
+    "base": {
+      "field": {
+        "path": "/private/tmp/sbup3-local-residual-gaussian-smoke.npz",
+        "sha256": "047dc731774e3666e1379fdae36e947d3f972aa04ccb4b5e0822982d977ddf50"
+      },
+      "report": {
+        "path": "/private/tmp/sbup3-local-residual-gaussian-smoke.json",
+        "sha256": "0b90911cea8af99035dc07f9f1de988b68fccc1885abcb1201c7b2a4fb747e5f"
+      }
+    },
+    "half_dz": {
+      "field": {
+        "path": "/private/tmp/sbup3-local-dz0125.npz",
+        "sha256": "71590c089444a926dc791cbcf75f54b6cd2dd18c5ca719326e9cd573831fcaf5"
+      },
+      "report": {
+        "path": "/private/tmp/sbup3-local-dz0125.json",
+        "sha256": "b1cdb7a0216708fe0d6b742cca00bb8379abcccbb3405b67ef1abcefb6ec4772"
+      }
+    },
+    "half_dt": {
+      "field": {
+        "path": "/private/tmp/sbup3-local-stride5.npz",
+        "sha256": "57821a2ff151efe63db1cb26680c4b895b90b2fa7121bc96b9187793dd74a10a"
+      },
+      "report": {
+        "path": "/private/tmp/sbup3-local-stride5.json",
+        "sha256": "5f8a5f102eea8439941921cfa11f7db481ad7ba5f5eff59a8ecf9e25809e698a"
+      }
+    },
+    "double_width": {
+      "field": {
+        "path": "/private/tmp/sbup3-local-width20.npz",
+        "sha256": "519bc251fd9729befad304459cf47e0393f46ed6e609b385ab95b498fa2e8aad"
+      },
+      "report": {
+        "path": "/private/tmp/sbup3-local-width20.json",
+        "sha256": "9ac2383ad5acf9639b5618da42e6b0f4b7a2b8f4765d74bfa2d5f84ba8d55cbd"
+      }
+    }
+  },
+  "interpretation": "Numerical sensitivity of a reduced local-SBE 2 um run; not a converged first-principles GaAs transmission prediction"
+}

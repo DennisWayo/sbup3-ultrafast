@@ -1,8 +1,8 @@
 """
 SBUP3 ground-state DFT preparation for bulk GaAs.
 
-This stage prepares periodic-wavefunction files for optical-response
-calculations with converged k-point sampling.
+This stage prepares periodic wavefunctions for optical-response calculations.
+Convergence must be established by a separate parameter sweep.
 """
 
 from __future__ import annotations
@@ -24,7 +24,7 @@ FD_GPW = HERE / "gaas_fd.gpw"
 PW_GPW = HERE / "gaas_pw.gpw"
 META_JSON = HERE / "gaas_ground_state_meta.json"
 
-# Defaults for publication-grade periodic calculations.
+# Starting values for periodic calculations; they are not convergence claims.
 DEFAULT_XC = "PBE"
 DEFAULT_KPTS = (8, 8, 8)
 DEFAULT_NBANDS = 32
@@ -218,7 +218,7 @@ def main() -> None:
     parser.add_argument(
         "--allow-gamma-only",
         action="store_true",
-        help="Allow kpts=1,1,1 (debug only; not publication-grade).",
+        help="Allow kpts=1,1,1 for a diagnostic calculation.",
     )
     parser.add_argument("--force", action="store_true", help="Recompute even if .gpw files exist")
     args = parser.parse_args()
@@ -227,7 +227,7 @@ def main() -> None:
     if _is_gamma_only(kpts) and not args.allow_gamma_only:
         raise RuntimeError(
             "Refusing to run with kpts=(1,1,1). "
-            "Use a converged periodic grid (for example 6,6,6 or 8,8,8)."
+            "Use a periodic grid and test its convergence."
         )
     if not args.force:
         _validate_existing_artifacts(
@@ -286,7 +286,7 @@ def main() -> None:
         "lcao_gpw": str(LCAO_GPW) if args.gs_mode == "fd" else None,
         "fd_gpw": str(FD_GPW) if args.gs_mode == "fd" else None,
         "pw_gpw": str(PW_GPW) if args.gs_mode == "pw" else None,
-        "publication_grade_kmesh": not _is_gamma_only(kpts),
+        "kmesh_non_gamma": not _is_gamma_only(kpts),
     }
     META_JSON.write_text(json.dumps(meta, indent=2))
     print(f"[OK] Wrote metadata: {META_JSON}")

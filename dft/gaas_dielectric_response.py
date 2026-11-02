@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
-Compute bulk GaAs dielectric/optical response from converged periodic DFT.
+Compute bulk GaAs dielectric/optical response from periodic DFT.
+
+The response settings require a separate convergence study.
 
 Outputs
 -------
@@ -128,10 +130,8 @@ def _validate_ground_state_meta(
             "Ground-state metadata reports gamma-only kpts=(1,1,1). "
             "Refusing publication workflow."
         )
-    if not bool(meta.get("publication_grade_kmesh", True)):
-        raise RuntimeError(
-            "Ground-state metadata does not certify publication-grade k-point sampling."
-        )
+    if not bool(meta.get("kmesh_non_gamma", meta.get("publication_grade_kmesh", True))):
+        raise RuntimeError("Ground-state metadata identifies a gamma-only diagnostic grid")
     return meta
 
 
@@ -166,7 +166,7 @@ def main() -> None:
     parser.add_argument(
         "--allow-gamma-only",
         action="store_true",
-        help="Allow 1,1,1 response k-grid (debug only; not publication-grade).",
+        help="Allow 1,1,1 response k-grid for a diagnostic calculation.",
     )
     parser.add_argument(
         "--allow-missing-gs-meta",
@@ -185,7 +185,7 @@ def main() -> None:
     if _is_gamma_only(kpts) and not args.allow_gamma_only:
         raise RuntimeError(
             "Refusing dielectric-response stage with kpts=(1,1,1). "
-            "Use a converged periodic grid."
+            "Use a periodic grid and test its convergence."
         )
     if not gs_gpw.exists():
         raise FileNotFoundError(f"Ground-state .gpw not found: {gs_gpw}")
@@ -272,7 +272,7 @@ def main() -> None:
         },
         "intraband": False,
         "integrationmode": args.integrationmode,
-        "publication_grade_kmesh": not _is_gamma_only(kpts),
+        "kmesh_non_gamma": not _is_gamma_only(kpts),
         "n_rows": int(len(energy_eV)),
     }
     meta_json.parent.mkdir(parents=True, exist_ok=True)

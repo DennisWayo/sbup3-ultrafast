@@ -1,0 +1,406 @@
+{
+  "timestamp_utc": "20261017_102244",
+  "mode": "sequential",
+  "git": {
+    "commit": "2395fd0cfdaec742fa865630f19b724a34e4d87f",
+    "dirty": false
+  },
+  "python": {
+    "executable": "/Users/denniswayo/sbup3-ultrafast/.venv-gpaw310/bin/python",
+    "version": "3.10.18 (main, Jun  3 2025, 18:23:41) [Clang 17.0.0 (clang-1700.3.19.1)]"
+  },
+  "packages": {
+    "numpy": "2.2.6",
+    "matplotlib": "3.10.9",
+    "gpaw": "25.7.0"
+  },
+  "params": {
+    "calibration": {
+      "enabled": false,
+      "ref_csv": null,
+      "ref_csv_effective": null,
+      "fit_channels": "alpha,n",
+      "log10_ratio_min": -8.0,
+      "log10_ratio_max": 8.0,
+      "grid": 801,
+      "target_density_m3": null,
+      "out_json": null,
+      "write_env": null
+    },
+    "dft": {
+      "kpts": "8,8,8",
+      "gs_mode": "pw",
+      "gs_nbands": 32,
+      "pw_ecut_ev": 200.0,
+      "response_kpts": "10,10,10",
+      "response_nbands": 120,
+      "response_out_csv": "analysis/data/gaas_dielectric_reference.csv",
+      "transition_e_min": 0.0,
+      "transition_e_max": 3.0,
+      "transition_min_rel_height": 0.01,
+      "transition_min_sep_ev": 0.02,
+      "transition_min_count": 16,
+      "transition_max_count": 24,
+      "transition_sum_f": 1.0,
+      "force_ground_state": false,
+      "allow_missing_gs_meta": false,
+      "run_lrtddft_stage": false,
+      "scissor_ev": null
+    },
+    "sbe": {
+      "t_fs": null,
+      "dt_as": null,
+      "gamma": null,
+      "e_field_ampl": null,
+      "omega_l": null,
+      "mixing": null,
+      "ignore_feedback": false,
+      "e_max": null,
+      "density_m3": 1.758546651023198e+28,
+      "polarization_scale": 1.0,
+      "osc_norm_factor": 0.9592641193252643,
+      "chi_eps": 1e-12,
+      "response_power_cutoff": 1.0,
+      "chi_max_ev": 3.0,
+      "allow_feedback_in_sequential": false
+    },
+    "uppe": {
+      "x_window": null,
+      "w0": null,
+      "nx": null,
+      "dz": null,
+      "z_steps": null
+    },
+    "coupling": {
+      "iters": null,
+      "rtol": null,
+      "feedback_beta": null,
+      "feedback_norm": null,
+      "feedback_norm_eps": null
+    }
+  },
+  "effective_params": {
+    "sbe": {
+      "t_fs": 50.0,
+      "dt_as": 5.0,
+      "gamma": 50000000000000.0,
+      "e_field_ampl": 10000000.0,
+      "omega_l": 998833257244613.9,
+      "mixing": 0.05,
+      "ignore_feedback": true,
+      "e_max": 50000000.0,
+      "density_m3": 1.758546651023198e+28,
+      "polarization_scale": 1.0,
+      "osc_norm_factor": 0.9592641193252643,
+      "chi_eps": 1e-12,
+      "response_power_cutoff": 1.0,
+      "chi_max_ev": 3.0
+    },
+    "uppe": {
+      "x_window": 1e-05,
+      "w0": 2e-06,
+      "nx": 256,
+      "dz": 1e-06,
+      "z_steps": 100
+    },
+    "coupling": {
+      "iters": 10,
+      "rtol": 0.001,
+      "feedback_beta": 0.2,
+      "feedback_norm": "rms",
+      "feedback_norm_eps": 1e-30
+    }
+  },
+  "dft": {
+    "ran": false,
+    "env": null,
+    "kpts": "8,8,8",
+    "gs_mode": "pw",
+    "gs_nbands": 32,
+    "pw_ecut_ev": 200.0,
+    "response_kpts": "10,10,10",
+    "response_nbands": 120,
+    "response_out_csv": "analysis/data/gaas_dielectric_reference.csv",
+    "transition_e_min": 0.0,
+    "transition_e_max": 3.0,
+    "transition_min_rel_height": 0.01,
+    "transition_min_sep_ev": 0.02,
+    "transition_min_count": 16,
+    "transition_max_count": 24,
+    "transition_sum_f": 1.0,
+    "force_ground_state": false,
+    "allow_missing_gs_meta": false,
+    "run_lrtddft_stage": false,
+    "scissor_ev": null,
+    "constants": {
+      "gaas_bulk_gpaw.py": {
+        "DEFAULT_XC": "\"PBE\"",
+        "DEFAULT_KPTS": "(8, 8, 8)",
+        "DEFAULT_NBANDS": "32",
+        "DEFAULT_SMEARING": "0.01",
+        "DEFAULT_H": "0.25"
+      },
+      "gaas_lrtddft.py": {
+        "OSC_MIN": "1e-6"
+      }
+    },
+    "scripts": {
+      "gaas_bulk_gpaw.py": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/dft/gaas_bulk_gpaw.py",
+        "exists": true,
+        "size_bytes": 8774,
+        "sha256": "cf811bfbea7f318cfd498ff41a0d1619724fe2b8047cd9f33d82146f17632fc9"
+      },
+      "gaas_dielectric_response.py": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/dft/gaas_dielectric_response.py",
+        "exists": true,
+        "size_bytes": 9881,
+        "sha256": "6cc1a6371fbb0ed6428238b051348376221c0d050c16d9b872667523e9f72e7c"
+      },
+      "build_transitions_from_dielectric.py": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/dft/build_transitions_from_dielectric.py",
+        "exists": true,
+        "size_bytes": 8588,
+        "sha256": "86e5942f0ca10598452ca332bfadfd7c96b988a58b77d847fea70e586b661e1d"
+      },
+      "gaas_lrtddft.py": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/dft/gaas_lrtddft.py",
+        "exists": true,
+        "size_bytes": 5458,
+        "sha256": "b156aa72aec2b3afc11933ad417e921e0e8c989348e2556b7ba8787a338c65a8"
+      }
+    },
+    "values": {
+      "omega0_rad_s": 998833257244613.9,
+      "d_eff_Cm": 2.3709032987694254e-30,
+      "E0_eV": 0.657443992515797,
+      "f0": 0.0012595675525857131
+    },
+    "outputs": {
+      "omega0_rad_s": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/dft/omega0_rad_s.npy",
+        "exists": true,
+        "size_bytes": 136,
+        "sha256": "954489920e1e33f8c9035a0f55adbea481a3dad9468f5eac34ab833adb820fe0"
+      },
+      "d_eff_Cm": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/dft/d_eff_Cm.npy",
+        "exists": true,
+        "size_bytes": 136,
+        "sha256": "a547e55c1ea7afc69322fe156291570af4088895d9ccca0215a52387925bbf79"
+      },
+      "E0_eV": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/dft/E0_eV.npy",
+        "exists": true,
+        "size_bytes": 136,
+        "sha256": "92004b4c12a5e8c7f7df52e8977134b58b450104cb18ca51450fafc6257fd2ca"
+      },
+      "f0": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/dft/f0.npy",
+        "exists": true,
+        "size_bytes": 136,
+        "sha256": "ee6aaf115caa03d6ace3919b799fe6a89d822ea2e8f993e8444e816512a90089"
+      },
+      "transitions_E_eV": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/dft/transitions_E_eV.npy",
+        "exists": true,
+        "size_bytes": 256,
+        "sha256": "4c7170b370f44d85275ae7afc1a44b7606c9e4570fe5fba85c3a1387745e16b3"
+      },
+      "transitions_f": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/dft/transitions_f.npy",
+        "exists": true,
+        "size_bytes": 256,
+        "sha256": "a1792b2e06bb97e7fd6c8873e8418ab1587b0d6584bf26fb6a8d2a54b19c8747"
+      },
+      "transitions_meta": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/dft/transitions_meta.json",
+        "exists": false
+      },
+      "dielectric_meta": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/dft/gaas_dielectric_meta.json",
+        "exists": false
+      },
+      "dielectric_csv": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/analysis/data/gaas_dielectric_reference.csv",
+        "exists": true,
+        "size_bytes": 24901,
+        "sha256": "582c471d41bd19a664bc989b0b3d9d7fca11487531efbd833500f142dca0a1d2"
+      }
+    }
+  },
+  "outputs": {
+    "sbe": {
+      "time_s": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/time_s.npy",
+        "exists": true,
+        "size_bytes": 80128,
+        "sha256": "023e036187ec369342694fc627fb05edf4860cf0ebe139260606b26f587fb2ff"
+      },
+      "E_t": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/E_t.npy",
+        "exists": true,
+        "size_bytes": 80128,
+        "sha256": "1fbb86fe99b95aca29a6fc3a18a3a3aaf53e649a306184af62b5309e6c46bc81"
+      },
+      "polarization": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/polarization.npy",
+        "exists": true,
+        "size_bytes": 160128,
+        "sha256": "b13997dd54eb877cd299cd414fc7cce2f7eb60a5faa16a2cef03574a4e31b532"
+      },
+      "population": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/population.npy",
+        "exists": true,
+        "size_bytes": 80128,
+        "sha256": "7deaaceef78321abc58ce8ac822c2f0b8e0b4d4a92c4dba1675b0477d3538fb8"
+      },
+      "omega_rad_s": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/omega_rad_s.npy",
+        "exists": true,
+        "size_bytes": 40136,
+        "sha256": "9b295727c83aa9c40a9dac3c45a1ab8c38a5b2e8a2b983c1e8c5cfc41469caa9"
+      },
+      "chi_eff_complex": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/chi_eff_complex.npy",
+        "exists": true,
+        "size_bytes": 80144,
+        "sha256": "ae69fd007a7857bb08841520d17577f3d722507c7b65ef09813b6098fbaa500b"
+      },
+      "chi_eff_real": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/chi_eff_real.npy",
+        "exists": true,
+        "size_bytes": 40136,
+        "sha256": "8f261027118e2f0dcbb15484b3a7eec9de3981214bcfad918354828b5b1b7943"
+      },
+      "chi_eff_imag": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/chi_eff_imag.npy",
+        "exists": true,
+        "size_bytes": 40136,
+        "sha256": "e6e192ea19f53cf994d0abc0255f1c16d637fff256effaee35f1aa1f09668d60"
+      },
+      "probe_chi_eff_complex": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/probe_chi_eff_complex.npy",
+        "exists": true,
+        "size_bytes": 80144,
+        "sha256": "44beca8d6a47cadef1a76702cde27577aa3cd3bf8174aaccd865f722c6c6141b"
+      },
+      "probe_chi_eff_real": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/probe_chi_eff_real.npy",
+        "exists": true,
+        "size_bytes": 40136,
+        "sha256": "08e04909b219378edfac5e87de746486ea879f7715b8440240b2317b2537bdc4"
+      },
+      "probe_chi_eff_imag": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/probe_chi_eff_imag.npy",
+        "exists": true,
+        "size_bytes": 40136,
+        "sha256": "429b4dfa7ece765060916dcdf4bd4ed24b6c367f6ff8d93023d21a0586427d9f"
+      },
+      "probe_chi_support_mask": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/probe_chi_support_mask.npy",
+        "exists": true,
+        "size_bytes": 5129,
+        "sha256": "5905c526f07e183a092151f2e29b3d6f3d66ba90990fc8df435cca69523a90da"
+      },
+      "alpha_rel": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/alpha_rel.npy",
+        "exists": true,
+        "size_bytes": 40136,
+        "sha256": "534b272b6933db61cc05fd8777731b45fae3710fbc5409890f146dd6ff666dbf"
+      },
+      "n_rel": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/n_rel.npy",
+        "exists": true,
+        "size_bytes": 40136,
+        "sha256": "e23ac666cc75ca3fe11209c636bc30b5d2056081a03e72c11ec9ee826be64617"
+      },
+      "probe_alpha_rel": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/probe_alpha_rel.npy",
+        "exists": true,
+        "size_bytes": 40136,
+        "sha256": "68e0dff413bc74d71b138406932aa18f5a1bdf123660c972b788cecdc6be1922"
+      },
+      "probe_n_rel": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/probe_n_rel.npy",
+        "exists": true,
+        "size_bytes": 40136,
+        "sha256": "b58128d6e13464d769be1d90de65a4354a80b1789f8d16da3c50a1bba1439beb"
+      },
+      "probe_alpha_m_inv": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/probe_alpha_m_inv.npy",
+        "exists": true,
+        "size_bytes": 40136,
+        "sha256": "68e0dff413bc74d71b138406932aa18f5a1bdf123660c972b788cecdc6be1922"
+      },
+      "probe_n_real": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/probe_n_real.npy",
+        "exists": true,
+        "size_bytes": 40136,
+        "sha256": "5a9809d9c96cb5b2b959cf952052b332c5f5f5e8e00f026d8c06fb9069fa21bf"
+      },
+      "E_t_feedback": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/E_t_feedback.npy",
+        "exists": false
+      },
+      "transition_model": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/transition_model.json",
+        "exists": true,
+        "size_bytes": 692,
+        "sha256": "0193b978d8206f8145202a358c200b039d00d19d8a52b20a22b5c621d4e4319e"
+      },
+      "transition_omega_rad_s_used": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/transition_omega_rad_s_used.npy",
+        "exists": true,
+        "size_bytes": 256,
+        "sha256": "4d2b319262fb5058d049c36aff582d6cb09b7b55f5353d19747cc318f289de5e"
+      },
+      "transition_d_eff_Cm_used": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/transition_d_eff_Cm_used.npy",
+        "exists": true,
+        "size_bytes": 256,
+        "sha256": "220476dc6d23942cfecfaa81c7329d432853b04868543548dad4fa68c7058b63"
+      },
+      "transition_osc_used": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/transition_osc_used.npy",
+        "exists": true,
+        "size_bytes": 256,
+        "sha256": "3a6c40d92eed1c6394881b3e7e1f89546e0287081ae1976337905b61d295cbb3"
+      },
+      "transition_weight_used": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/transition_weight_used.npy",
+        "exists": true,
+        "size_bytes": 256,
+        "sha256": "a1792b2e06bb97e7fd6c8873e8418ab1587b0d6584bf26fb6a8d2a54b19c8747"
+      },
+      "transition_energy_eV_used": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/sbe/transition_energy_eV_used.npy",
+        "exists": true,
+        "size_bytes": 256,
+        "sha256": "42eb8243ccf7a27145e1dfe35039fc5d6579d91e6eebfe76b177c52c8b43f7f9"
+      }
+    },
+    "uppe": {
+      "E_xt_out": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/uppe/outputs/E_xt_out.npy",
+        "exists": true,
+        "size_bytes": 20480128,
+        "sha256": "5c9de336ea0345415ecc9232e9e0130e332502458b743cad709c9f61d20c45ae"
+      },
+      "x_m": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/uppe/outputs/x_m.npy",
+        "exists": true,
+        "size_bytes": 2176,
+        "sha256": "a6d1b4b398dbe7ae5c2b2c0c9d02e60276e260b895e7b6a0dd9e679dfcc620b8"
+      },
+      "time_s": {
+        "path": "/Users/denniswayo/sbup3-validation-20261017/uppe/outputs/time_s.npy",
+        "exists": true,
+        "size_bytes": 80128,
+        "sha256": "023e036187ec369342694fc627fb05edf4860cf0ebe139260606b26f587fb2ff"
+      }
+    }
+  },
+  "validation_report": null,
+  "calibration_report": null
+}

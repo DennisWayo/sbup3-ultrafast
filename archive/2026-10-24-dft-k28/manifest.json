@@ -1,0 +1,29 @@
+{
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 37,
+      "sha256": "af92753755f86e71516ae3da28ea08ddd9deecb2e2cac8e6104bb9934bb81341"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1565,
+      "sha256": "13948cac43e679b4e75a569f60c890ed9d878d10d2e2efe3168c574bbb4c6df0"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k28_b48_e150.csv",
+      "bytes": 25182,
+      "sha256": "bfa0b379d9619f7c43f207af13117c54942c0767a8580ec9f4c28e7b7c1d3552"
+    },
+    {
+      "path": "dft/gaas_dielectric_gs6_k28_b48_e150.meta.json",
+      "bytes": 593,
+      "sha256": "90305cdd7f1924f4093f4e649e6e7efbb5fd77de759775fc8f8c152bd6c3d41a"
+    },
+    {
+      "path": "dft_k28_report.json",
+      "bytes": 4416,
+      "sha256": "d5ef7d0d1c9a76e817429c2c919fcd94b9dfc3d730288b0c4e2d3a2cf5102e69"
+    }
+  ]
+}
