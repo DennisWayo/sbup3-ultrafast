@@ -25,6 +25,7 @@ def local_polarization(
     gamma_s: float,
     population_clip: float = 1.0,
     field_sampling: str = "linear",
+    linearized: bool = False,
 ) -> tuple[np.ndarray, float]:
     """Return real P(x,t) and the largest local excited population.
 
@@ -32,6 +33,8 @@ def local_polarization(
     parameters; this function does not turn them into ab-initio matrix elements.
     ``field_sampling='left'`` reproduces the historical constant-within-step
     drive; the default linearly samples the drive at RK4 substeps.
+    With ``linearized=True``, population is held at its ground-state value
+    while retaining the same RK4 time grid and field interpolation.
     """
     field = np.asarray(field_xt, dtype=float)
     time = np.asarray(time_s, dtype=float)
@@ -70,6 +73,8 @@ def local_polarization(
 
     def rhs(p_state: np.ndarray, n_state: np.ndarray,
             coupling: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+        if linearized:
+            return -decay * p_state + 1j * coupling, np.zeros_like(n_state)
         dp = -decay * p_state + 1j * coupling * (1.0 - 2.0 * n_state)
         dn = -2.0 * np.imag(coupling * np.conj(p_state))
         return dp, dn

@@ -43,13 +43,17 @@ def local_sbe_uppe(
     dz_m: float,
     z_steps: int,
     max_field_vpm: float,
+    residual_mode: str = "analytic",
 ) -> tuple[np.ndarray, dict]:
     """Advance a dispersive UPPE with a local temporal Bloch response.
 
     The analytic linear SBE response defines the background index. A predictor
-    supplies the nonlinear residual polarization at the end of the step; its
+    supplies the residual polarization at the end of the step; its
     average with the beginning residual enters the source integral. The
     corrected field becomes the next step's local SBE drive.
+    The matched-discrete option subtracts a population-frozen SBE response
+    evaluated on the same RK4 grid, isolating population feedback from the
+    time-discretization difference relative to analytic susceptibility.
     Population is reset only at the start of each local time trace, so this
     model has no carrier transport or memory between distinct z locations.
     """
@@ -58,6 +62,8 @@ def local_sbe_uppe(
         raise ValueError("Initial field and maximum field must be finite")
     if z_steps < 0 or dz_m <= 0:
         raise ValueError("Require a positive step and nonnegative step count")
+    if residual_mode not in {"analytic", "matched-discrete"}:
+        raise ValueError("Unknown residual mode")
 
     def response(e: np.ndarray) -> tuple[np.ndarray, float]:
         return local_polarization(
@@ -70,6 +76,13 @@ def local_sbe_uppe(
 
     def residual(e: np.ndarray) -> tuple[np.ndarray, float]:
         nonlinear_p, peak = response(e)
+        if residual_mode == "matched-discrete":
+            linear_discrete, _ = local_polarization(
+                e, time_s, omega_rad_s, dipole_cm, weights,
+                density_m3=density_m3, polarization_scale=polarization_scale,
+                gamma_s=gamma_s, linearized=True,
+            )
+            return nonlinear_p - linear_discrete, peak
         return nonlinear_p - propagator.linear_polarization(e), peak
 
     polarization, peak_population = residual(field)
@@ -104,6 +117,7 @@ def local_sbe_uppe(
         frozen = propagator.advance(frozen, initial_polarization)
     report = {
         "model": "Dispersive linear reduced-SBE background plus local nonlinear SBE residual recomputed at each z step",
+        "residual_mode": residual_mode,
         "source_rule": "Predictor-corrector average of beginning and predicted end-step residual polarization",
         "z_um": dz_m * z_steps * 1e6,
         "dz_um": dz_m * 1e6,
@@ -132,6 +146,8 @@ def main() -> None:
                         help="Zero-field tail for the SBE polarization to decay before the temporal FFT wraps")
     parser.add_argument("--gamma-s", type=float, default=5.0e13)
     parser.add_argument("--max-field-vpm", type=float, default=1.0e9)
+    parser.add_argument("--residual-mode", choices=("analytic", "matched-discrete"),
+                        default="analytic")
     args = parser.parse_args()
     if (args.stride < 1 or args.width_um <= 0 or args.dx_nm <= 0
             or args.waist_um <= 0 or args.tail_fs < 0):
@@ -180,6 +196,7 @@ def main() -> None:
         dz_m=args.dz_um * 1e-6,
         z_steps=steps,
         max_field_vpm=args.max_field_vpm,
+        residual_mode=args.residual_mode,
     )
     report.update({
         "width_um": args.width_um,

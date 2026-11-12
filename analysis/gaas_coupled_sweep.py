@@ -58,7 +58,7 @@ def save(path: Path, record: dict) -> None:
 
 def check_output(prefix: Path, *, width_um: float, dz_um: float,
                  z_um: float, stride: int, dx_nm: float,
-                 inputs: dict[str, str]) -> dict:
+                 inputs: dict[str, str], residual_mode: str) -> dict:
     report_path = prefix.with_suffix(".json")
     field_path = prefix.with_suffix(".npz")
     report = json.loads(report_path.read_text())
@@ -68,6 +68,8 @@ def check_output(prefix: Path, *, width_um: float, dz_um: float,
             raise ValueError(f"{prefix}: {key} does not match the plan")
     if report["time_stride"] != stride or report["input_sha256"] != inputs:
         raise ValueError(f"{prefix}: temporal sampling or input hash mismatch")
+    if report.get("residual_mode") != residual_mode:
+        raise ValueError(f"{prefix}: residual mode mismatch")
     if report["output_npz_sha256"] != sha256(field_path):
         raise ValueError(f"{prefix}: field checksum mismatch")
     with np.load(field_path) as saved:
@@ -133,6 +135,8 @@ def main() -> int:
     parser.add_argument("--dx-nm", type=float, default=156.25)
     parser.add_argument("--dz-um", type=float, default=0.5)
     parser.add_argument("--stride", type=int, default=10)
+    parser.add_argument("--residual-mode", choices=("analytic", "matched-discrete"),
+                        default="analytic")
     parser.add_argument("--case-timeout-hours", type=float, default=12.0)
     parser.add_argument("--wait-for-status", type=Path)
     parser.add_argument("--max-wait-hours", type=float, default=30.0)
@@ -166,7 +170,8 @@ def main() -> int:
                    "--width-um", str(width), "--dx-nm", str(args.dx_nm),
                    "--waist-um", "2", "--z-um", str(args.z_um),
                    "--dz-um", str(dz), "--stride", str(stride),
-                   "--tail-fs", "150", "--max-field-vpm", "1e9"]
+                   "--tail-fs", "150", "--max-field-vpm", "1e9",
+                   "--residual-mode", args.residual_mode]
         entries.append({"case": label, "state": "pending", "command": command,
                         "log": str(out / f"{label}.log")})
     record = {
@@ -177,6 +182,7 @@ def main() -> int:
         "input_sha256": input_hashes,
         "wait_for_status": str(args.wait_for_status) if args.wait_for_status else None,
         "case_timeout_hours": args.case_timeout_hours,
+        "residual_mode": args.residual_mode,
         "cases": entries,
     }
     if args.plan:
@@ -222,7 +228,8 @@ def main() -> int:
                 raise RuntimeError(f"Case exited {completed.returncode}")
             entry["output"] = check_output(
                 out / label, width_um=width, dz_um=dz, z_um=args.z_um,
-                stride=stride, dx_nm=args.dx_nm, inputs=input_hashes)
+                stride=stride, dx_nm=args.dx_nm, inputs=input_hashes,
+                residual_mode=args.residual_mode)
         except Exception as exc:
             entry["state"] = "failed"
             entry["error"] = str(exc)
