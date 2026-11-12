@@ -18,6 +18,10 @@ predictor--corrector average across each propagation step.
 | 100 µm | 2.821112044e-7 | 4.547093062e-6 | 8.967282460e-4 | 2.213311693e-6 |
 
 Values are relative RMS differences in the central -5 to 5 µm output field.
+The step comparison uses the base and half-step fields; time and box
+comparisons use the half-step field as their reference. The outer-fifth energy
+fraction is measured in the doubled-width field.
+The 10 µm base uses a 40 µm transverse box and a 0.5 µm propagation step.
 The 100 µm base uses a 160 µm transverse box, 156.25 nm spacing, 2 µm
 input waist, 0.25 µm propagation step, and 0.05 fs sampled time step.
 The step comparison uses 0.25 versus 0.125 µm; the time comparison uses
