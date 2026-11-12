@@ -1,0 +1,143 @@
+{
+  "timestamp_utc": "20260520_081916_104478",
+  "git": {
+    "commit": "fcb91a39e89f33ca14f6210e557ac7f102d893ad",
+    "dirty": true
+  },
+  "scaling": {
+    "density_m3": "1.7585466510231837e+28",
+    "polarization_scale": "1"
+  },
+  "sweep": [],
+  "metrics": {
+    "dt_in_s": 5e-18,
+    "dt_out_s": 5e-18,
+    "dx_m": 3.9215686274509744e-08,
+    "finite": {
+      "E_t": {
+        "nan": 0,
+        "inf": 0
+      },
+      "P_t": {
+        "nan": 0,
+        "inf": 0
+      },
+      "n_t": {
+        "nan": 0,
+        "inf": 0
+      },
+      "E_xt": {
+        "nan": 0,
+        "inf": 0
+      },
+      "chi_r": {
+        "nan": 4964,
+        "inf": 0
+      },
+      "chi_i": {
+        "nan": 4964,
+        "inf": 0
+      },
+      "alpha": {
+        "nan": 4964,
+        "inf": 0
+      }
+    },
+    "response_support": {
+      "coverage_fraction": 0.007398520295940812,
+      "max_energy_eV": 2.977680739960696
+    },
+    "probe_response": {
+      "available": true,
+      "coverage_fraction": 0.003599280143971206,
+      "min_energy_eV": 1.5715537238681454,
+      "max_energy_eV": 2.977680739960696
+    },
+    "dephasing": {
+      "tail_max_over_peak": 0.13986222479335972,
+      "tail_mean": 9.210507540857555e-07,
+      "decay_slope": -624075932275001.5
+    },
+    "spectral": {
+      "input_centroid_eV": 0.6574439924561778,
+      "input_rms_width_eV": 0.09745660187189586,
+      "output_centroid_eV": 0.6771952095433206,
+      "output_rms_width_eV": 0.10650520792694092
+    },
+    "energy_proxy": {
+      "mean": 1.6093523914640183e+87,
+      "min": 6.172639441216411e+82,
+      "max": 1.0856189128519569e+88,
+      "std": 2.3496587234791312e+87,
+      "drift_rel": 6.745649653678025,
+      "std_rel": 1.4600026295929263
+    },
+    "feedback_rel_l2": 1.4250222659865721,
+    "transition_model": {
+      "multi_enable": true,
+      "source": "/Users/denniswayo/sbup3-ultrafast/dft/transitions_E_eV.npy",
+      "n_transitions": 16,
+      "energy_min_eV": 1.482068,
+      "energy_max_eV": 2.964497,
+      "n_transitions_used": 16,
+      "oscillator_sum_used": 0.9592641193252643,
+      "density_m3": 1.7585466510231837e+28,
+      "polarization_scale": 1.0,
+      "osc_norm_factor": 0.9592641193252643,
+      "chi_eps": 1e-12,
+      "response_power_cutoff": 1.0,
+      "chi_max_ev": 3.0,
+      "probe_enable": true,
+      "probe_e_field_ampl": 50000.0,
+      "probe_t0_fs": 25.0,
+      "probe_tau_fs": 0.35,
+      "probe_omega_l": 0.0,
+      "probe_chi_eps": 1e-12,
+      "probe_response_power_cutoff": 1.0,
+      "probe_chi_min_ev": 1.5,
+      "probe_chi_max_ev": 3.0
+    },
+    "transition_summary": {
+      "n_transitions": 16,
+      "energy_min_eV": 1.482068,
+      "energy_max_eV": 2.964497,
+      "osc_sum": 0.9592641193252643
+    }
+  },
+  "baseline": {
+    "path": "/Users/denniswayo/sbup3-ultrafast/analysis/data/gaas_exp_jellison_1992.csv",
+    "response_source": "probe",
+    "metrics": {
+      "alpha": {
+        "energy_min_eV": 1.5715537238681454,
+        "energy_max_eV": 2.977680739960696,
+        "scale": -1.171776856367172,
+        "rmse": 14013919.272634266,
+        "rmse_norm": 0.2470325201828718,
+        "rmse_shape": 0.7502695113097737,
+        "n_points": 84
+      },
+      "alpha_abs": {
+        "energy_min_eV": 1.5715537238681454,
+        "energy_max_eV": 2.977680739960696,
+        "scale": 1.171776856367172,
+        "rmse": 14013919.272634266,
+        "rmse_norm": 0.2470325201828718,
+        "rmse_shape": 0.36020850559317036,
+        "n_points": 84
+      },
+      "n": {
+        "energy_min_eV": 1.5715537238681454,
+        "energy_max_eV": 2.977680739960696,
+        "scale": 3.6750987021597936,
+        "rmse": 1.339462285044462,
+        "rmse_norm": 0.2599887975629779,
+        "rmse_shape": 0.2871756177556579,
+        "n_points": 84
+      }
+    },
+    "recommended_polarization_scale": 1.171776856367172,
+    "recommended_source": "alpha_abs"
+  },
+  "linear_check": null
+}

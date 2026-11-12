@@ -1,0 +1,70 @@
+{
+  "model": "Sequential 100-um vacuum-background UPPE with frozen SBE full polarization and 2-um Gaussian transverse profile",
+  "meaning": "Periodic-box sensitivity of this restricted model; not a self-consistent optical prediction",
+  "central_crop_um": 10.0,
+  "dx_nm": 39.0625,
+  "input_sha256": {
+    "time_s": "023e036187ec369342694fc627fb05edf4860cf0ebe139260606b26f587fb2ff",
+    "E_t": "1fbb86fe99b95aca29a6fc3a18a3a3aaf53e649a306184af62b5309e6c46bc81",
+    "polarization": "b13997dd54eb877cd299cd414fc7cce2f7eb60a5faa16a2cef03574a4e31b532"
+  },
+  "solver_sha256": "d22220bf7149ece5f31e0ce4c53adb2cf06791ae317ef717fa35e34a2094a5a7",
+  "direct_solver_relative_rms": 1.5395573514806935e-12,
+  "cases": [
+    {
+      "width_um": 10.0,
+      "nx": 256,
+      "central_rms_v_per_m": 2209134.8578340895,
+      "outer_20_percent_energy_fraction": 0.07851223861193503,
+      "imaginary_to_real_max_ratio": 7.386399359907855e-16
+    },
+    {
+      "width_um": 20.0,
+      "nx": 512,
+      "central_rms_v_per_m": 1554529.3851645263,
+      "outer_20_percent_energy_fraction": 0.3281617979478256,
+      "imaginary_to_real_max_ratio": 6.766802675957461e-16,
+      "central_relative_rms_vs_previous": 0.9200933155071219
+    },
+    {
+      "width_um": 40.0,
+      "nx": 1024,
+      "central_rms_v_per_m": 1172771.05986268,
+      "outer_20_percent_energy_fraction": 0.1397577127678883,
+      "imaginary_to_real_max_ratio": 8.539552568898193e-16,
+      "central_relative_rms_vs_previous": 0.803871039731578
+    },
+    {
+      "width_um": 80.0,
+      "nx": 2048,
+      "central_rms_v_per_m": 1130463.5198927713,
+      "outer_20_percent_energy_fraction": 0.04299632181905939,
+      "imaginary_to_real_max_ratio": 8.860752914004317e-16,
+      "central_relative_rms_vs_previous": 0.28603586303191353
+    },
+    {
+      "width_um": 160.0,
+      "nx": 4096,
+      "central_rms_v_per_m": 1128978.0917924272,
+      "outer_20_percent_energy_fraction": 0.0017406374241322954,
+      "imaginary_to_real_max_ratio": 8.320200792442104e-16,
+      "central_relative_rms_vs_previous": 0.037877829962465324
+    },
+    {
+      "width_um": 320.0,
+      "nx": 8192,
+      "central_rms_v_per_m": 1128744.7426400834,
+      "outer_20_percent_energy_fraction": 0.00024244868529564806,
+      "imaginary_to_real_max_ratio": 8.401897687915323e-16,
+      "central_relative_rms_vs_previous": 0.011814604815685264
+    },
+    {
+      "width_um": 640.0,
+      "nx": 16384,
+      "central_rms_v_per_m": 1128659.5251469857,
+      "outer_20_percent_energy_fraction": 0.00013331833815477363,
+      "imaginary_to_real_max_ratio": 8.388547967886992e-16,
+      "central_relative_rms_vs_previous": 0.00588743647501903
+    }
+  ]
+}

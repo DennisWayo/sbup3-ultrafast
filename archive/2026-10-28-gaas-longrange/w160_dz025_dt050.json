@@ -1,0 +1,2430 @@
+{
+  "model": "Dispersive linear reduced-SBE background plus local nonlinear SBE residual recomputed at each z step",
+  "source_rule": "Predictor-corrector average of beginning and predicted end-step residual polarization",
+  "z_um": 99.99999999999999,
+  "dz_um": 0.25,
+  "z_steps": 400,
+  "peak_field_vpm": 10000000.0,
+  "peak_population": 4.406767082094821e-07,
+  "relative_rms_vs_frozen_residual": 0.13364015951395844,
+  "step_diagnostics": [
+    {
+      "step": 1,
+      "z_um": 0.25,
+      "peak_field_vpm": 9960454.829022689,
+      "relative_polarization_change": 1.0867457077133285
+    },
+    {
+      "step": 2,
+      "z_um": 0.5,
+      "peak_field_vpm": 9911716.664951155,
+      "relative_polarization_change": 1.0863900863453535
+    },
+    {
+      "step": 3,
+      "z_um": 0.75,
+      "peak_field_vpm": 9854173.063475845,
+      "relative_polarization_change": 1.0860354758175046
+    },
+    {
+      "step": 4,
+      "z_um": 1.0,
+      "peak_field_vpm": 9788293.832636978,
+      "relative_polarization_change": 1.0856795200007048
+    },
+    {
+      "step": 5,
+      "z_um": 1.25,
+      "peak_field_vpm": 9714611.09845263,
+      "relative_polarization_change": 1.0853221455097746
+    },
+    {
+      "step": 6,
+      "z_um": 1.5,
+      "peak_field_vpm": 9633695.174863972,
+      "relative_polarization_change": 1.0849632704035916
+    },
+    {
+      "step": 7,
+      "z_um": 1.75,
+      "peak_field_vpm": 9546147.976596717,
+      "relative_polarization_change": 1.0846028061171478
+    },
+    {
+      "step": 8,
+      "z_um": 2.0,
+      "peak_field_vpm": 9452575.846648937,
+      "relative_polarization_change": 1.084240658175324
+    },
+    {
+      "step": 9,
+      "z_um": 2.25,
+      "peak_field_vpm": 9353590.101480747,
+      "relative_polarization_change": 1.083876725709294
+    },
+    {
+      "step": 10,
+      "z_um": 2.5,
+      "peak_field_vpm": 9249785.198585266,
+      "relative_polarization_change": 1.0835109010562451
+    },
+    {
+      "step": 11,
+      "z_um": 2.75,
+      "peak_field_vpm": 9141739.02123642,
+      "relative_polarization_change": 1.0831430695499125
+    },
+    {
+      "step": 12,
+      "z_um": 3.0,
+      "peak_field_vpm": 9030004.888468986,
+      "relative_polarization_change": 1.0827731106554874
+    },
+    {
+      "step": 13,
+      "z_um": 3.25,
+      "peak_field_vpm": 8915102.96050032,
+      "relative_polarization_change": 1.0824008964009646
+    },
+    {
+      "step": 14,
+      "z_um": 3.5,
+      "peak_field_vpm": 8797527.372188527,
+      "relative_polarization_change": 1.082026292885712
+    },
+    {
+      "step": 15,
+      "z_um": 3.7499999999999996,
+      "peak_field_vpm": 8677734.463131867,
+      "relative_polarization_change": 1.0816491585198846
+    },
+    {
+      "step": 16,
+      "z_um": 4.0,
+      "peak_field_vpm": 8556148.924621629,
+      "relative_polarization_change": 1.0812693446639068
+    },
+    {
+      "step": 17,
+      "z_um": 4.25,
+      "peak_field_vpm": 8435340.797250153,
+      "relative_polarization_change": 1.0808866942570505
+    },
+    {
+      "step": 18,
+      "z_um": 4.5,
+      "peak_field_vpm": 8381386.67414612,
+      "relative_polarization_change": 1.0805010408180344
+    },
+    {
+      "step": 19,
+      "z_um": 4.749999999999999,
+      "peak_field_vpm": 8323643.955906132,
+      "relative_polarization_change": 1.0801122075406224
+    },
+    {
+      "step": 20,
+      "z_um": 5.0,
+      "peak_field_vpm": 8262435.054101695,
+      "relative_polarization_change": 1.0797200051326072
+    },
+    {
+      "step": 21,
+      "z_um": 5.25,
+      "peak_field_vpm": 8198062.45356749,
+      "relative_polarization_change": 1.0793242307420496
+    },
+    {
+      "step": 22,
+      "z_um": 5.5,
+      "peak_field_vpm": 8130815.533270577,
+      "relative_polarization_change": 1.0789246651985054
+    },
+    {
+      "step": 23,
+      "z_um": 5.75,
+      "peak_field_vpm": 8062411.449932388,
+      "relative_polarization_change": 1.0785210707769253
+    },
+    {
+      "step": 24,
+      "z_um": 6.0,
+      "peak_field_vpm": 7992228.486513,
+      "relative_polarization_change": 1.07811318760342
+    },
+    {
+      "step": 25,
+      "z_um": 6.249999999999999,
+      "peak_field_vpm": 7919981.450451849,
+      "relative_polarization_change": 1.077700730412631
+    },
+    {
+      "step": 26,
+      "z_um": 6.5,
+      "peak_field_vpm": 7845883.644723677,
+      "relative_polarization_change": 1.0772833834045685
+    },
+    {
+      "step": 27,
+      "z_um": 6.75,
+      "peak_field_vpm": 7770135.271427799,
+      "relative_polarization_change": 1.0768607960218284
+    },
+    {
+      "step": 28,
+      "z_um": 7.0,
+      "peak_field_vpm": 7692924.791741717,
+      "relative_polarization_change": 1.076432574732201
+    },
+    {
+      "step": 29,
+      "z_um": 7.25,
+      "peak_field_vpm": 7614424.993358207,
+      "relative_polarization_change": 1.0759982788564002
+    },
+    {
+      "step": 30,
+      "z_um": 7.499999999999999,
+      "peak_field_vpm": 7534799.165295994,
+      "relative_polarization_change": 1.0755574091169164
+    },
+    {
+      "step": 31,
+      "z_um": 7.75,
+      "peak_field_vpm": 7454200.298486394,
+      "relative_polarization_change": 1.075109402162583
+    },
+    {
+      "step": 32,
+      "z_um": 8.0,
+      "peak_field_vpm": 7374264.049335793,
+      "relative_polarization_change": 1.0746536173984211
+    },
+    {
+      "step": 33,
+      "z_um": 8.249999999999998,
+      "peak_field_vpm": 7294498.229910301,
+      "relative_polarization_change": 1.0741893296756087
+    },
+    {
+      "step": 34,
+      "z_um": 8.5,
+      "peak_field_vpm": 7214136.339489541,
+      "relative_polarization_change": 1.0737157147557017
+    },
+    {
+      "step": 35,
+      "z_um": 8.75,
+      "peak_field_vpm": 7133286.572397366,
+      "relative_polarization_change": 1.0732318407508634
+    },
+    {
+      "step": 36,
+      "z_um": 9.0,
+      "peak_field_vpm": 7052052.446210986,
+      "relative_polarization_change": 1.072736653931621
+    },
+    {
+      "step": 37,
+      "z_um": 9.25,
+      "peak_field_vpm": 6970529.152502959,
+      "relative_polarization_change": 1.0722289694472726
+    },
+    {
+      "step": 38,
+      "z_um": 9.499999999999998,
+      "peak_field_vpm": 6888804.612854523,
+      "relative_polarization_change": 1.0717074607594397
+    },
+    {
+      "step": 39,
+      "z_um": 9.75,
+      "peak_field_vpm": 6807087.1181322485,
+      "relative_polarization_change": 1.071170648488879
+    },
+    {
+      "step": 40,
+      "z_um": 10.0,
+      "peak_field_vpm": 6727576.022068804,
+      "relative_polarization_change": 1.0706169000011312
+    },
+    {
+      "step": 41,
+      "z_um": 10.25,
+      "peak_field_vpm": 6648048.858953885,
+      "relative_polarization_change": 1.0700444171197572
+    },
+    {
+      "step": 42,
+      "z_um": 10.5,
+      "peak_field_vpm": 6568572.253298243,
+      "relative_polarization_change": 1.0694512496740725
+    },
+    {
+      "step": 43,
+      "z_um": 10.749999999999998,
+      "peak_field_vpm": 6489206.862508997,
+      "relative_polarization_change": 1.0688352880641783
+    },
+    {
+      "step": 44,
+      "z_um": 11.0,
+      "peak_field_vpm": 6410009.731093977,
+      "relative_polarization_change": 1.0681942885859037
+    },
+    {
+      "step": 45,
+      "z_um": 11.249999999999998,
+      "peak_field_vpm": 6331035.891412748,
+      "relative_polarization_change": 1.0675258829254526
+    },
+    {
+      "step": 46,
+      "z_um": 11.5,
+      "peak_field_vpm": 6252334.787396689,
+      "relative_polarization_change": 1.0668276062727915
+    },
+    {
+      "step": 47,
+      "z_um": 11.75,
+      "peak_field_vpm": 6176049.818784599,
+      "relative_polarization_change": 1.0660969351924177
+    },
+    {
+      "step": 48,
+      "z_um": 12.0,
+      "peak_field_vpm": 6100182.415932456,
+      "relative_polarization_change": 1.0653313093965942
+    },
+    {
+      "step": 49,
+      "z_um": 12.25,
+      "peak_field_vpm": 6024654.843336233,
+      "relative_polarization_change": 1.0645281920474654
+    },
+    {
+      "step": 50,
+      "z_um": 12.499999999999998,
+      "peak_field_vpm": 5949503.745966267,
+      "relative_polarization_change": 1.0636850876143855
+    },
+    {
+      "step": 51,
+      "z_um": 12.75,
+      "peak_field_vpm": 5874764.544974193,
+      "relative_polarization_change": 1.062799590465088
+    },
+    {
+      "step": 52,
+      "z_um": 13.0,
+      "peak_field_vpm": 5800468.721014722,
+      "relative_polarization_change": 1.0618694072238288
+    },
+    {
+      "step": 53,
+      "z_um": 13.25,
+      "peak_field_vpm": 5726646.49819359,
+      "relative_polarization_change": 1.0608923475525147
+    },
+    {
+      "step": 54,
+      "z_um": 13.5,
+      "peak_field_vpm": 5655172.518693039,
+      "relative_polarization_change": 1.0598663336828298
+    },
+    {
+      "step": 55,
+      "z_um": 13.749999999999998,
+      "peak_field_vpm": 5584299.312799638,
+      "relative_polarization_change": 1.0587893175767764
+    },
+    {
+      "step": 56,
+      "z_um": 14.0,
+      "peak_field_vpm": 5513915.91964739,
+      "relative_polarization_change": 1.0576592149833466
+    },
+    {
+      "step": 57,
+      "z_um": 14.249999999999998,
+      "peak_field_vpm": 5444048.573207259,
+      "relative_polarization_change": 1.0564737735870042
+    },
+    {
+      "step": 58,
+      "z_um": 14.5,
+      "peak_field_vpm": 5374720.507970862,
+      "relative_polarization_change": 1.0552303680996564
+    },
+    {
+      "step": 59,
+      "z_um": 14.75,
+      "peak_field_vpm": 5305954.039665876,
+      "relative_polarization_change": 1.0539258200018833
+    },
+    {
+      "step": 60,
+      "z_um": 14.999999999999998,
+      "peak_field_vpm": 5237770.399049074,
+      "relative_polarization_change": 1.0525560903821582
+    },
+    {
+      "step": 61,
+      "z_um": 15.25,
+      "peak_field_vpm": 5171522.003674398,
+      "relative_polarization_change": 1.0511159974297033
+    },
+    {
+      "step": 62,
+      "z_um": 15.5,
+      "peak_field_vpm": 5106221.469726122,
+      "relative_polarization_change": 1.049598934996676
+    },
+    {
+      "step": 63,
+      "z_um": 15.75,
+      "peak_field_vpm": 5041485.59846082,
+      "relative_polarization_change": 1.0479964815093534
+    },
+    {
+      "step": 64,
+      "z_um": 16.0,
+      "peak_field_vpm": 4977324.468427481,
+      "relative_polarization_change": 1.0462981880357038
+    },
+    {
+      "step": 65,
+      "z_um": 16.25,
+      "peak_field_vpm": 4913747.239310008,
+      "relative_polarization_change": 1.0444912950201766
+    },
+    {
+      "step": 66,
+      "z_um": 16.499999999999996,
+      "peak_field_vpm": 4868301.0289479755,
+      "relative_polarization_change": 1.0425605383040306
+    },
+    {
+      "step": 67,
+      "z_um": 16.75,
+      "peak_field_vpm": 4826811.282132989,
+      "relative_polarization_change": 1.0404882123746144
+    },
+    {
+      "step": 68,
+      "z_um": 17.0,
+      "peak_field_vpm": 4787305.687851107,
+      "relative_polarization_change": 1.0382540766147574
+    },
+    {
+      "step": 69,
+      "z_um": 17.25,
+      "peak_field_vpm": 4747367.063278768,
+      "relative_polarization_change": 1.0358356990790971
+    },
+    {
+      "step": 70,
+      "z_um": 17.5,
+      "peak_field_vpm": 4707027.754510807,
+      "relative_polarization_change": 1.0332088699474646
+    },
+    {
+      "step": 71,
+      "z_um": 17.749999999999996,
+      "peak_field_vpm": 4666322.931629122,
+      "relative_polarization_change": 1.0303479649161078
+    },
+    {
+      "step": 72,
+      "z_um": 18.0,
+      "peak_field_vpm": 4625289.25366247,
+      "relative_polarization_change": 1.0272268253173473
+    },
+    {
+      "step": 73,
+      "z_um": 18.25,
+      "peak_field_vpm": 4586260.732460062,
+      "relative_polarization_change": 1.0238193142403182
+    },
+    {
+      "step": 74,
+      "z_um": 18.5,
+      "peak_field_vpm": 4546923.088893903,
+      "relative_polarization_change": 1.0201001259604094
+    },
+    {
+      "step": 75,
+      "z_um": 18.75,
+      "peak_field_vpm": 4507307.035936985,
+      "relative_polarization_change": 1.0160457462676165
+    },
+    {
+      "step": 76,
+      "z_um": 18.999999999999996,
+      "peak_field_vpm": 4467445.261542992,
+      "relative_polarization_change": 1.011634609758346
+    },
+    {
+      "step": 77,
+      "z_um": 19.25,
+      "peak_field_vpm": 4427368.033634258,
+      "relative_polarization_change": 1.0068477267921636
+    },
+    {
+      "step": 78,
+      "z_um": 19.5,
+      "peak_field_vpm": 4388890.579437756,
+      "relative_polarization_change": 1.0016687891216973
+    },
+    {
+      "step": 79,
+      "z_um": 19.75,
+      "peak_field_vpm": 4350533.975286272,
+      "relative_polarization_change": 0.9960831229087116
+    },
+    {
+      "step": 80,
+      "z_um": 20.0,
+      "peak_field_vpm": 4311979.852545328,
+      "relative_polarization_change": 0.9900770441330704
+    },
+    {
+      "step": 81,
+      "z_um": 20.249999999999996,
+      "peak_field_vpm": 4273252.367652648,
+      "relative_polarization_change": 0.9836360247049634
+    },
+    {
+      "step": 82,
+      "z_um": 20.5,
+      "peak_field_vpm": 4234375.783740896,
+      "relative_polarization_change": 0.9767429295871841
+    },
+    {
+      "step": 83,
+      "z_um": 20.75,
+      "peak_field_vpm": 4196413.908616892,
+      "relative_polarization_change": 0.9693773421469188
+    },
+    {
+      "step": 84,
+      "z_um": 21.0,
+      "peak_field_vpm": 4159221.043462763,
+      "relative_polarization_change": 0.9615134796544424
+    },
+    {
+      "step": 85,
+      "z_um": 21.249999999999996,
+      "peak_field_vpm": 4121900.877730169,
+      "relative_polarization_change": 0.953121120909588
+    },
+    {
+      "step": 86,
+      "z_um": 21.499999999999996,
+      "peak_field_vpm": 4084469.3199485545,
+      "relative_polarization_change": 0.9441672015449423
+    },
+    {
+      "step": 87,
+      "z_um": 21.75,
+      "peak_field_vpm": 4046969.4927457226,
+      "relative_polarization_change": 0.9346136001676709
+    },
+    {
+      "step": 88,
+      "z_um": 22.0,
+      "peak_field_vpm": 4009487.5442858255,
+      "relative_polarization_change": 0.9244171716155913
+    },
+    {
+      "step": 89,
+      "z_um": 22.25,
+      "peak_field_vpm": 3973671.35130253,
+      "relative_polarization_change": 0.9135286005815005
+    },
+    {
+      "step": 90,
+      "z_um": 22.499999999999996,
+      "peak_field_vpm": 3937740.2527476074,
+      "relative_polarization_change": 0.9018935106591092
+    },
+    {
+      "step": 91,
+      "z_um": 22.749999999999996,
+      "peak_field_vpm": 3901820.004568824,
+      "relative_polarization_change": 0.8894580676847125
+    },
+    {
+      "step": 92,
+      "z_um": 23.0,
+      "peak_field_vpm": 3865817.859083612,
+      "relative_polarization_change": 0.8761733959883901
+    },
+    {
+      "step": 93,
+      "z_um": 23.25,
+      "peak_field_vpm": 3829856.8892345093,
+      "relative_polarization_change": 0.8620272862366177
+    },
+    {
+      "step": 94,
+      "z_um": 23.5,
+      "peak_field_vpm": 3794317.0245635444,
+      "relative_polarization_change": 0.8470624393116769
+    },
+    {
+      "step": 95,
+      "z_um": 23.749999999999996,
+      "peak_field_vpm": 3759936.222661819,
+      "relative_polarization_change": 0.8313326703724756
+    },
+    {
+      "step": 96,
+      "z_um": 24.0,
+      "peak_field_vpm": 3725532.598467452,
+      "relative_polarization_change": 0.8149430583126575
+    },
+    {
+      "step": 97,
+      "z_um": 24.25,
+      "peak_field_vpm": 3691140.1349300174,
+      "relative_polarization_change": 0.798059575459624
+    },
+    {
+      "step": 98,
+      "z_um": 24.5,
+      "peak_field_vpm": 3656799.4363109465,
+      "relative_polarization_change": 0.7806968856839432
+    },
+    {
+      "step": 99,
+      "z_um": 24.75,
+      "peak_field_vpm": 3622472.2557284497,
+      "relative_polarization_change": 0.7628912368698361
+    },
+    {
+      "step": 100,
+      "z_um": 24.999999999999996,
+      "peak_field_vpm": 3588612.9055452957,
+      "relative_polarization_change": 0.7448792569529862
+    },
+    {
+      "step": 101,
+      "z_um": 25.25,
+      "peak_field_vpm": 3555805.417421107,
+      "relative_polarization_change": 0.7264656406407496
+    },
+    {
+      "step": 102,
+      "z_um": 25.5,
+      "peak_field_vpm": 3523047.779911384,
+      "relative_polarization_change": 0.707730913815816
+    },
+    {
+      "step": 103,
+      "z_um": 25.75,
+      "peak_field_vpm": 3490362.4121494684,
+      "relative_polarization_change": 0.6894325666042794
+    },
+    {
+      "step": 104,
+      "z_um": 26.0,
+      "peak_field_vpm": 3457723.7309049377,
+      "relative_polarization_change": 0.6708758030265473
+    },
+    {
+      "step": 105,
+      "z_um": 26.249999999999996,
+      "peak_field_vpm": 3425189.430048728,
+      "relative_polarization_change": 0.652741945823905
+    },
+    {
+      "step": 106,
+      "z_um": 26.5,
+      "peak_field_vpm": 3392751.3425388737,
+      "relative_polarization_change": 0.6367312763070159
+    },
+    {
+      "step": 107,
+      "z_um": 26.75,
+      "peak_field_vpm": 3361509.439526494,
+      "relative_polarization_change": 0.6201499564743812
+    },
+    {
+      "step": 108,
+      "z_um": 27.0,
+      "peak_field_vpm": 3330485.178487832,
+      "relative_polarization_change": 0.6065818960550057
+    },
+    {
+      "step": 109,
+      "z_um": 27.25,
+      "peak_field_vpm": 3299536.1689542932,
+      "relative_polarization_change": 0.5968585584810835
+    },
+    {
+      "step": 110,
+      "z_um": 27.499999999999996,
+      "peak_field_vpm": 3268690.8208195698,
+      "relative_polarization_change": 0.583959459940511
+    },
+    {
+      "step": 111,
+      "z_um": 27.75,
+      "peak_field_vpm": 3237972.2643338568,
+      "relative_polarization_change": 0.5811883393305912
+    },
+    {
+      "step": 112,
+      "z_um": 28.0,
+      "peak_field_vpm": 3207360.231928872,
+      "relative_polarization_change": 0.5759602237769861
+    },
+    {
+      "step": 113,
+      "z_um": 28.25,
+      "peak_field_vpm": 3177037.546970649,
+      "relative_polarization_change": 0.5680205848992268
+    },
+    {
+      "step": 114,
+      "z_um": 28.499999999999996,
+      "peak_field_vpm": 3147756.0648885556,
+      "relative_polarization_change": 0.5818184875805043
+    },
+    {
+      "step": 115,
+      "z_um": 28.749999999999996,
+      "peak_field_vpm": 3118574.2329242504,
+      "relative_polarization_change": 0.5690472116084209
+    },
+    {
+      "step": 116,
+      "z_um": 29.0,
+      "peak_field_vpm": 3089526.219267712,
+      "relative_polarization_change": 0.5909424859201982
+    },
+    {
+      "step": 117,
+      "z_um": 29.25,
+      "peak_field_vpm": 3060608.3925924865,
+      "relative_polarization_change": 0.6085506144303495
+    },
+    {
+      "step": 118,
+      "z_um": 29.5,
+      "peak_field_vpm": 3031815.7667694404,
+      "relative_polarization_change": 0.6064477593261125
+    },
+    {
+      "step": 119,
+      "z_um": 29.749999999999996,
+      "peak_field_vpm": 3003177.8131992514,
+      "relative_polarization_change": 0.6836713030502382
+    },
+    {
+      "step": 120,
+      "z_um": 29.999999999999996,
+      "peak_field_vpm": 2974689.6806295016,
+      "relative_polarization_change": 0.6562748874254827
+    },
+    {
+      "step": 121,
+      "z_um": 30.25,
+      "peak_field_vpm": 2947129.491866673,
+      "relative_polarization_change": 0.7586296466283748
+    },
+    {
+      "step": 122,
+      "z_um": 30.5,
+      "peak_field_vpm": 2919832.70304065,
+      "relative_polarization_change": 0.7665107133758425
+    },
+    {
+      "step": 123,
+      "z_um": 30.749999999999996,
+      "peak_field_vpm": 2892672.1661197306,
+      "relative_polarization_change": 0.8094224926332404
+    },
+    {
+      "step": 124,
+      "z_um": 31.0,
+      "peak_field_vpm": 2865655.249718872,
+      "relative_polarization_change": 0.9158794550991632
+    },
+    {
+      "step": 125,
+      "z_um": 31.25,
+      "peak_field_vpm": 2838805.6868480872,
+      "relative_polarization_change": 0.8514341360996546
+    },
+    {
+      "step": 126,
+      "z_um": 31.5,
+      "peak_field_vpm": 2812114.195713429,
+      "relative_polarization_change": 1.0530148882756514
+    },
+    {
+      "step": 127,
+      "z_um": 31.75,
+      "peak_field_vpm": 2785583.1744908104,
+      "relative_polarization_change": 0.9098619335643117
+    },
+    {
+      "step": 128,
+      "z_um": 32.0,
+      "peak_field_vpm": 2759234.881103516,
+      "relative_polarization_change": 1.1445269421146165
+    },
+    {
+      "step": 129,
+      "z_um": 32.25,
+      "peak_field_vpm": 2733788.528114186,
+      "relative_polarization_change": 0.9852487146196545
+    },
+    {
+      "step": 130,
+      "z_um": 32.5,
+      "peak_field_vpm": 2708505.8834257806,
+      "relative_polarization_change": 1.189624057288852
+    },
+    {
+      "step": 131,
+      "z_um": 32.75,
+      "peak_field_vpm": 2687658.8500468694,
+      "relative_polarization_change": 1.0523711048742537
+    },
+    {
+      "step": 132,
+      "z_um": 32.99999999999999,
+      "peak_field_vpm": 2669565.423042977,
+      "relative_polarization_change": 1.20687557679114
+    },
+    {
+      "step": 133,
+      "z_um": 33.25,
+      "peak_field_vpm": 2651340.1983725484,
+      "relative_polarization_change": 1.087211155823432
+    },
+    {
+      "step": 134,
+      "z_um": 33.5,
+      "peak_field_vpm": 2632974.494498021,
+      "relative_polarization_change": 1.217007002408244
+    },
+    {
+      "step": 135,
+      "z_um": 33.75,
+      "peak_field_vpm": 2614682.443091942,
+      "relative_polarization_change": 1.080844109411717
+    },
+    {
+      "step": 136,
+      "z_um": 34.0,
+      "peak_field_vpm": 2597222.851016444,
+      "relative_polarization_change": 1.2336535859815587
+    },
+    {
+      "step": 137,
+      "z_um": 34.25,
+      "peak_field_vpm": 2579596.1851459406,
+      "relative_polarization_change": 1.0397364641005828
+    },
+    {
+      "step": 138,
+      "z_um": 34.5,
+      "peak_field_vpm": 2561841.1383241205,
+      "relative_polarization_change": 1.26205056737705
+    },
+    {
+      "step": 139,
+      "z_um": 34.75,
+      "peak_field_vpm": 2544021.4311528923,
+      "relative_polarization_change": 0.9880071145199991
+    },
+    {
+      "step": 140,
+      "z_um": 35.0,
+      "peak_field_vpm": 2526097.928733425,
+      "relative_polarization_change": 1.29139726007845
+    },
+    {
+      "step": 141,
+      "z_um": 35.24999999999999,
+      "peak_field_vpm": 2508611.3703211118,
+      "relative_polarization_change": 0.9664941062736596
+    },
+    {
+      "step": 142,
+      "z_um": 35.49999999999999,
+      "peak_field_vpm": 2491529.6530559864,
+      "relative_polarization_change": 1.2692579494351233
+    },
+    {
+      "step": 143,
+      "z_um": 35.75,
+      "peak_field_vpm": 2474264.7671630643,
+      "relative_polarization_change": 1.0123097754087453
+    },
+    {
+      "step": 144,
+      "z_um": 36.0,
+      "peak_field_vpm": 2457059.973715299,
+      "relative_polarization_change": 1.1082751451780641
+    },
+    {
+      "step": 145,
+      "z_um": 36.25,
+      "peak_field_vpm": 2439855.333068347,
+      "relative_polarization_change": 1.1334589241894406
+    },
+    {
+      "step": 146,
+      "z_um": 36.5,
+      "peak_field_vpm": 2422347.42327631,
+      "relative_polarization_change": 0.904392218050818
+    },
+    {
+      "step": 147,
+      "z_um": 36.75,
+      "peak_field_vpm": 2405569.5460149315,
+      "relative_polarization_change": 1.2574374523219654
+    },
+    {
+      "step": 148,
+      "z_um": 37.0,
+      "peak_field_vpm": 2388735.9844759977,
+      "relative_polarization_change": 0.9097974241172113
+    },
+    {
+      "step": 149,
+      "z_um": 37.25,
+      "peak_field_vpm": 2372162.7311099917,
+      "relative_polarization_change": 1.0700916948381674
+    },
+    {
+      "step": 150,
+      "z_um": 37.5,
+      "peak_field_vpm": 2355798.1817084495,
+      "relative_polarization_change": 1.1303389746455454
+    },
+    {
+      "step": 151,
+      "z_um": 37.74999999999999,
+      "peak_field_vpm": 2338681.373687423,
+      "relative_polarization_change": 0.8026920830490802
+    },
+    {
+      "step": 152,
+      "z_um": 37.99999999999999,
+      "peak_field_vpm": 2321715.2886928357,
+      "relative_polarization_change": 1.225757068392882
+    },
+    {
+      "step": 153,
+      "z_um": 38.25,
+      "peak_field_vpm": 2305627.8667348786,
+      "relative_polarization_change": 0.9974990975162744
+    },
+    {
+      "step": 154,
+      "z_um": 38.5,
+      "peak_field_vpm": 2531602.682636085,
+      "relative_polarization_change": 0.7694982912494415
+    },
+    {
+      "step": 155,
+      "z_um": 38.75,
+      "peak_field_vpm": 2274216.705233005,
+      "relative_polarization_change": 1.2929576202035513
+    },
+    {
+      "step": 156,
+      "z_um": 39.0,
+      "peak_field_vpm": 2355735.0722230747,
+      "relative_polarization_change": 0.9321582201426701
+    },
+    {
+      "step": 157,
+      "z_um": 39.25,
+      "peak_field_vpm": 2750351.606650316,
+      "relative_polarization_change": 0.7244907365608022
+    },
+    {
+      "step": 158,
+      "z_um": 39.5,
+      "peak_field_vpm": 2276373.544702239,
+      "relative_polarization_change": 1.3345525925520851
+    },
+    {
+      "step": 159,
+      "z_um": 39.75,
+      "peak_field_vpm": 2150922.605695194,
+      "relative_polarization_change": 0.9579794042639417
+    },
+    {
+      "step": 160,
+      "z_um": 40.0,
+      "peak_field_vpm": 2542205.7676710472,
+      "relative_polarization_change": 0.6453819286545766
+    },
+    {
+      "step": 161,
+      "z_um": 40.24999999999999,
+      "peak_field_vpm": 2290677.17208784,
+      "relative_polarization_change": 1.2781499744415639
+    },
+    {
+      "step": 162,
+      "z_um": 40.49999999999999,
+      "peak_field_vpm": 2204484.368058093,
+      "relative_polarization_change": 1.1291202544581447
+    },
+    {
+      "step": 163,
+      "z_um": 40.75,
+      "peak_field_vpm": 2370760.242850289,
+      "relative_polarization_change": 0.6139332187932552
+    },
+    {
+      "step": 164,
+      "z_um": 41.0,
+      "peak_field_vpm": 2342571.962620248,
+      "relative_polarization_change": 0.9486592518311497
+    },
+    {
+      "step": 165,
+      "z_um": 41.25,
+      "peak_field_vpm": 2318758.933253138,
+      "relative_polarization_change": 1.5104901869612923
+    },
+    {
+      "step": 166,
+      "z_um": 41.5,
+      "peak_field_vpm": 2146805.876127998,
+      "relative_polarization_change": 0.7767274325759688
+    },
+    {
+      "step": 167,
+      "z_um": 41.75,
+      "peak_field_vpm": 2128144.364670371,
+      "relative_polarization_change": 0.582888718302796
+    },
+    {
+      "step": 168,
+      "z_um": 42.0,
+      "peak_field_vpm": 2167534.4525456037,
+      "relative_polarization_change": 1.433227974414109
+    },
+    {
+      "step": 169,
+      "z_um": 42.25,
+      "peak_field_vpm": 2062482.2617602274,
+      "relative_polarization_change": 1.3447383659167014
+    },
+    {
+      "step": 170,
+      "z_um": 42.49999999999999,
+      "peak_field_vpm": 2087055.785360515,
+      "relative_polarization_change": 0.5912530550373913
+    },
+    {
+      "step": 171,
+      "z_um": 42.74999999999999,
+      "peak_field_vpm": 2082114.363929417,
+      "relative_polarization_change": 0.6912428864965643
+    },
+    {
+      "step": 172,
+      "z_um": 42.99999999999999,
+      "peak_field_vpm": 2026410.4019204506,
+      "relative_polarization_change": 1.774676820380311
+    },
+    {
+      "step": 173,
+      "z_um": 43.25,
+      "peak_field_vpm": 1998475.1952742653,
+      "relative_polarization_change": 1.313137624906241
+    },
+    {
+      "step": 174,
+      "z_um": 43.5,
+      "peak_field_vpm": 1986010.2633719437,
+      "relative_polarization_change": 0.5260753940114462
+    },
+    {
+      "step": 175,
+      "z_um": 43.75,
+      "peak_field_vpm": 2005447.0055808544,
+      "relative_polarization_change": 0.7248930995177209
+    },
+    {
+      "step": 176,
+      "z_um": 44.0,
+      "peak_field_vpm": 1962483.5696186407,
+      "relative_polarization_change": 1.876341727897065
+    },
+    {
+      "step": 177,
+      "z_um": 44.25,
+      "peak_field_vpm": 1958615.8795796447,
+      "relative_polarization_change": 1.5983968190847886
+    },
+    {
+      "step": 178,
+      "z_um": 44.5,
+      "peak_field_vpm": 1907924.5818170293,
+      "relative_polarization_change": 0.5635960903523942
+    },
+    {
+      "step": 179,
+      "z_um": 44.75,
+      "peak_field_vpm": 1920853.4132382746,
+      "relative_polarization_change": 0.6461570665677974
+    },
+    {
+      "step": 180,
+      "z_um": 44.99999999999999,
+      "peak_field_vpm": 1953526.560866593,
+      "relative_polarization_change": 1.5655400721519888
+    },
+    {
+      "step": 181,
+      "z_um": 45.24999999999999,
+      "peak_field_vpm": 1878436.205991458,
+      "relative_polarization_change": 2.1392761958417488
+    },
+    {
+      "step": 182,
+      "z_um": 45.49999999999999,
+      "peak_field_vpm": 1926504.882890732,
+      "relative_polarization_change": 0.8570674862850907
+    },
+    {
+      "step": 183,
+      "z_um": 45.75,
+      "peak_field_vpm": 1970645.5677048045,
+      "relative_polarization_change": 0.7082035569814248
+    },
+    {
+      "step": 184,
+      "z_um": 46.0,
+      "peak_field_vpm": 1919520.5473196676,
+      "relative_polarization_change": 1.0105757067884569
+    },
+    {
+      "step": 185,
+      "z_um": 46.25,
+      "peak_field_vpm": 1986554.1635067845,
+      "relative_polarization_change": 1.048974065450861
+    },
+    {
+      "step": 186,
+      "z_um": 46.5,
+      "peak_field_vpm": 1971289.7943818541,
+      "relative_polarization_change": 0.9641788129842057
+    },
+    {
+      "step": 187,
+      "z_um": 46.75,
+      "peak_field_vpm": 1900953.4763044282,
+      "relative_polarization_change": 0.9420466503668031
+    },
+    {
+      "step": 188,
+      "z_um": 47.0,
+      "peak_field_vpm": 1801182.699281219,
+      "relative_polarization_change": 0.9432424927298574
+    },
+    {
+      "step": 189,
+      "z_um": 47.25,
+      "peak_field_vpm": 1818685.5037840337,
+      "relative_polarization_change": 0.9418443948559324
+    },
+    {
+      "step": 190,
+      "z_um": 47.49999999999999,
+      "peak_field_vpm": 1786212.4594704332,
+      "relative_polarization_change": 0.9382282180939825
+    },
+    {
+      "step": 191,
+      "z_um": 47.74999999999999,
+      "peak_field_vpm": 1748184.2808127627,
+      "relative_polarization_change": 0.9342232530610936
+    },
+    {
+      "step": 192,
+      "z_um": 48.0,
+      "peak_field_vpm": 1716122.4919955952,
+      "relative_polarization_change": 0.9299753762663836
+    },
+    {
+      "step": 193,
+      "z_um": 48.25,
+      "peak_field_vpm": 1777216.9548055462,
+      "relative_polarization_change": 0.9255047539704875
+    },
+    {
+      "step": 194,
+      "z_um": 48.5,
+      "peak_field_vpm": 1748117.3458303686,
+      "relative_polarization_change": 0.9209419421419675
+    },
+    {
+      "step": 195,
+      "z_um": 48.75,
+      "peak_field_vpm": 1680770.052246833,
+      "relative_polarization_change": 0.9163885083310158
+    },
+    {
+      "step": 196,
+      "z_um": 49.0,
+      "peak_field_vpm": 1679200.0805220252,
+      "relative_polarization_change": 0.9118858977041058
+    },
+    {
+      "step": 197,
+      "z_um": 49.25,
+      "peak_field_vpm": 1640193.1722424817,
+      "relative_polarization_change": 0.9074320322931988
+    },
+    {
+      "step": 198,
+      "z_um": 49.5,
+      "peak_field_vpm": 1691320.5246519176,
+      "relative_polarization_change": 0.9029994762209193
+    },
+    {
+      "step": 199,
+      "z_um": 49.74999999999999,
+      "peak_field_vpm": 1719158.9240236164,
+      "relative_polarization_change": 0.8985501701629814
+    },
+    {
+      "step": 200,
+      "z_um": 49.99999999999999,
+      "peak_field_vpm": 1663081.561763981,
+      "relative_polarization_change": 0.8940437578849907
+    },
+    {
+      "step": 201,
+      "z_um": 50.24999999999999,
+      "peak_field_vpm": 1660238.1755042654,
+      "relative_polarization_change": 0.8894388597436977
+    },
+    {
+      "step": 202,
+      "z_um": 50.5,
+      "peak_field_vpm": 1687722.802835989,
+      "relative_polarization_change": 0.8846918605755837
+    },
+    {
+      "step": 203,
+      "z_um": 50.75,
+      "peak_field_vpm": 1635719.2902683797,
+      "relative_polarization_change": 0.8797525641469348
+    },
+    {
+      "step": 204,
+      "z_um": 51.0,
+      "peak_field_vpm": 1625215.4701699985,
+      "relative_polarization_change": 0.8745605629856867
+    },
+    {
+      "step": 205,
+      "z_um": 51.25,
+      "peak_field_vpm": 1631306.1934979649,
+      "relative_polarization_change": 0.8690504615072094
+    },
+    {
+      "step": 206,
+      "z_um": 51.5,
+      "peak_field_vpm": 1595623.6745910465,
+      "relative_polarization_change": 0.8631569612862247
+    },
+    {
+      "step": 207,
+      "z_um": 51.75,
+      "peak_field_vpm": 1505699.407342054,
+      "relative_polarization_change": 0.8568226220016688
+    },
+    {
+      "step": 208,
+      "z_um": 52.0,
+      "peak_field_vpm": 1525721.4293623567,
+      "relative_polarization_change": 0.850012138629798
+    },
+    {
+      "step": 209,
+      "z_um": 52.24999999999999,
+      "peak_field_vpm": 1526855.5366074936,
+      "relative_polarization_change": 0.8427186357190236
+    },
+    {
+      "step": 210,
+      "z_um": 52.49999999999999,
+      "peak_field_vpm": 1460872.786610901,
+      "relative_polarization_change": 0.8349654755575879
+    },
+    {
+      "step": 211,
+      "z_um": 52.74999999999999,
+      "peak_field_vpm": 1508504.4409586524,
+      "relative_polarization_change": 0.8268126285108855
+    },
+    {
+      "step": 212,
+      "z_um": 53.0,
+      "peak_field_vpm": 1511711.5614484807,
+      "relative_polarization_change": 0.8183513516922032
+    },
+    {
+      "step": 213,
+      "z_um": 53.25,
+      "peak_field_vpm": 1474938.4771749633,
+      "relative_polarization_change": 0.809692509092649
+    },
+    {
+      "step": 214,
+      "z_um": 53.5,
+      "peak_field_vpm": 1488444.8709264535,
+      "relative_polarization_change": 0.8009629216038789
+    },
+    {
+      "step": 215,
+      "z_um": 53.75,
+      "peak_field_vpm": 1515135.415971741,
+      "relative_polarization_change": 0.792291872842273
+    },
+    {
+      "step": 216,
+      "z_um": 54.0,
+      "peak_field_vpm": 1466842.6205105458,
+      "relative_polarization_change": 0.7837902716952473
+    },
+    {
+      "step": 217,
+      "z_um": 54.25,
+      "peak_field_vpm": 1434404.3925437464,
+      "relative_polarization_change": 0.7755470838365842
+    },
+    {
+      "step": 218,
+      "z_um": 54.5,
+      "peak_field_vpm": 1459977.7532718405,
+      "relative_polarization_change": 0.7676214335243841
+    },
+    {
+      "step": 219,
+      "z_um": 54.74999999999999,
+      "peak_field_vpm": 1422443.7592774073,
+      "relative_polarization_change": 0.7600349417219929
+    },
+    {
+      "step": 220,
+      "z_um": 54.99999999999999,
+      "peak_field_vpm": 1398365.981443852,
+      "relative_polarization_change": 0.7527836310334883
+    },
+    {
+      "step": 221,
+      "z_um": 55.24999999999999,
+      "peak_field_vpm": 1417748.0650687213,
+      "relative_polarization_change": 0.7458498765958489
+    },
+    {
+      "step": 222,
+      "z_um": 55.5,
+      "peak_field_vpm": 1393460.8715113597,
+      "relative_polarization_change": 0.7391996677222363
+    },
+    {
+      "step": 223,
+      "z_um": 55.75,
+      "peak_field_vpm": 1349746.8311009689,
+      "relative_polarization_change": 0.7327765972294904
+    },
+    {
+      "step": 224,
+      "z_um": 56.0,
+      "peak_field_vpm": 1385538.4799224997,
+      "relative_polarization_change": 0.7264932796213638
+    },
+    {
+      "step": 225,
+      "z_um": 56.25,
+      "peak_field_vpm": 1372746.601892955,
+      "relative_polarization_change": 0.7202206947812464
+    },
+    {
+      "step": 226,
+      "z_um": 56.5,
+      "peak_field_vpm": 1328367.4582649826,
+      "relative_polarization_change": 0.7137852151953286
+    },
+    {
+      "step": 227,
+      "z_um": 56.75,
+      "peak_field_vpm": 1362785.6131982948,
+      "relative_polarization_change": 0.7069888339041586
+    },
+    {
+      "step": 228,
+      "z_um": 56.99999999999999,
+      "peak_field_vpm": 1347553.802836986,
+      "relative_polarization_change": 0.6996453737896833
+    },
+    {
+      "step": 229,
+      "z_um": 57.24999999999999,
+      "peak_field_vpm": 1305409.7214662256,
+      "relative_polarization_change": 0.6915972150659457
+    },
+    {
+      "step": 230,
+      "z_um": 57.49999999999999,
+      "peak_field_vpm": 1319286.3214071817,
+      "relative_polarization_change": 0.682740107163506
+    },
+    {
+      "step": 231,
+      "z_um": 57.74999999999999,
+      "peak_field_vpm": 1320517.827330472,
+      "relative_polarization_change": 0.6730723140998218
+    },
+    {
+      "step": 232,
+      "z_um": 58.0,
+      "peak_field_vpm": 1286677.382540045,
+      "relative_polarization_change": 0.6627067327123308
+    },
+    {
+      "step": 233,
+      "z_um": 58.25,
+      "peak_field_vpm": 1288079.9447785653,
+      "relative_polarization_change": 0.6519083663730133
+    },
+    {
+      "step": 234,
+      "z_um": 58.5,
+      "peak_field_vpm": 1297108.2178012915,
+      "relative_polarization_change": 0.6410518379118731
+    },
+    {
+      "step": 235,
+      "z_um": 58.75,
+      "peak_field_vpm": 1271064.32201394,
+      "relative_polarization_change": 0.6305148285041443
+    },
+    {
+      "step": 236,
+      "z_um": 59.0,
+      "peak_field_vpm": 1258312.5042906257,
+      "relative_polarization_change": 0.6206759154329694
+    },
+    {
+      "step": 237,
+      "z_um": 59.25,
+      "peak_field_vpm": 1280601.0848724893,
+      "relative_polarization_change": 0.6117510065700863
+    },
+    {
+      "step": 238,
+      "z_um": 59.49999999999999,
+      "peak_field_vpm": 1259139.9818267466,
+      "relative_polarization_change": 0.6037709742402427
+    },
+    {
+      "step": 239,
+      "z_um": 59.74999999999999,
+      "peak_field_vpm": 1230396.0643212714,
+      "relative_polarization_change": 0.5967648745933397
+    },
+    {
+      "step": 240,
+      "z_um": 59.99999999999999,
+      "peak_field_vpm": 1257188.4688425297,
+      "relative_polarization_change": 0.5906285121264563
+    },
+    {
+      "step": 241,
+      "z_um": 60.24999999999999,
+      "peak_field_vpm": 1241350.3664232832,
+      "relative_polarization_change": 0.5852519237143057
+    },
+    {
+      "step": 242,
+      "z_um": 60.5,
+      "peak_field_vpm": 1205847.4611188008,
+      "relative_polarization_change": 0.5805854410069906
+    },
+    {
+      "step": 243,
+      "z_um": 60.75,
+      "peak_field_vpm": 1230476.9879981524,
+      "relative_polarization_change": 0.5764232826569781
+    },
+    {
+      "step": 244,
+      "z_um": 61.0,
+      "peak_field_vpm": 1220778.8693559538,
+      "relative_polarization_change": 0.5728019722555006
+    },
+    {
+      "step": 245,
+      "z_um": 61.25,
+      "peak_field_vpm": 1185565.4763172618,
+      "relative_polarization_change": 0.5695470625388147
+    },
+    {
+      "step": 246,
+      "z_um": 61.49999999999999,
+      "peak_field_vpm": 1197712.4653099598,
+      "relative_polarization_change": 0.5665005249176878
+    },
+    {
+      "step": 247,
+      "z_um": 61.75,
+      "peak_field_vpm": 1201786.7962464786,
+      "relative_polarization_change": 0.5639083158257227
+    },
+    {
+      "step": 248,
+      "z_um": 62.0,
+      "peak_field_vpm": 1173419.022247459,
+      "relative_polarization_change": 0.5613166338582979
+    },
+    {
+      "step": 249,
+      "z_um": 62.24999999999999,
+      "peak_field_vpm": 1171989.7469465341,
+      "relative_polarization_change": 0.5588506388346001
+    },
+    {
+      "step": 250,
+      "z_um": 62.5,
+      "peak_field_vpm": 1183454.4424022585,
+      "relative_polarization_change": 0.5562375308654467
+    },
+    {
+      "step": 251,
+      "z_um": 62.74999999999999,
+      "peak_field_vpm": 1161440.9306383699,
+      "relative_polarization_change": 0.5531660938481885
+    },
+    {
+      "step": 252,
+      "z_um": 63.0,
+      "peak_field_vpm": 1146114.1385975347,
+      "relative_polarization_change": 0.5503060623026942
+    },
+    {
+      "step": 253,
+      "z_um": 63.24999999999999,
+      "peak_field_vpm": 1163179.2619755275,
+      "relative_polarization_change": 0.5466496302909998
+    },
+    {
+      "step": 254,
+      "z_um": 63.5,
+      "peak_field_vpm": 1145710.267247544,
+      "relative_polarization_change": 0.5434936482722262
+    },
+    {
+      "step": 255,
+      "z_um": 63.74999999999999,
+      "peak_field_vpm": 1121021.8051053367,
+      "relative_polarization_change": 0.5406530011549561
+    },
+    {
+      "step": 256,
+      "z_um": 64.0,
+      "peak_field_vpm": 1138678.4039924415,
+      "relative_polarization_change": 0.5382587689200836
+    },
+    {
+      "step": 257,
+      "z_um": 64.25,
+      "peak_field_vpm": 1127976.7722271744,
+      "relative_polarization_change": 0.5376844992966627
+    },
+    {
+      "step": 258,
+      "z_um": 64.5,
+      "peak_field_vpm": 1099689.0078901183,
+      "relative_polarization_change": 0.536546231424909
+    },
+    {
+      "step": 259,
+      "z_um": 64.75,
+      "peak_field_vpm": 1115188.4667806344,
+      "relative_polarization_change": 0.5380324466417389
+    },
+    {
+      "step": 260,
+      "z_um": 65.0,
+      "peak_field_vpm": 1110990.755627391,
+      "relative_polarization_change": 0.5387956669926773
+    },
+    {
+      "step": 261,
+      "z_um": 65.25,
+      "peak_field_vpm": 1085370.2409880403,
+      "relative_polarization_change": 0.5410493605503461
+    },
+    {
+      "step": 262,
+      "z_um": 65.5,
+      "peak_field_vpm": 1088695.4459038766,
+      "relative_polarization_change": 0.5443982676935742
+    },
+    {
+      "step": 263,
+      "z_um": 65.75,
+      "peak_field_vpm": 1094900.3526431634,
+      "relative_polarization_change": 0.5460743642460685
+    },
+    {
+      "step": 264,
+      "z_um": 65.99999999999999,
+      "peak_field_vpm": 1072570.8199700713,
+      "relative_polarization_change": 0.5514398487211651
+    },
+    {
+      "step": 265,
+      "z_um": 66.25,
+      "peak_field_vpm": 1066429.1690999977,
+      "relative_polarization_change": 0.5513275884689613
+    },
+    {
+      "step": 266,
+      "z_um": 66.5,
+      "peak_field_vpm": 1076117.877343672,
+      "relative_polarization_change": 0.5577207993587212
+    },
+    {
+      "step": 267,
+      "z_um": 66.75,
+      "peak_field_vpm": 1058445.7698448312,
+      "relative_polarization_change": 0.5590802328537654
+    },
+    {
+      "step": 268,
+      "z_um": 67.0,
+      "peak_field_vpm": 1042855.7896784451,
+      "relative_polarization_change": 0.5657568702611243
+    },
+    {
+      "step": 269,
+      "z_um": 67.25,
+      "peak_field_vpm": 1055313.2726923833,
+      "relative_polarization_change": 0.5705571427805403
+    },
+    {
+      "step": 270,
+      "z_um": 67.5,
+      "peak_field_vpm": 1044001.5490288896,
+      "relative_polarization_change": 0.574095975207286
+    },
+    {
+      "step": 271,
+      "z_um": 67.75,
+      "peak_field_vpm": 1022487.730541313,
+      "relative_polarization_change": 0.5858363934802902
+    },
+    {
+      "step": 272,
+      "z_um": 68.0,
+      "peak_field_vpm": 1033407.1828671372,
+      "relative_polarization_change": 0.5871537029143984
+    },
+    {
+      "step": 273,
+      "z_um": 68.24999999999999,
+      "peak_field_vpm": 1028687.2848281172,
+      "relative_polarization_change": 0.6059380335410882
+    },
+    {
+      "step": 274,
+      "z_um": 68.5,
+      "peak_field_vpm": 1006098.6452548563,
+      "relative_polarization_change": 0.6009762116508239
+    },
+    {
+      "step": 275,
+      "z_um": 68.74999999999999,
+      "peak_field_vpm": 1012048.7128816472,
+      "relative_polarization_change": 0.622464556660958
+    },
+    {
+      "step": 276,
+      "z_um": 69.0,
+      "peak_field_vpm": 1013157.1716183192,
+      "relative_polarization_change": 0.618209700522137
+    },
+    {
+      "step": 277,
+      "z_um": 69.25,
+      "peak_field_vpm": 993147.8152313892,
+      "relative_polarization_change": 0.6474838090665155
+    },
+    {
+      "step": 278,
+      "z_um": 69.5,
+      "peak_field_vpm": 990347.8232316286,
+      "relative_polarization_change": 0.6496294706414711
+    },
+    {
+      "step": 279,
+      "z_um": 69.75,
+      "peak_field_vpm": 996211.2480338928,
+      "relative_polarization_change": 0.6731563375075099
+    },
+    {
+      "step": 280,
+      "z_um": 70.0,
+      "peak_field_vpm": 980554.3196075977,
+      "relative_polarization_change": 0.6767722175692426
+    },
+    {
+      "step": 281,
+      "z_um": 70.25,
+      "peak_field_vpm": 969928.3300134849,
+      "relative_polarization_change": 0.6944714113135352
+    },
+    {
+      "step": 282,
+      "z_um": 70.49999999999999,
+      "peak_field_vpm": 977961.1371618062,
+      "relative_polarization_change": 0.7181085481226017
+    },
+    {
+      "step": 283,
+      "z_um": 70.75,
+      "peak_field_vpm": 966509.0142502587,
+      "relative_polarization_change": 0.7330162664144539
+    },
+    {
+      "step": 284,
+      "z_um": 70.99999999999999,
+      "peak_field_vpm": 950589.954779311,
+      "relative_polarization_change": 0.7667919196613797
+    },
+    {
+      "step": 285,
+      "z_um": 71.25,
+      "peak_field_vpm": 958545.4739764346,
+      "relative_polarization_change": 0.7586777647983272
+    },
+    {
+      "step": 286,
+      "z_um": 71.5,
+      "peak_field_vpm": 952928.1921072968,
+      "relative_polarization_change": 0.8028151514326843
+    },
+    {
+      "step": 287,
+      "z_um": 71.75,
+      "peak_field_vpm": 934272.4300221812,
+      "relative_polarization_change": 0.7921973301573739
+    },
+    {
+      "step": 288,
+      "z_um": 72.0,
+      "peak_field_vpm": 938668.8275789121,
+      "relative_polarization_change": 0.8647895096841944
+    },
+    {
+      "step": 289,
+      "z_um": 72.25,
+      "peak_field_vpm": 938379.1063549193,
+      "relative_polarization_change": 0.8416501931330221
+    },
+    {
+      "step": 290,
+      "z_um": 72.5,
+      "peak_field_vpm": 921088.5546093963,
+      "relative_polarization_change": 0.9124289503194912
+    },
+    {
+      "step": 291,
+      "z_um": 72.75,
+      "peak_field_vpm": 919654.9451531945,
+      "relative_polarization_change": 0.8651152594055238
+    },
+    {
+      "step": 292,
+      "z_um": 73.0,
+      "peak_field_vpm": 922737.6308068746,
+      "relative_polarization_change": 0.9447967558653131
+    },
+    {
+      "step": 293,
+      "z_um": 73.24999999999999,
+      "peak_field_vpm": 908642.6556674726,
+      "relative_polarization_change": 0.9049174089486733
+    },
+    {
+      "step": 294,
+      "z_um": 73.5,
+      "peak_field_vpm": 901045.4942426105,
+      "relative_polarization_change": 1.0007942819422648
+    },
+    {
+      "step": 295,
+      "z_um": 73.74999999999999,
+      "peak_field_vpm": 906153.9046021913,
+      "relative_polarization_change": 0.9538871304379495
+    },
+    {
+      "step": 296,
+      "z_um": 74.0,
+      "peak_field_vpm": 896243.8521483133,
+      "relative_polarization_change": 1.0307252992962965
+    },
+    {
+      "step": 297,
+      "z_um": 74.25,
+      "peak_field_vpm": 883459.4762263525,
+      "relative_polarization_change": 0.9825552139598381
+    },
+    {
+      "step": 298,
+      "z_um": 74.5,
+      "peak_field_vpm": 889000.0188233516,
+      "relative_polarization_change": 1.0384977033065341
+    },
+    {
+      "step": 299,
+      "z_um": 74.75,
+      "peak_field_vpm": 883403.9133900076,
+      "relative_polarization_change": 1.021798513595497
+    },
+    {
+      "step": 300,
+      "z_um": 75.0,
+      "peak_field_vpm": 868626.1765611987,
+      "relative_polarization_change": 1.045231758151692
+    },
+    {
+      "step": 301,
+      "z_um": 75.25,
+      "peak_field_vpm": 871607.1966764953,
+      "relative_polarization_change": 1.069474059451965
+    },
+    {
+      "step": 302,
+      "z_um": 75.49999999999999,
+      "peak_field_vpm": 870096.3891729974,
+      "relative_polarization_change": 1.0324562849292789
+    },
+    {
+      "step": 303,
+      "z_um": 75.75,
+      "peak_field_vpm": 855585.3853945894,
+      "relative_polarization_change": 1.1118685101702435
+    },
+    {
+      "step": 304,
+      "z_um": 75.99999999999999,
+      "peak_field_vpm": 854085.4669590076,
+      "relative_polarization_change": 1.0094969134934115
+    },
+    {
+      "step": 305,
+      "z_um": 76.25,
+      "peak_field_vpm": 855679.3697791129,
+      "relative_polarization_change": 1.1484320320773513
+    },
+    {
+      "step": 306,
+      "z_um": 76.5,
+      "peak_field_vpm": 843591.3523242169,
+      "relative_polarization_change": 0.9993696502666576
+    },
+    {
+      "step": 307,
+      "z_um": 76.75,
+      "peak_field_vpm": 838627.6372450782,
+      "relative_polarization_change": 1.16487646663566
+    },
+    {
+      "step": 308,
+      "z_um": 77.0,
+      "peak_field_vpm": 840512.7690068219,
+      "relative_polarization_change": 1.0159135158666446
+    },
+    {
+      "step": 309,
+      "z_um": 77.25,
+      "peak_field_vpm": 831784.1566612081,
+      "relative_polarization_change": 1.1359714508680347
+    },
+    {
+      "step": 310,
+      "z_um": 77.5,
+      "peak_field_vpm": 825657.0741584011,
+      "relative_polarization_change": 1.0636299447213349
+    },
+    {
+      "step": 311,
+      "z_um": 77.74999999999999,
+      "peak_field_vpm": 826596.9068577954,
+      "relative_polarization_change": 1.061265230022996
+    },
+    {
+      "step": 312,
+      "z_um": 78.0,
+      "peak_field_vpm": 821027.7308817467,
+      "relative_polarization_change": 1.1296279568453567
+    },
+    {
+      "step": 313,
+      "z_um": 78.24999999999999,
+      "peak_field_vpm": 813226.4896382528,
+      "relative_polarization_change": 0.9915883252096515
+    },
+    {
+      "step": 314,
+      "z_um": 78.5,
+      "peak_field_vpm": 813538.6165100498,
+      "relative_polarization_change": 1.1711453514813746
+    },
+    {
+      "step": 315,
+      "z_um": 78.74999999999999,
+      "peak_field_vpm": 810029.1887069424,
+      "relative_polarization_change": 0.989529261886878
+    },
+    {
+      "step": 316,
+      "z_um": 79.0,
+      "peak_field_vpm": 801437.8637947907,
+      "relative_polarization_change": 1.12004569699557
+    },
+    {
+      "step": 317,
+      "z_um": 79.25,
+      "peak_field_vpm": 800357.896851843,
+      "relative_polarization_change": 1.0638411351287307
+    },
+    {
+      "step": 318,
+      "z_um": 79.5,
+      "peak_field_vpm": 798396.2811474233,
+      "relative_polarization_change": 0.9940271914670825
+    },
+    {
+      "step": 319,
+      "z_um": 79.75,
+      "peak_field_vpm": 790311.920124851,
+      "relative_polarization_change": 1.1522468236327235
+    },
+    {
+      "step": 320,
+      "z_um": 80.0,
+      "peak_field_vpm": 787379.5764832576,
+      "relative_polarization_change": 0.9475934927433017
+    },
+    {
+      "step": 321,
+      "z_um": 80.25,
+      "peak_field_vpm": 787054.369347463,
+      "relative_polarization_change": 1.1152026715905212
+    },
+    {
+      "step": 322,
+      "z_um": 80.49999999999999,
+      "peak_field_vpm": 780193.4699995727,
+      "relative_polarization_change": 1.0397182724644538
+    },
+    {
+      "step": 323,
+      "z_um": 80.75,
+      "peak_field_vpm": 775329.4453586763,
+      "relative_polarization_change": 0.9467827796817552
+    },
+    {
+      "step": 324,
+      "z_um": 80.99999999999999,
+      "peak_field_vpm": 775404.208822402,
+      "relative_polarization_change": 1.1496456946612568
+    },
+    {
+      "step": 325,
+      "z_um": 81.25,
+      "peak_field_vpm": 770457.7790562509,
+      "relative_polarization_change": 0.9281276763884031
+    },
+    {
+      "step": 326,
+      "z_um": 81.5,
+      "peak_field_vpm": 764084.3596060872,
+      "relative_polarization_change": 1.0276480320194836
+    },
+    {
+      "step": 327,
+      "z_um": 81.75,
+      "peak_field_vpm": 764133.2678146441,
+      "relative_polarization_change": 1.0860740581848296
+    },
+    {
+      "step": 328,
+      "z_um": 82.0,
+      "peak_field_vpm": 760436.8077901659,
+      "relative_polarization_change": 0.867656172202631
+    },
+    {
+      "step": 329,
+      "z_um": 82.25,
+      "peak_field_vpm": 753393.1072807601,
+      "relative_polarization_change": 1.0980826511766029
+    },
+    {
+      "step": 330,
+      "z_um": 82.5,
+      "peak_field_vpm": 752386.9033584388,
+      "relative_polarization_change": 1.0046533281143695
+    },
+    {
+      "step": 331,
+      "z_um": 82.74999999999999,
+      "peak_field_vpm": 750027.9353430246,
+      "relative_polarization_change": 0.8436684730804782
+    },
+    {
+      "step": 332,
+      "z_um": 83.0,
+      "peak_field_vpm": 743097.7834762862,
+      "relative_polarization_change": 1.1271676684831085
+    },
+    {
+      "step": 333,
+      "z_um": 83.24999999999999,
+      "peak_field_vpm": 740408.086690993,
+      "relative_polarization_change": 0.9433817433401354
+    },
+    {
+      "step": 334,
+      "z_um": 83.5,
+      "peak_field_vpm": 765294.416706595,
+      "relative_polarization_change": 0.8217914900230278
+    },
+    {
+      "step": 335,
+      "z_um": 83.75,
+      "peak_field_vpm": 732913.7882810886,
+      "relative_polarization_change": 1.1334196538735923
+    },
+    {
+      "step": 336,
+      "z_um": 84.0,
+      "peak_field_vpm": 783000.3412877264,
+      "relative_polarization_change": 0.9143040137106944
+    },
+    {
+      "step": 337,
+      "z_um": 84.25,
+      "peak_field_vpm": 848981.5511992881,
+      "relative_polarization_change": 0.7776783979706409
+    },
+    {
+      "step": 338,
+      "z_um": 84.5,
+      "peak_field_vpm": 740243.4117260532,
+      "relative_polarization_change": 1.1254120355125021
+    },
+    {
+      "step": 339,
+      "z_um": 84.75,
+      "peak_field_vpm": 809440.7627238779,
+      "relative_polarization_change": 0.930663838317506
+    },
+    {
+      "step": 340,
+      "z_um": 84.99999999999999,
+      "peak_field_vpm": 886790.3797216656,
+      "relative_polarization_change": 0.715450602405717
+    },
+    {
+      "step": 341,
+      "z_um": 85.25,
+      "peak_field_vpm": 719781.910471463,
+      "relative_polarization_change": 1.0617589267137986
+    },
+    {
+      "step": 342,
+      "z_um": 85.49999999999999,
+      "peak_field_vpm": 763051.9200922297,
+      "relative_polarization_change": 1.0148123911464837
+    },
+    {
+      "step": 343,
+      "z_um": 85.75,
+      "peak_field_vpm": 827991.7629256435,
+      "relative_polarization_change": 0.6848468729689549
+    },
+    {
+      "step": 344,
+      "z_um": 85.99999999999999,
+      "peak_field_vpm": 740670.0531805583,
+      "relative_polarization_change": 0.8681219797495304
+    },
+    {
+      "step": 345,
+      "z_um": 86.25,
+      "peak_field_vpm": 740029.326711789,
+      "relative_polarization_change": 1.1605121874487603
+    },
+    {
+      "step": 346,
+      "z_um": 86.5,
+      "peak_field_vpm": 755242.8592742338,
+      "relative_polarization_change": 0.7696035116055593
+    },
+    {
+      "step": 347,
+      "z_um": 86.75,
+      "peak_field_vpm": 751386.3521892069,
+      "relative_polarization_change": 0.6321066730943454
+    },
+    {
+      "step": 348,
+      "z_um": 87.0,
+      "peak_field_vpm": 754475.7035848277,
+      "relative_polarization_change": 1.102946181324007
+    },
+    {
+      "step": 349,
+      "z_um": 87.25,
+      "peak_field_vpm": 713950.8272627522,
+      "relative_polarization_change": 1.044273378663165
+    },
+    {
+      "step": 350,
+      "z_um": 87.5,
+      "peak_field_vpm": 716706.5339401241,
+      "relative_polarization_change": 0.6187690488012325
+    },
+    {
+      "step": 351,
+      "z_um": 87.74999999999999,
+      "peak_field_vpm": 751303.5073132479,
+      "relative_polarization_change": 0.6611271802024415
+    },
+    {
+      "step": 352,
+      "z_um": 88.0,
+      "peak_field_vpm": 706018.9793360018,
+      "relative_polarization_change": 1.2374806859216967
+    },
+    {
+      "step": 353,
+      "z_um": 88.24999999999999,
+      "peak_field_vpm": 703227.8439642099,
+      "relative_polarization_change": 0.9829617601120372
+    },
+    {
+      "step": 354,
+      "z_um": 88.5,
+      "peak_field_vpm": 709107.2171505871,
+      "relative_polarization_change": 0.5477581791793891
+    },
+    {
+      "step": 355,
+      "z_um": 88.75,
+      "peak_field_vpm": 664732.336365786,
+      "relative_polarization_change": 0.6298166029245627
+    },
+    {
+      "step": 356,
+      "z_um": 89.0,
+      "peak_field_vpm": 662375.6633359522,
+      "relative_polarization_change": 1.251941608660649
+    },
+    {
+      "step": 357,
+      "z_um": 89.25,
+      "peak_field_vpm": 677847.1407625095,
+      "relative_polarization_change": 1.0945796112851203
+    },
+    {
+      "step": 358,
+      "z_um": 89.5,
+      "peak_field_vpm": 671157.3674313064,
+      "relative_polarization_change": 0.5718958721443891
+    },
+    {
+      "step": 359,
+      "z_um": 89.75,
+      "peak_field_vpm": 667988.5167933101,
+      "relative_polarization_change": 0.5030005039681764
+    },
+    {
+      "step": 360,
+      "z_um": 89.99999999999999,
+      "peak_field_vpm": 675788.7830389967,
+      "relative_polarization_change": 1.0029970509097932
+    },
+    {
+      "step": 361,
+      "z_um": 90.25,
+      "peak_field_vpm": 656255.9638365307,
+      "relative_polarization_change": 1.5220231521788332
+    },
+    {
+      "step": 362,
+      "z_um": 90.49999999999999,
+      "peak_field_vpm": 645802.9653038861,
+      "relative_polarization_change": 0.8114934484064907
+    },
+    {
+      "step": 363,
+      "z_um": 90.75,
+      "peak_field_vpm": 649599.2537928768,
+      "relative_polarization_change": 0.39692168174349945
+    },
+    {
+      "step": 364,
+      "z_um": 90.99999999999999,
+      "peak_field_vpm": 643763.8841938631,
+      "relative_polarization_change": 0.648352202758658
+    },
+    {
+      "step": 365,
+      "z_um": 91.25,
+      "peak_field_vpm": 674308.5770912668,
+      "relative_polarization_change": 1.6051454463105226
+    },
+    {
+      "step": 366,
+      "z_um": 91.5,
+      "peak_field_vpm": 668387.9972555713,
+      "relative_polarization_change": 1.4971186766907303
+    },
+    {
+      "step": 367,
+      "z_um": 91.75,
+      "peak_field_vpm": 678443.1251459372,
+      "relative_polarization_change": 0.6106121820397492
+    },
+    {
+      "step": 368,
+      "z_um": 92.0,
+      "peak_field_vpm": 685770.1437077727,
+      "relative_polarization_change": 0.46958490142624815
+    },
+    {
+      "step": 369,
+      "z_um": 92.24999999999999,
+      "peak_field_vpm": 686034.1683522927,
+      "relative_polarization_change": 1.1961729164464359
+    },
+    {
+      "step": 370,
+      "z_um": 92.5,
+      "peak_field_vpm": 682380.487227307,
+      "relative_polarization_change": 1.4745023805082487
+    },
+    {
+      "step": 371,
+      "z_um": 92.74999999999999,
+      "peak_field_vpm": 679019.4617022419,
+      "relative_polarization_change": 0.6920287340702825
+    },
+    {
+      "step": 372,
+      "z_um": 93.0,
+      "peak_field_vpm": 649547.1181619309,
+      "relative_polarization_change": 0.7830744439337429
+    },
+    {
+      "step": 373,
+      "z_um": 93.24999999999999,
+      "peak_field_vpm": 640801.0898931291,
+      "relative_polarization_change": 0.6577265849475419
+    },
+    {
+      "step": 374,
+      "z_um": 93.5,
+      "peak_field_vpm": 647280.504737432,
+      "relative_polarization_change": 0.9566181082112566
+    },
+    {
+      "step": 375,
+      "z_um": 93.75,
+      "peak_field_vpm": 627252.6875316101,
+      "relative_polarization_change": 1.042739439261482
+    },
+    {
+      "step": 376,
+      "z_um": 94.0,
+      "peak_field_vpm": 605476.8009690782,
+      "relative_polarization_change": 0.7337537562725324
+    },
+    {
+      "step": 377,
+      "z_um": 94.25,
+      "peak_field_vpm": 602427.4547170404,
+      "relative_polarization_change": 1.0321357302244278
+    },
+    {
+      "step": 378,
+      "z_um": 94.5,
+      "peak_field_vpm": 601978.8796060865,
+      "relative_polarization_change": 1.1659519172074
+    },
+    {
+      "step": 379,
+      "z_um": 94.75,
+      "peak_field_vpm": 612344.2285681512,
+      "relative_polarization_change": 0.7578872326099044
+    },
+    {
+      "step": 380,
+      "z_um": 94.99999999999999,
+      "peak_field_vpm": 598096.91110095,
+      "relative_polarization_change": 1.0803893506261666
+    },
+    {
+      "step": 381,
+      "z_um": 95.25,
+      "peak_field_vpm": 590530.2879194801,
+      "relative_polarization_change": 1.1510898219960604
+    },
+    {
+      "step": 382,
+      "z_um": 95.49999999999999,
+      "peak_field_vpm": 602397.0362879545,
+      "relative_polarization_change": 0.7318844464651344
+    },
+    {
+      "step": 383,
+      "z_um": 95.75,
+      "peak_field_vpm": 618891.7377767239,
+      "relative_polarization_change": 1.091187759800455
+    },
+    {
+      "step": 384,
+      "z_um": 96.0,
+      "peak_field_vpm": 609168.6903879497,
+      "relative_polarization_change": 1.1119687496641755
+    },
+    {
+      "step": 385,
+      "z_um": 96.25,
+      "peak_field_vpm": 590490.7795932522,
+      "relative_polarization_change": 0.6829698557522679
+    },
+    {
+      "step": 386,
+      "z_um": 96.5,
+      "peak_field_vpm": 591209.3540730708,
+      "relative_polarization_change": 1.0176433151078357
+    },
+    {
+      "step": 387,
+      "z_um": 96.75,
+      "peak_field_vpm": 585587.6484722901,
+      "relative_polarization_change": 1.152246496947236
+    },
+    {
+      "step": 388,
+      "z_um": 97.0,
+      "peak_field_vpm": 582175.6580151939,
+      "relative_polarization_change": 0.6707519713852472
+    },
+    {
+      "step": 389,
+      "z_um": 97.24999999999999,
+      "peak_field_vpm": 608046.1734578494,
+      "relative_polarization_change": 0.8233674180103437
+    },
+    {
+      "step": 390,
+      "z_um": 97.5,
+      "peak_field_vpm": 604593.0860456238,
+      "relative_polarization_change": 1.2898793024195225
+    },
+    {
+      "step": 391,
+      "z_um": 97.74999999999999,
+      "peak_field_vpm": 573549.3507588431,
+      "relative_polarization_change": 0.7636910018571003
+    },
+    {
+      "step": 392,
+      "z_um": 98.0,
+      "peak_field_vpm": 565910.28532751,
+      "relative_polarization_change": 0.6261539305180146
+    },
+    {
+      "step": 393,
+      "z_um": 98.24999999999999,
+      "peak_field_vpm": 557872.4451778495,
+      "relative_polarization_change": 1.3097188834571822
+    },
+    {
+      "step": 394,
+      "z_um": 98.5,
+      "peak_field_vpm": 563273.2024513716,
+      "relative_polarization_change": 0.966785367654954
+    },
+    {
+      "step": 395,
+      "z_um": 98.75,
+      "peak_field_vpm": 567621.1641529567,
+      "relative_polarization_change": 0.5692097875443155
+    },
+    {
+      "step": 396,
+      "z_um": 99.0,
+      "peak_field_vpm": 561153.9900494233,
+      "relative_polarization_change": 1.007024343068079
+    },
+    {
+      "step": 397,
+      "z_um": 99.25,
+      "peak_field_vpm": 542181.7969030178,
+      "relative_polarization_change": 1.2324312738541674
+    },
+    {
+      "step": 398,
+      "z_um": 99.49999999999999,
+      "peak_field_vpm": 551494.3942552245,
+      "relative_polarization_change": 0.6655678987608898
+    },
+    {
+      "step": 399,
+      "z_um": 99.75,
+      "peak_field_vpm": 549655.134844035,
+      "relative_polarization_change": 0.6554940819577508
+    },
+    {
+      "step": 400,
+      "z_um": 99.99999999999999,
+      "peak_field_vpm": 543081.0814140188,
+      "relative_polarization_change": 1.261455392922446
+    }
+  ],
+  "width_um": 160.0,
+  "dx_nm": 156.25,
+  "waist_um": 2.0,
+  "time_stride": 10,
+  "zero_field_tail_fs": 150.00000000000003,
+  "time_samples": 4000,
+  "density_m3": 1.758546651023198e+28,
+  "polarization_scale": 1.0,
+  "gamma_s": 50000000000000.0,
+  "input_sha256": {
+    "time": "023e036187ec369342694fc627fb05edf4860cf0ebe139260606b26f587fb2ff",
+    "field": "1fbb86fe99b95aca29a6fc3a18a3a3aaf53e649a306184af62b5309e6c46bc81",
+    "omega": "4d2b319262fb5058d049c36aff582d6cb09b7b55f5353d19747cc318f289de5e",
+    "dipole": "220476dc6d23942cfecfaa81c7329d432853b04868543548dad4fa68c7058b63",
+    "weights": "a1792b2e06bb97e7fd6c8873e8418ab1587b0d6584bf26fb6a8d2a54b19c8747",
+    "model": "0193b978d8206f8145202a358c200b039d00d19d8a52b20a22b5c621d4e4319e"
+  },
+  "output_npz_sha256": "6ea104269258f1b7e923075a914443700646eece805a3d8b2d6effa798eebb54"
+}

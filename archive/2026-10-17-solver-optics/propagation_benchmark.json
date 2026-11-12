@@ -1,0 +1,27 @@
+{
+  "solver_sha256": "d22220bf7149ece5f31e0ce4c53adb2cf06791ae317ef717fa35e34a2094a5a7",
+  "input": {
+    "wavelength_m": 1.55e-06,
+    "samples_per_period": 64,
+    "time_samples": 256,
+    "x_samples": 8
+  },
+  "lossless": {
+    "index": 3.6,
+    "distance_m": 1.0763888888888889e-07,
+    "rms_ratio": 1.0,
+    "max_abs_error_v_per_m_for_unit_input": 1.0352829704629585e-14
+  },
+  "prescribed_source": {
+    "background_index": 1.0,
+    "source_polarization": "eps0 * 0.02 * cos(omega*t) C/m^2",
+    "distance_m": 1.9375e-07,
+    "one_step_max_abs_error": 6.994405055138486e-15,
+    "one_vs_16_max_abs_difference": 5.551115123125783e-16
+  },
+  "transverse_mode": {
+    "mode_kx_rad_per_m": 981747.7042468104,
+    "distance_m": 1.2e-06,
+    "max_abs_error_v_per_m_for_unit_input": 4.801714581503802e-15
+  }
+}

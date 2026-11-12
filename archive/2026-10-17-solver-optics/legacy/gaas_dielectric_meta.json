@@ -1,0 +1,30 @@
+{
+  "gs_gpw": "/Users/denniswayo/sbup3-ultrafast/dft/gaas_pw.gpw",
+  "gs_meta_json": "/Users/denniswayo/sbup3-ultrafast/dft/gaas_ground_state_meta.json",
+  "gs_meta_loaded": true,
+  "gs_kpts": [
+    4,
+    4,
+    4
+  ],
+  "response_gpw": "/Users/denniswayo/sbup3-ultrafast/dft/gaas_response.gpw",
+  "out_csv": "/Users/denniswayo/sbup3-ultrafast/analysis/data/gaas_dielectric_reference.csv",
+  "kpts_response": [
+    6,
+    6,
+    6
+  ],
+  "nbands": 48,
+  "eta_eV": 0.05,
+  "ecut_eV": 150.0,
+  "frequencies": {
+    "type": "nonlinear",
+    "domega0_eV": 0.02,
+    "omega2_eV": 5.0,
+    "omegamax_eV": 8.0
+  },
+  "intraband": false,
+  "integrationmode": "point integration",
+  "publication_grade_kmesh": true,
+  "n_rows": 242
+}

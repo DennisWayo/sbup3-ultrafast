@@ -1,0 +1,18 @@
+{
+  "gs_mode": "pw",
+  "xc": "PBE",
+  "kpts": [
+    8,
+    8,
+    8
+  ],
+  "nbands": 48,
+  "smearing_ev": 0.01,
+  "h_ang": null,
+  "pw_ecut_ev": 200.0,
+  "lattice_a_ang": 5.6533,
+  "lcao_gpw": null,
+  "fd_gpw": null,
+  "pw_gpw": "/Users/denniswayo/sbup3-validation-20261017/dft/studies/gs8_200/gaas_pw.gpw",
+  "publication_grade_kmesh": true
+}

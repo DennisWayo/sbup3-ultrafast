@@ -1,0 +1,12 @@
+{
+  "response_gpw": "/Users/denniswayo/sbup3-validation-20261017/dft/gaas_response_gs6_k6_b48.gpw",
+  "response_gpw_sha256": "8b2b54ab14526b8b4b5660bc240be2b7dd67d2c7951ce6eeff2bf269eaecbb90",
+  "out_csv": "/Users/denniswayo/sbup3-validation-20261017/analysis/data/gaas_dielectric_gs6_k6_b48_e200.csv",
+  "out_csv_sha256": "712c63819a3ffa06b01f25ea5bbef82874950e74b45157f4e0f61e28cc7410df",
+  "ecut_eV": 200.0,
+  "eta_eV": 0.05,
+  "domega0_eV": 0.02,
+  "omega2_eV": 5.0,
+  "omegamax_eV": 8.0,
+  "n_rows": 242
+}

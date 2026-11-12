@@ -1,0 +1,448 @@
+SBUP3 dielectric response: GaAs
+-----------------------------
+[LOAD] /Users/dela/sbup3-validation-20261019/dft/gaas_pw.gpw
+
+  ___ ___ ___ _ _ _  
+ |   |   |_  | | | | 
+ | | | | | . | | | | 
+ |__ |  _|___|_____|  25.7.0
+ |___|_|             
+
+User:   dela@macstudio-node1.local
+Date:   Sat Oct 24 11:10:48 2026
+Arch:   arm64
+Pid:    10743
+CWD:    /Users/dela/sbup3-validation-20261019
+Python: 3.11.15
+gpaw:   /Users/dela/miniforge3/envs/gpaw-cpu-opt/lib/python3.11/site-packages/gpaw
+_gpaw:  /Users/dela/miniforge3/envs/gpaw-cpu-opt/lib/python3.11/site-packages/
+        _gpaw.cpython-311-darwin.so
+ase:    /Users/dela/miniforge3/envs/gpaw-cpu-opt/lib/python3.11/site-packages/ase (version 3.28.0)
+numpy:  /Users/dela/miniforge3/envs/gpaw-cpu-opt/lib/python3.11/site-packages/numpy (version 2.4.3)
+scipy:  /Users/dela/miniforge3/envs/gpaw-cpu-opt/lib/python3.11/site-packages/scipy (version 1.17.1)
+libxc:  7.0.0
+units:  Angstrom and eV
+cores: 1
+OpenMP: True
+OMP_NUM_THREADS: 1
+
+Input parameters:
+  gpts: [14 14 14]
+  kpts: [32 32 32]
+  mode: {ecut: 200.0,
+         name: pw}
+  nbands: 48
+  occupations: {name: fermi-dirac,
+                width: 0.01}
+  symmetry: off
+  xc: PBE
+
+Initialize ...
+
+species:
+  Ga:
+    name: Gallium
+    id: 818a1f824512bb44ae6134ae13584d59
+    Z: 31.0
+    valence: 3
+    core: 28
+    charge: 0.0
+    file: /Users/dela/miniforge3/envs/gpaw-cpu-opt/lib/python3.11/site-packages/gpaw_data/setups/Ga.PBE.gz
+    compensation charges: {type: gauss,
+                           rc: 0.37,
+                           lmax: 2}
+    cutoffs: {filter: 2.06,
+              core: 4.17}
+    projectors:
+      #              energy  rcut
+      - 4s(2.00)    -8.945   1.164
+      - 4p(1.00)    -2.580   1.164
+      -  s          18.266   1.164
+      -  p          24.631   1.164
+      -  d           0.000   1.164
+  
+    # Using partial waves for Ga as LCAO basis
+
+  As:
+    name: Arsenic
+    id: bf96491e5ab01ad111b1ee6203e85afa
+    Z: 33.0
+    valence: 5
+    core: 28
+    charge: 0.0
+    file: /Users/dela/miniforge3/envs/gpaw-cpu-opt/lib/python3.11/site-packages/gpaw_data/setups/As.PBE.gz
+    compensation charges: {type: gauss,
+                           rc: 0.33,
+                           lmax: 2}
+    cutoffs: {filter: 1.87,
+              core: 2.96}
+    projectors:
+      #              energy  rcut
+      - 4s(2.00)   -14.487   1.058
+      - 4p(3.00)    -5.196   1.058
+      -  s          12.725   1.058
+      -  p          22.016   1.058
+      -  d           0.000   1.058
+  
+    # Using partial waves for As as LCAO basis
+
+Reference energy: -114387.645129  # eV
+
+Spin-paired calculation
+
+Convergence criteria:
+ Maximum [total energy] change in last 3 cyles: 0.0005 eV / valence electron
+ Maximum integral of absolute [dens]ity change: 0.0001 electrons / valence electron
+ Maximum integral of absolute [eigenst]ate change: 4e-08 eV^2 / valence electron
+ Maximum number of scf [iter]ations: 333
+ (Square brackets indicate name in SCF output, whereas a 'c' in
+ the SCF output indicates the quantity has converged.)
+
+Symmetries present (total): 1
+
+  ( 1  0  0)
+  ( 0  1  0)
+  ( 0  0  1)
+
+32768 k-points: 32 x 32 x 32 Monkhorst-Pack grid
+32768 k-points in the irreducible part of the Brillouin zone
+       k-points in crystal coordinates                weights
+   0:    -0.48437500   -0.48437500   -0.48437500          1/32768
+   1:    -0.48437500   -0.48437500   -0.45312500          1/32768
+   2:    -0.48437500   -0.48437500   -0.42187500          1/32768
+   3:    -0.48437500   -0.48437500   -0.39062500          1/32768
+   4:    -0.48437500   -0.48437500   -0.35937500          1/32768
+   5:    -0.48437500   -0.48437500   -0.32812500          1/32768
+   6:    -0.48437500   -0.48437500   -0.29687500          1/32768
+   7:    -0.48437500   -0.48437500   -0.26562500          1/32768
+   8:    -0.48437500   -0.48437500   -0.23437500          1/32768
+   9:    -0.48437500   -0.48437500   -0.20312500          1/32768
+          ...
+32767:     0.48437500    0.48437500    0.48437500          1/32768
+
+Wave functions: Plane wave expansion
+  Cutoff energy: 200.000 eV
+  Number of coefficients (min, max): 276, 302
+  Pulay-stress correction: 0.000000 eV/Ang^3 (de/decut=0.000000)
+  Using Numpy's FFT
+  ScaLapack parameters: grid=1x1, blocksize=None
+  Wavefunction extrapolation:
+    Improved wavefunction reuse through dual PAW basis 
+
+Occupation numbers: Fermi-Dirac:
+  width: 0.0100  # eV
+ 
+
+Eigensolver
+   Davidson(niter=2) 
+
+Densities:
+  Coarse grid: 14*14*14 grid
+  Fine grid: 28*28*28 grid
+  Total Charge: 0.000000 
+
+Density mixing:
+  Method: separate
+  Backend: pulay
+  Linear mixing parameter: 0.05
+  old densities: 5
+  Damping of long wavelength oscillations: 50 
+
+Hamiltonian:
+  XC and Coulomb potentials evaluated on a 28*28*28 grid
+  Using the PBE Exchange-Correlation functional
+  External potential:
+    NoExternalPotential
+ 
+
+XC parameters: PBE with 2 nearest neighbor stencil
+
+Memory estimate:
+  Process memory now: 398.91 MiB
+  Calculator: 9403.18 MiB
+    Density: 1.14 MiB
+      Arrays: 0.54 MiB
+      Localized functions: 0.39 MiB
+      Mixer: 0.21 MiB
+    Hamiltonian: 0.37 MiB
+      Arrays: 0.36 MiB
+      XC: 0.00 MiB
+      Poisson: 0.00 MiB
+      vbar: 0.01 MiB
+    Wavefunctions: 9401.68 MiB
+      Arrays psit_nG: 7248.00 MiB
+      Eigensolver: 0.60 MiB
+      Projections: 624.00 MiB
+      Projectors: 1377.98 MiB
+      PW-descriptor: 151.10 MiB
+
+Total number of cores used: 1
+OpenMP threads: 28
+
+Number of atoms: 2
+Number of atomic orbitals: 8
+Number of bands in calculation: 48
+Number of valence electrons: 8
+Bands to converge: occupied
+
+... initialized
+
+Initializing position-dependent things.
+
+Creating initial wave functions:
+  8 bands from LCAO basis set
+  40 bands from random numbers
+
+                    
+                    
+                    
+                    
+           As       
+                    
+       Ga           
+                    
+                    
+                    
+                    
+
+Atomic positions and initial magnetic moments
+
+Positions:
+   0 Ga     0.000000    0.000000    0.000000    ( 0.0000,  0.0000,  0.0000)
+   1 As     1.413325    1.413325    1.413325    ( 0.0000,  0.0000,  0.0000)
+
+Unit cell:
+           periodic     x           y           z      points  spacing
+  1. axis:    yes    0.000000    2.826650    2.826650    14     0.2331
+  2. axis:    yes    2.826650    0.000000    2.826650    14     0.2331
+  3. axis:    yes    2.826650    2.826650    0.000000    14     0.2331
+
+  Lengths:   3.997487   3.997487   3.997487
+  Angles:   60.000000  60.000000  60.000000
+
+Effective grid spacing dv^(1/3) = 0.2544
+
+     iter     time        total  log10-change:
+                         energy   eigst   dens
+iter:   1 11:52:28    -8.222257               c
+iter:   2 12:31:50    -8.222419   -4.10       c
+iter:   3 13:11:08    -8.222420c  -6.11       c
+iter:   4 13:50:26    -8.222420c  -8.01c      c
+
+Converged after 4 iterations.
+
+Dipole moment: (-3.418427, -3.418427, -3.418427) |e|*Ang
+
+Energy contributions relative to reference atoms: (reference = -114387.645129)
+
+Kinetic:        +27.406036
+Potential:      -24.224320
+External:        +0.000000
+XC:             -11.404250
+Entropy (-ST):   -0.000000
+Local:           +0.000115
+SIC:             +0.000000
+--------------------------
+Free energy:     -8.222420
+Extrapolated:    -8.222420
+
+Showing only first 2 kpts
+ Kpt  Band  Eigenvalues  Occupancy
+  0     2      3.79881    2.00000
+  0     3      3.79881    2.00000
+  0     4      5.97732    0.00000
+  0     5      9.60165    0.00000
+
+  1     2      3.70290    2.00000
+  1     3      3.77138    2.00000
+  1     4      6.09396    0.00000
+  1     5      9.55514    0.00000
+
+
+Fermi level: 5.30597
+
+Gap: 0.678 eV
+Transition (v -> c):
+  (s=0, k=15855, n=3, [-0.02, -0.02, -0.02]) -> (s=0, k=16912, n=4, [0.02, 0.02, 0.02])
+Direct/indirect transitions are different
+Direct gap: 0.678 eV
+Transition at: (s=0, k=15855, n=3, [-0.02, -0.02, -0.02])
+Diagonalizing full Hamiltonian (48 lowest bands)
+Matrix size (min, max): 276, 302
+Approximate memory used per core to store H_GG, S_GG: 4.175 MB
+Notice: Up to twice the amount of memory might be allocated
+during diagonalization algorithm.
+The least memory is required when the parallelization is purely
+over states (bands) and not k-points, set GPAW(..., parallel={'kpt': 1}, ...).
+6201.078125s |----------------------------------------| Time: 5925.938s
+Writing to /Users/dela/sbup3-validation-20261019/dft/gaas_response_gs6_k32_b48.gpw (mode='all')
+
+[SAVE] response wavefunctions -> /Users/dela/sbup3-validation-20261019/dft/gaas_response_gs6_k32_b48.gpw
+Using integrator: PointIntegrator
+NonLinearFrequencyDescriptor(from 0.000 to 8.024 eV, 242 points)
+Nonperiodic BCs:  [False False False]
+Using integrator: PointIntegrator
+NonLinearFrequencyDescriptor(from 0.000 to 8.024 eV, 242 points)
+Nonperiodic BCs:  [False False False]
+
+Sat Oct 24 15:29:46 2026
+Calculating chi0 body with:
+    Ground state adapter containing:
+    Number of spins: 1
+    Number of kpoints: 32768
+    Number of irreducible kpoints: 32768
+    Number of completely occupied states: 4
+    Number of partially occupied states: 4
+    Occupied states memory: 0.16748046875 M / cpu
+
+    Linear response parametrization:
+    q_c: [0.0, 0.0, 0.0]
+    Number of frequency points: 242
+    Planewave cutoff: 150.0
+    Number of bands: 48
+    Number of planewaves: 169
+    Broadening (eta): 0.05
+    comm.size: 1
+    kncomm.size: 1
+    blockcomm.size: 1
+
+    Memory estimate of potentially large arrays:
+        chi0_wGG: 105.46511840820312 M / cpu
+        Memory usage before allocation: 13712.15625 M / cpu
+Integrating chi0 body.
+
+Symmetries of q_c:
+    Direct symmetries (Uq -> q): 1
+    Indirect symmetries (TUq -> q): 0
+In total 1 allowed symmetries.
+
+  ( 1  0  0)
+  ( 0  1  0)
+  ( 0  0  1)
+
+32768 groups of equivalent kpoints. 0.0% reduction.
+
+Integral kind: spectral function
+439.9453125s |----------------------------------------| Time: 403.051s
+
+Sat Oct 24 15:36:29 2026
+Calculating chi0 optical extensions with:
+    Ground state adapter containing:
+    Number of spins: 1
+    Number of kpoints: 32768
+    Number of irreducible kpoints: 32768
+    Number of completely occupied states: 4
+    Number of partially occupied states: 4
+    Occupied states memory: 0.16748046875 M / cpu
+
+    Linear response parametrization:
+    Number of frequency points: 242
+    Planewave cutoff: 150.0
+    Number of bands: 48
+    Number of planewaves: 169
+    Broadening (eta): 0.05
+Integrating chi0 head and wings.
+
+Symmetries of q_c:
+    Direct symmetries (Uq -> q): 1
+    Indirect symmetries (TUq -> q): 0
+In total 1 allowed symmetries.
+
+  ( 1  0  0)
+  ( 0  1  0)
+  ( 0  0  1)
+
+32768 groups of equivalent kpoints. 0.0% reduction.
+
+Integral kind: spectral function wings
+847.734375s |----------------------------------------| Time: 469.126s
+
+Finished calculating chi0
+
+Timing:                             incl.     excl.
+----------------------------------------------------------
+Get eigenvalues:                    2.286     2.286   0.3% |
+Get kpoints:                        0.223     0.223   0.0% |
+Get matrix element:               852.520     7.055   0.8% |
+ Get kpoint pair:                 212.793     1.534   0.2% |
+  fft indices:                      0.970     0.970   0.1% |
+  get k-points:                   210.288     0.099   0.0% |
+   Get a k-point:                 210.190     1.166   0.1% |
+    Load projections:               7.088     7.088   0.8% |
+    load wfs:                     201.936   201.936  23.0% |--------|
+ get_optical_pair_density_head:    68.564     2.223   0.3% |
+  Optical limit:                   66.342    36.580   4.2% |-|
+   Derivatives:                    29.762    29.762   3.4% ||
+ get_pair_density:                564.108     0.691   0.1% |
+  conj:                             0.754     0.754   0.1% |
+  paw:                            562.664     9.954   1.1% |
+   Calculate pair-densities:      552.710    28.569   3.3% ||
+    fft:                          460.110   460.110  52.5% |--------------------|
+    gemm:                          64.031    64.031   7.3% |--|
+Hilbert transform:                  0.054     0.054   0.0% |
+symmetrize_wGG:                     0.013     0.013   0.0% |
+Other:                             21.292    21.292   2.4% ||
+----------------------------------------------------------
+Total:                                      876.387 100.0%
+
+Sat Oct 24 15:44:18 2026
+[OK] Wrote optical constants: /Users/dela/sbup3-validation-20261019/dft/gaas_dielectric_gs6_k32_b48_e150.csv
+[OK] Wrote metadata: /Users/dela/sbup3-validation-20261019/dft/gaas_dielectric_gs6_k32_b48_e150.meta.json
+Timing:                              incl.     excl.
+-----------------------------------------------------------
+Full diag:                        5938.878    13.201   0.1% |
+ Build H and S:                    854.733   854.733   5.2% |-|
+ Diagonalize:                     5063.913  5063.913  30.9% |-----------|
+ Projections:                        5.937     5.937   0.0% |
+ Redistribute:                       1.094     1.094   0.0% |
+Hamiltonian:                         0.028     0.000   0.0% |
+ Atomic:                             0.024     0.000   0.0% |
+  XC Correction:                     0.024     0.024   0.0% |
+ Calculate atomic Hamiltonians:      0.000     0.000   0.0% |
+ Communicate:                        0.000     0.000   0.0% |
+ Initialize Hamiltonian:             0.000     0.000   0.0% |
+ Poisson:                            0.000     0.000   0.0% |
+ XC 3D grid:                         0.003     0.003   0.0% |
+LCAO initialization:               115.904     3.685   0.0% |
+ LCAO eigensolver:                  61.988     0.206   0.0% |
+  Calculate projections:             0.197     0.197   0.0% |
+  DenseAtomicCorrection:             0.699     0.699   0.0% |
+  Distribute overlap matrix:         0.079     0.079   0.0% |
+  Orbital Layouts:                  55.799    55.799   0.3% |
+  Potential matrix:                  0.010     0.010   0.0% |
+  Sum over cells:                    4.998     4.998   0.0% |
+ LCAO to grid:                      28.554    28.554   0.2% |
+ Set positions (LCAO WFS):          21.678     3.070   0.0% |
+  Basic WFS set positions:           0.000     0.000   0.0% |
+  Basis functions set positions:     0.000     0.000   0.0% |
+  P tci:                             7.118     7.118   0.0% |
+  ST tci:                           11.487    11.487   0.1% |
+  mktci:                             0.002     0.002   0.0% |
+PWDescriptor:                        1.031     1.031   0.0% |
+SCF-cycle:                        9458.541     1.433   0.0% |
+ Davidson:                        9437.070   206.313   1.3% ||
+  Apply H:                         551.818   536.140   3.3% ||
+   HMM T:                           15.678    15.678   0.1% |
+  Subspace diag:                   897.994     2.204   0.0% |
+   calc_h_matrix:                  589.504    38.954   0.2% |
+    Apply H:                       550.550   534.944   3.3% ||
+     HMM T:                         15.605    15.605   0.1% |
+   diagonalize:                    267.654   267.654   1.6% ||
+   rotate_psi:                      38.632    38.632   0.2% |
+  calc. matrices:                 1271.211   167.115   1.0% |
+   Apply H:                       1104.096  1070.931   6.5% |--|
+    HMM T:                          33.165    33.165   0.2% |
+  diagonalize:                    6429.566  6429.566  39.2% |---------------|
+  rotate_psi:                       80.167    80.167   0.5% |
+ Orthonormalize:                    20.038     0.589   0.0% |
+  calc_s_matrix:                     7.159     7.159   0.0% |
+  inverse-cholesky:                  1.814     1.814   0.0% |
+  projections:                       5.478     5.478   0.0% |
+  rotate_psi_s:                      4.998     4.998   0.0% |
+Set symmetry:                        0.000     0.000   0.0% |
+Other:                             896.859   896.859   5.5% |-|
+-----------------------------------------------------------
+Total:                                     16411.242 100.0%
+
+Memory usage: 13.71 GiB
+Date: Sat Oct 24 15:44:20 2026

@@ -1,0 +1,63 @@
+{
+  "state": "completed",
+  "started_utc": "2026-11-11T23:13:19.257700+00:00",
+  "versions": {
+    "gpaw": "26.7.0",
+    "ase": "3.29.0",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1"
+  },
+  "source_sha256": "f90bae63a4d50333dd7971f37d4059b13f56886ac0c4f209db9dc35872c1bb1e",
+  "settings": {
+    "xc": "PBE",
+    "pw_ecut_eV": 200,
+    "gs_kpts": [
+      6,
+      6,
+      6
+    ],
+    "response_kpt_density": 4.0,
+    "response_bands": 48,
+    "response_ecut_eV": 150,
+    "eta_eV": 0.05,
+    "intraband": false,
+    "frequencies": {
+      "type": "nonlinear",
+      "domega0": 0.005,
+      "omega2": 5.0,
+      "omegamax": 8.0
+    }
+  },
+  "outputs": {
+    "gs_gpw_sha256": "2b0e35049e6c70c014c954a7bac8260a664b5cc10e793348d2694daead51228b",
+    "full_gpw_sha256": "9c4c6b626e3aa9e8c52f62de9f303b8214c076e714102c5faf8cc8ab3d5ddc11",
+    "full_irreducible_kpoints": 512,
+    "full_point": {
+      "path": "/Users/dela/sbup3-gpaw-26.7-20261112/fresh_k8/full_point.csv",
+      "sha256": "b9ac82644cbac17eba758f60d807883d754af94a955fad85cad436489a85670f"
+    },
+    "full_tetrahedron": {
+      "path": "/Users/dela/sbup3-gpaw-26.7-20261112/fresh_k8/full_tetrahedron.csv",
+      "sha256": "25af7a138c1851275baacede8bb289bcd46ba560328cc1a0e3b3ceb635875aea"
+    },
+    "sym_gpw_sha256": "32fcedbe5e77069d17557fb8bc0d96b635f349084a9c655b9a9f71c35f2e243d",
+    "sym_irreducible_kpoints": 29,
+    "sym_point": {
+      "path": "/Users/dela/sbup3-gpaw-26.7-20261112/fresh_k8/sym_point.csv",
+      "sha256": "f06a5e1138327d49105958093800a93125b13582c7d5fccf9baf601be33d3807"
+    },
+    "sym_tetrahedron": {
+      "path": "/Users/dela/sbup3-gpaw-26.7-20261112/fresh_k8/sym_tetrahedron.csv",
+      "sha256": "439348b2bdce77f5e6791f2981f65b513a8f7dabdf57c8f29f7e3d99e090a6e9"
+    }
+  },
+  "response_grid": {
+    "size": [
+      8,
+      8,
+      8
+    ],
+    "gamma": true
+  },
+  "finished_utc": "2026-11-11T23:15:45.631561+00:00"
+}

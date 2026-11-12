@@ -1,0 +1,71 @@
+{
+  "state": "completed",
+  "started_utc": "2026-11-11T23:06:07.942713+00:00",
+  "gpaw_version": "26.7.0",
+  "source_sha256": "18d93905ea49b3f0146936b3a2eddbe45badf6744e45c9073df3c9bfd0084096",
+  "input_gpw_sha256": {
+    "full": "cdf1fd8d6109405611d196109b183a1790ad1cd600412b4c71c50749a39c8338",
+    "sym": "90f766acf29676ba32dbb48807934acce9d35defb26163420bd24f0cb3c2e733"
+  },
+  "settings": {
+    "mesh": [
+      16,
+      16,
+      16
+    ],
+    "bands": 48,
+    "eta_eV": 0.05,
+    "ecut_eV": 150,
+    "intraband": false,
+    "qsymmetry": true,
+    "frequencies": {
+      "type": "nonlinear",
+      "domega0": 0.005,
+      "omega2": 5.0,
+      "omegamax": 8.0
+    }
+  },
+  "results": {
+    "full_point": {
+      "path": "/Users/dela/sbup3-gpaw-26.7-20261112/same_input_k16/k16_full_point_gpaw267.csv",
+      "sha256": "56cb8ed01ace3ed9eb3df8ccc0e0470c8e5c16ecb9cdd6f76c4611615de565e8",
+      "shape": [
+        964,
+        5
+      ],
+      "energy_min_eV": 0.0,
+      "energy_max_eV": 8.01015
+    },
+    "full_tetrahedron": {
+      "path": "/Users/dela/sbup3-gpaw-26.7-20261112/same_input_k16/k16_full_tetrahedron_gpaw267.csv",
+      "sha256": "89c2ac1df1ddb59b542402ab95d4a6894829f368dd12aaaa4e0d85f889aa5863",
+      "shape": [
+        964,
+        5
+      ],
+      "energy_min_eV": 0.0,
+      "energy_max_eV": 8.01015
+    },
+    "sym_point": {
+      "path": "/Users/dela/sbup3-gpaw-26.7-20261112/same_input_k16/k16_sym_point_gpaw267.csv",
+      "sha256": "b64f6ba396a829ba903f7a25ddcb693bb87104157e051958b4bd9452480600aa",
+      "shape": [
+        964,
+        5
+      ],
+      "energy_min_eV": 0.0,
+      "energy_max_eV": 8.01015
+    },
+    "sym_tetrahedron": {
+      "path": "/Users/dela/sbup3-gpaw-26.7-20261112/same_input_k16/k16_sym_tetrahedron_gpaw267.csv",
+      "sha256": "3878f06d45310a10a2b4b727c733c146dcaa1a78c53d3da8b956c6367d534f41",
+      "shape": [
+        964,
+        5
+      ],
+      "energy_min_eV": 0.0,
+      "energy_max_eV": 8.01015
+    }
+  },
+  "finished_utc": "2026-11-11T23:09:58.642798+00:00"
+}

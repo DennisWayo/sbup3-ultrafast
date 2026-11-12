@@ -1,0 +1,14 @@
+{
+  "scope": "100 \u00b5m numerical sensitivity of the calibrated local-SBE model",
+  "central_region_um": [
+    -5,
+    5
+  ],
+  "relative_rms": {
+    "dz_0p5_vs_0p25_um": 0.1094958714748446,
+    "dt_0p05_vs_0p025_fs": 0.07199758524353103,
+    "box_160_vs_320_um": 0.0009157619257774213
+  },
+  "outer_fifth_energy_fraction_w320": 2.34643857607696e-06,
+  "interpretation": "Numerical sensitivity only; no first-principles or experimental transmission validation"
+}

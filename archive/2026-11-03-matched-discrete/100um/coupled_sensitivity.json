@@ -1,0 +1,15 @@
+{
+  "scope": "Numerical sensitivity of the calibrated local SBE--UPPE model",
+  "z_um": 100.0,
+  "central_region_um": [
+    -5,
+    5
+  ],
+  "relative_rms": {
+    "propagation_step": 2.821112044367499e-07,
+    "temporal_sampling": 4.547093062366303e-06,
+    "transverse_box": 0.0008967282459783129
+  },
+  "outer_fifth_energy_fraction": 2.2133116930477646e-06,
+  "interpretation": "No claim of physical GaAs validation or dielectric convergence"
+}
